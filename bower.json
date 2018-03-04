@@ -1,0 +1,24 @@
+{
+  "name": "lybrary",
+  "description": "a Sails application",
+  "main": "app.js",
+  "authors": [
+    "anonymous node/sails user"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "angular": "^1.6.9",
+    "angular-route": "^1.6.9",
+    "angular-resource": "^1.6.9"
+  }
+}
