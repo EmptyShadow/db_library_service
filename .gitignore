@@ -116,5 +116,6 @@ npm-debug.log
 nbproject
 .idea
 .node_history
-./assets/vendor
 package-lock.json
+assets/vendor
+.directory
