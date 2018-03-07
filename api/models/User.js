@@ -13,9 +13,7 @@ module.exports = {
       //columnName: 'id',
       type: 'integer',
       primaryKey: true,
-      autoIncrement: true,
-      unique: true,
-      required: true
+      autoIncrement: true
     },
     login: {
       //columnName: 'login',
@@ -38,8 +36,7 @@ module.exports = {
     is_admin: {
       //columnName: 'is_admin',
       type: 'boolean',
-      defaultsTo: false,
-      required: true
+      defaultsTo: false
     }
   }
 };
