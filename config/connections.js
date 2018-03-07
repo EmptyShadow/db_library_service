@@ -42,8 +42,8 @@ module.exports.connections = {
   ***************************************************************************/
   someMysqlServer: {
     adapter: 'sails-mysql',
-    host: 'http://db',
-    user: 'root', //optional
+    host: 'db',
+    user: 'admin', //optional
     password: '123', //optional
     database: 'library' //optional
   },
