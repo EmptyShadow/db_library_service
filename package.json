@@ -2,12 +2,11 @@
   "name": "library",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "Library service",
   "keywords": [],
   "dependencies": {
     "async": "^2.6.0",
     "ejs": "2.3.4",
-    "forever": "^0.15.3",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-coffee": "1.0.0",
@@ -34,9 +33,9 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/library.git"
+    "url": "https://github.com/eltech-anykeyers/db_library_service"
   },
-  "author": "anonymous node/sails user",
+  "author": "eltech-anykeyers",
   "license": "",
   "devDependencies": {
     "jade": "^1.11.0"

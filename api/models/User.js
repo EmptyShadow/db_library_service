@@ -15,30 +15,31 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true,
       unique: true,
-      required: false
+      required: true
     },
-    name: {
+    login: {
       //columnName: 'login',
       type: 'string',
       unique: true,
-      required: false,
+      required: true,
       size: 30
     },
     email: {
       //columnName: 'email',
       type: 'string',
       unique: true,
-      required: false
+      required: true
     },
     password: {
       //columnName: 'password',
       type: 'string',
-      required: false
+      required: true
     },
     is_admin: {
       //columnName: 'is_admin',
       type: 'boolean',
-      defaultsTo: false
+      defaultsTo: false,
+      required: true
     }
   }
 };
