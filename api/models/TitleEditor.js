@@ -1,5 +1,5 @@
 /**
- * Author.js
+ * TitleEditor.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,15 +8,20 @@
 module.exports = {
 
   connection: 'someMysqlServer',
-  attributes:{
+  attributes: {
     id: {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
     },
-    id_name: {
-      type: 'integer',
+    lang: {
+      type: 'string',
       require: true
+    },
+    title: {
+      type: 'string',
+      unique: true,
+      required: true
     }
   }
 };

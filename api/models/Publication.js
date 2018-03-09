@@ -7,8 +7,49 @@
 
 module.exports = {
 
+  connection: 'someMysqlServer',
   attributes: {
-
+    id: {
+      type: 'integer',
+      primaryKey: true,
+      autoIncrement: true
+    },
+    id_title: {
+      type: 'integer',
+      require: true
+    },
+    datepub: {
+      type: 'datetime',
+      require: true
+    },
+    //Высшая Аттестационная Комиссия
+    is_vak: {
+      type: 'boolean',
+      defaultTo: false
+    },
+    // РОССИЙСКИЙ ИНДЕКС НАУЧНОГО ЦИТИРОВАНИЯ
+    is_rince: {
+      type: 'boolean',
+      defaultTo: false
+    },
+    // хз
+    is_wos: {
+      type: 'boolean',
+      defaultTo: false
+    },
+    // публикация в журнале
+    is_scopus: {
+      type: 'boolean',
+      defaultTo: false
+    },
+    is_doi: {
+      type: 'boolean',
+      defaultTo: false
+    },
+    link: {
+      type: 'string',
+      require: true
+    }
   }
 };
 
