@@ -7,6 +7,7 @@
 
 module.exports = {
 
+  connection: 'someMysqlServer',
   attributes: {
     id_author: {
       type: 'integer',
