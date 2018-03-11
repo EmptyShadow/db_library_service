@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+    div(class="text-center center-block")
+        form(class="form-signup")
+            h1(class="h3 mb-3 font-weight-normal") Регистрация
+
+            if errorLogin
+                div(class="alert alert-danger" role="alert") #{errorLogin}
+
+            label(for="inputLogin" class="sr-only") Логин
+            if login
+                input(type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus value="#{login}")
+            else
+                input(type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus)
+
+            label(for="inputEmail" class="sr-only") Email адрес
+            if email
+                input(type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required autofocus value="#{email}")
+            else
+                input(type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required autofocus)
+
+            label(for="inputPassword1" class="sr-only") Пароль
+            input(type="password" id="inputPassword1" class="form-control" placeholder="Пароль" required)
+
+            label(for="inputPassword2" class="sr-only") Подтверждение пароля
+            input(type="password" id="inputPassword2" class="form-control" placeholder="Подтверждение пароля" required)
+          
+            button(class="btn btn-lg btn-primary btn-block" type="submit") Регистрация

@@ -7,14 +7,20 @@ html
 
     block styles
 
+    link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css")
     // STYLES
     link(rel="stylesheet", href="/styles/importer.css")
     // STYLES END
-
+//(data-ng-app="library-client")
 body
-  block body
+  //{{body}}
+  include ./bars/navbar
+  //include ./forms/signup
 
-  script(src="/vendor/bootstrap/dist/bootstrap.min.js")
+  block content
+
+  script(src="/vendor/jquery/dist/jquery.min.js")  
+  script(src="/vendor/bootstrap/dist/js/bootstrap.min.js")
   script(src="/vendor/angular/angular.min.js")
   script(src="/vendor/angular-resource/angular-resource.min.js")
   script(src="/vendor/angular-route/angular-route.min.js")

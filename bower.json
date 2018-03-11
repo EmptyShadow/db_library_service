@@ -19,6 +19,7 @@
     "bootstrap": "^4.0.0",
     "angular": "^1.6.9",
     "angular-route": "^1.6.9",
-    "angular-resource": "^1.6.9"
+    "angular-resource": "^1.6.9",
+    "jquery": "^3.3.1"
   }
 }

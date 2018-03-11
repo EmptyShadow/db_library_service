@@ -34,13 +34,31 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+
+  'GET /user/login': {
+    view: 'forms/signin'
+  },
+
+  'POST /user/login': {
+    controller: 'UserController',
+    action: 'login'
+  },
+
+  'GET /user/join': {
+    view: 'forms/signup'
+  },
+
+  'POST /user/join': {
+    controller: 'UserController',
+    action: 'join'
+  },
 
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
   *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
+  * If a request to a URL doesn't matc h any of the custom routes above, it   *
   * is matched against Sails route blueprints. See `config/blueprints.js`    *
   * for configuration options and examples.                                  *
   *                                                                          *
