@@ -13,11 +13,21 @@ module.exports = {
             password: req.param('password')
         }
         if (!data.login || !data.email || !data.password) {
-            return res.view('forms/signin', {login: data.login, email: data.email, errorLogin: 'Неправильный логин, email или пароль!!'});
+            return res.badRequest('Все поля должны быть заполнены!!');
         }
+        return res.view('homepage');
     },
 
     join: function (req, res) {
-        return res.ok('ok!!');
+        let data = {
+            login: req.param('login'),
+            email: req.param('email'),
+            password1: req.param('password1'),
+            password2: req.param('password2')
+        }
+        if (!data.login || !data.email || !data.password1 || !data.password2) {
+            return res.badRequest('Все поля должны быть заполнены!!');
+        }
+        return res.view('homepage');
     }
 };
