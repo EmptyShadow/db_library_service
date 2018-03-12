@@ -54,6 +54,11 @@ module.exports.routes = {
     action: 'join'
   },
 
+  'GET /navs': {
+    controller: 'NavbarController',
+    action: 'getNavs'
+  }
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
