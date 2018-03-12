@@ -57,6 +57,16 @@ module.exports.routes = {
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'
+  },
+
+  'GET /manual': {
+    controller: 'ManualController',
+    action: 'getManual'
+  },
+
+  'GET /contacts': {
+    controller: 'ContactController',
+    action: 'getContacts'
   }
 
   /***************************************************************************
