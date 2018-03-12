@@ -120,3 +120,4 @@ package-lock.json
 assets/vendor
 .directory
 .editorconfig
+.vscode

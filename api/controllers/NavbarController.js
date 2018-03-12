@@ -7,6 +7,9 @@
 
 module.exports = {
 	getNavs: function (req, res) {
+        if (!req.session.logged_in) {
+            return res.json([]);
+        }
         let navs = [
             {
                 title: 'Пользователи',
