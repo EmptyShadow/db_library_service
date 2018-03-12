@@ -9,13 +9,17 @@
  */
 module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
+  // Если пользователь вошел на сайт
+  if (req.session.logged_in) {
+    // Если пользователь во время ипользования сменил ip
+    if (req.ip != req.session.ip) {
+      // то разлогиним его
+      req.session.logged_in = false;
+      return res.view('homepage');
+    }
     return next();
   }
 
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+  // Перебрасываем на домашнюю страницу
+  return res.view('homepage');
 };

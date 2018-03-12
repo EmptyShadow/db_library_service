@@ -33,7 +33,9 @@ module.exports = {
                 return res.notFound('Неверный логин, почта или пароль!!');
             }
 
-            // создание сессии и кукис
+            // записываем в сессию что пользователь вошел и записываем его ip
+            req.session.logged_in = true;
+            req.session.ip = req.ip;
 
             // Возвращаем данные пользователя
             user.password = '';
