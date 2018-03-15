@@ -1,41 +1,45 @@
-div(class="collapse bg-dark" id="navbarHeader")
-    div(class="container")
-        div(class="row")
-            div(class="col-sm-8 col-md-7 py-4")
-                h4(class="text-white") About
-                p(class="text-muted") Add some information about the album below, 
-                    | the author, or any other background context. 
-                    | Make it a few sentences long so folks can pick up 
-                    | some informative tidbits. Then, link them off to some social 
-                    | networking sites or contact information.
-            div(class="col-sm-4 offset-md-1 py-4")
-                h4(class="text-white") Contact
-                ul(class="list-unstyled")
-                    li
-                        a(href="#" class="text-white") Follow on Twitter
-                    li
-                        a(href="#" class="text-white") Like on Facebook
-                    li
-                        a(href="#" class="text-white") Email me
+header
+    div(class="collapse bg-dark" id="navbarHeader")
+        div(class="container")
+            div(class="row")
+                div(class="col-sm-8 col-md-7 py-4" data-ng-controller="ManualController")
+                    h4(class="text-white")
+                        {{data.title}}
+                    p(class="text-muted")
+                        {{data.manual}}
+                div(class="col-sm-4 offset-md-1 py-4" data-ng-controller="ContactController")
+                    h4(class="text-white")
+                        | Контакты
+                    ul(class="list-unstyled" data-ng-repeat="contact in contacts")
+                        li
+                            a(href="{{contact.link}}" class="text-white" target="_blank")
+                                {{contact.title}}
 
-nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
-    a(class="navbar-brand" href="/") Библиотека
-    button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
-        span(class="navbar-toggler-icon")
-
-    div(class="collapse navbar-collapse" id="navbarSupportedContent")
-        ul(class="navbar-nav mr-auto")
-            li(class="nav-item active")
-                a(class="nav-link" href="/") Home 
-                    span(class="sr-only") (current)
-
-            li(class="nav-item")
-                a(class="nav-link" href="#") Link
-        
-        div(class="btn-toolbar")
-            div(class="btn-group mr-2")
-                a(class="btn btn-outline-success" href="/user/login") Вход
-            div(class="btn-group mr-2")
-                a(class="btn btn-outline-primary" href="/user/join") Регистрация
-            div(class="btn-group mr-2")
-                button(class="btn btn-danger" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation") Инструкция
+    nav(class="navbar navbar-expand-md navbar-dark bg-dark")
+        a(class="navbar-brand" href="/")
+            | Библиотека
+        button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation")
+            span(class="navbar-toggler-icon")
+        div(data-ng-controller="NavbarController" class="collapse navbar-collapse" id="navbarCollapse")
+            ul(class="navbar-nav mr-auto")
+                li(class="nav-item" data-ng-repeat="nav in navs")
+                    a(class="nav-link" href="{{nav.link}}")
+                        {{nav.title}}
+                //<li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                //<li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+            div(class="btn-toolbar")
+                div(class="btn-group mr-2")
+                    a(class="btn btn-outline-success" href="/user/login") 
+                        | Вход
+                div(class="btn-group mr-2")
+                    a(class="btn btn-outline-primary" href="/user/join")
+                        | Регистрация
+                div(class="btn-group mr-2")
+                    button(class="btn btn-danger" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
+                        aria-expanded="false" aria-label="Toggle navigation")
+                        | Инструкция

@@ -36,17 +36,9 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  'GET /user/login': {
-    view: 'forms/signin'
-  },
-
   'POST /user/login': {
     controller: 'UserController',
     action: 'login'
-  },
-
-  'GET /user/join': {
-    view: 'forms/signup'
   },
 
   'POST /user/join': {

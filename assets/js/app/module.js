@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('Library', [
-        "ngRoute",
-        "ngResource"
+        "ngResource",
+        "ui.router"
     ]);
 })();   
