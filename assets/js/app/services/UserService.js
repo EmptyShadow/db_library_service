@@ -124,9 +124,10 @@
                 }).then(function success(response) {
                     /*user.setData(response.data);
                     user.errorLogin = '';*/
-                    console.log(response.data);
                     $window.location.href = '/';
                 }, function error(response) {
+                    console.log(response);
+                    user.error = response.data.error;
                     user.errorLogin = response.data.errorLogin;
                     user.errorEmail = response.data.errorEmail;
                     user.errorPassword = response.data.errorPassword;

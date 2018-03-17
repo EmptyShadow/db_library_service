@@ -66,19 +66,23 @@ module.exports = {
         // если что то пусто
         if (!data.login || !data.email || !data.password1 || !data.password2) {
             // то говорим что запрос неверный
-            return res.badRequest('Все поля должны быть заполнены!!');
+            return res.badRequest({error: 'Все поля должны быть заполнены!!'});
         }
         // если подтверждение пароля не верное
         if (data.password1 !== data.password2) {
             // то сообщаем об этом
-            return res.badRequest('Пароли не совпадают!!');
+            return res.badRequest({errorPassword: 'Пароли не совпадают!!'});
         }
 
         // пытаемся найти пользователя у которого логин или почта совпадают с переданными
-        User.query(
-            'SELECT * FROM user WHERE user.login = ? OR user.email = ? LIMIT 0,1', 
-            [data.login, data.email], 
-            function (err, user) {
+        User.find()
+            .where({
+                or: [
+                    {login: data.login},
+                    {email: data.email}
+                ]    
+            })
+            .exec(function (err, user) {
                 if (err) {
                     return res.serverError(err);
                 }
@@ -86,8 +90,8 @@ module.exports = {
                 if (user.length > 0) {
                     // формируем ответ, что совпало
                     let errRes = {
-                        errLogin: data.login === user.login ? 'Логин занят!!' : '',
-                        errEmail: data.email === user.email ? 'Почта занята!!' : ''
+                        errorLogin: data.login == user[0].login ? 'Логин занят!!' : '',
+                        errorEmail: data.email == user[0].email ? 'Почта занята!!' : ''
                     };
                     return res.badRequest(errRes);
                 }

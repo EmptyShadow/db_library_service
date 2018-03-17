@@ -2,9 +2,11 @@
     <form class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
 
-        <div class="alert alert-danger" role="alert" ng-if="user.errorLogin || user.errorEmail">
-            {{user.errorLogin}}
-            {{user.errorEmail}}
+        <div class="alert alert-danger" role="alert" ng-if="user.errorLogin || user.errorEmail || user.error || user.errorPassword">
+            {{user.error}}<br ng-if="user.error">
+            {{user.errorLogin}}<br ng-if="user.errorLogin">
+            {{user.errorEmail}}<br ng-if="user.errorEmail">
+            {{user.errorPassword}}
         </div>
 
         <label for="inputLogin" class="sr-only">Логин</label>
