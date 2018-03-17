@@ -9,11 +9,6 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
-    id: {
-      type: 'integer',
-      primaryKey: true,
-      autoIncrement: true
-    },
     id_title: {
      type: 'integer',
       required: true
