@@ -3,8 +3,12 @@
 
     angular.module('Library').controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$http'];
-    function NavbarController($scope, $http) {
+    NavbarController.$inject = ['$scope', '$http', '$cookies'];
+    function NavbarController($scope, $http, $cookies) {
+        
+        $scope.userAuth = $cookies.get('user') != undefined;
+        console.log($scope.userAuth);
+        
         $http({
             method: 'GET',
             url: '/navs'

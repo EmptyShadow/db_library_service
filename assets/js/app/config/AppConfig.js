@@ -29,6 +29,12 @@
             .state('home.join', {
                 url: 'join',
                 templateUrl: 'views/forms/signup.html'
+            })
+            .state('home.logout', {
+                controller: 'UserController',
+                action: 'logout',
+                url: 'logout',
+                templateUrl: 'views/home.html'
             });
         $urlRouterProvider.otherwise('/');
     }

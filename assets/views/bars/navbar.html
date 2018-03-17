@@ -39,11 +39,14 @@
                 </li>-->
             </ul>
             <div class="btn-toolbar">
-                <div class="btn-group mr-2">
-                    <a class="btn btn-outline-success" ui-sref="home.login">Вход</a>
+                <div class="btn-group mr-2" ng-if="!userAuth">
+                    <a class="btn btn-success" ui-sref="home.login">Вход</a>
                 </div>
-                <div class="btn-group mr-2">
-                    <a class="btn btn-outline-primary" ui-sref="home.join">Регистрация</a>
+                <div class="btn-group mr-2" ng-if="!userAuth">
+                    <a class="btn btn-primary" sref="home.join">Регистрация</a>
+                </div>
+                <div class="btn-group mr-2" ng-if="userAuth">
+                    <button type="button" class="btn btn-secondary" data-ng-controller="UserController" data-ng-click="user.logout()">Выйти</a>
                 </div>
                 <div class="btn-group mr-2">
                     <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"

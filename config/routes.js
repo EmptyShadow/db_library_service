@@ -41,6 +41,11 @@ module.exports.routes = {
     action: 'login'
   },
 
+  'POST /user/logout': {
+    controller: 'UserController',
+    action: 'logout'
+  },
+
   'POST /user/join': {
     controller: 'UserController',
     action: 'join'

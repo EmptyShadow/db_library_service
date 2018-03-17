@@ -3,6 +3,8 @@
 
     angular.module('Library', [
         "ngResource",
-        "ui.router"
+        //"ngRoute",
+        "ui.router",
+        "ngCookies"
     ]);
 })();   

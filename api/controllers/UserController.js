@@ -15,8 +15,9 @@ module.exports = {
         let data = {
             login: req.param('login'),
             email: req.param('email'),
-            password: md5(req.param('password'))
+            password: req.param('password')
         }
+        
         // если что то пусто
         if (!data.login || !data.email || !data.password) {
             // то говорим что запрос неверный
@@ -39,8 +40,16 @@ module.exports = {
 
             // Возвращаем данные пользователя
             user.password = '';
+
+            res.cookie('user', user);
             return res.json(user);
         })
+    },
+
+    logout: function (req, res) {
+        req.session.logged_in = false;
+        res.clearCookie('user');
+        return res.json({logout: 'true'});
     },
 
     /**
@@ -84,7 +93,7 @@ module.exports = {
                     return res.badRequest(errRes);
                 }
                 
-                data.password = md5(data.password1);
+                data.password = data.password1;
                 // создаем нового пользователя
                 User.create(data).exec(function (err, newUser) {
                     if (err) {
