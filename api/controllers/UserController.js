@@ -35,7 +35,7 @@ module.exports = {
             }
 
             // записываем в сессию что пользователь вошел и записываем его ip
-            req.session.logged_in = true;
+            req.session.logged_in = user.is_admin;
             req.session.ip = req.ip;
 
             // Возвращаем данные пользователя
@@ -63,7 +63,6 @@ module.exports = {
             password1: req.param('password1'),
             password2: req.param('password2')
         }
-
         // если что то пусто
         if (!data.login || !data.email || !data.password1 || !data.password2) {
             // то говорим что запрос неверный
@@ -76,15 +75,15 @@ module.exports = {
         }
 
         // пытаемся найти пользователя у которого логин или почта совпадают с переданными
-        User.quary(
-            'SELECT * FROM user WHERE user.login = $1 OR user.email = $2 LIMIT 0,1', 
+        User.query(
+            'SELECT * FROM user WHERE user.login = ? OR user.email = ? LIMIT 0,1', 
             [data.login, data.email], 
             function (err, user) {
                 if (err) {
                     return res.serverError(err);
                 }
                 // если пользователь нашелся
-                if (user) {
+                if (user.length > 0) {
                     // формируем ответ, что совпало
                     let errRes = {
                         errLogin: data.login === user.login ? 'Логин занят!!' : '',

@@ -16,10 +16,11 @@
             if (dataUser) {
                 this.setData(dataUser);
             }
-            this.login = "";
-            this.email = "";
+            this.login = "admin";
+            this.email = "email@admin";
             this.password = "";
-            this.errorLogin = "";
+            this.password1 = "admin";
+            this.password2 = "admin";
         };
 
         /**
@@ -36,7 +37,7 @@
              * Авторизация
              */
             auth: function () {
-                let validUser = this.isAvailable();
+                let validUser = this.isAvailable() && this.password;
                 if (!validUser) { return false; }
 
                 let user = this;
@@ -59,7 +60,7 @@
              * Валидация данных пользователя
              */
             isAvailable: function () {
-                if (!this.login || !this.email || !this.password) {
+                if (!this.login || !this.email) {
                     this.errorLogin = 'Все поля должны быть заполнены!!';
                     return false;
                 }
@@ -90,6 +91,9 @@
 
                 return true;
             },
+            /**
+             * Выход пользователя
+             */
             logout: function () {
                 $http({
                     method: 'POST',
@@ -98,6 +102,34 @@
                     $window.location.href = '/';
                 }, function error(response) {
                     console.log(response.data);
+                });
+            },
+            join: function () {
+                let validUser = this.isAvailable() && this.password1 && this.password2;
+                if (!validUser) { return false; }
+
+                if (this.password1 != this.password2) {
+                    this.errorPassword = 'Пароли должны совпадать';
+                    return false;
+                }
+
+                let user = this;
+                $http({
+                    method: 'POST',
+                    url: '/user/join',
+                    data: this,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function success(response) {
+                    /*user.setData(response.data);
+                    user.errorLogin = '';*/
+                    console.log(response.data);
+                    $window.location.href = '/';
+                }, function error(response) {
+                    user.errorLogin = response.data.errorLogin;
+                    user.errorEmail = response.data.errorEmail;
+                    user.errorPassword = response.data.errorPassword;
                 });
             }
         };
