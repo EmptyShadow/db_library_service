@@ -16,9 +16,9 @@
             if (dataUser) {
                 this.setData(dataUser);
             }
-            this.login = "";
-            this.email = "";
-            this.password = "";
+            this.login = "admin";
+            this.email = "email";
+            this.password = "admin";
             this.errorLogin = "";
         };
 
@@ -36,7 +36,7 @@
              * Авторизация
              */
             auth: function () {
-                let validUser = this.isAvailable;
+                let validUser = this.isAvailable();
                 if (!validUser) { return false; }
 
                 let user = this;
@@ -60,15 +60,18 @@
              */
             isAvailable: function () {
                 if (!this.login || !this.email || !this.password) {
+                    this.errorLogin = 'Все поля должны быть заполнены!!';
                     return false;
                 }
 
-                return this.isAvailableEmaill();
+                console.log(this);
+
+                return this.isAvailableEmail();
             },
             /**
              * Валидация адреса почты
              */
-            isAvailableEmail: function ValidateEmail() {
+            isAvailableEmail: function () {
                 // проверка существования 1 амперсанта в адресе почты
                 let countAmpersantsInEmail = -1;
                 let indexAmpers = -1;
@@ -83,6 +86,7 @@
                 } while (indexAmpers != -1);
 
                 if (countAmpersantsInEmail != 1) {
+                    this.errorLogin = 'Неправильная почта!!';
                     return false;
                 }
 
