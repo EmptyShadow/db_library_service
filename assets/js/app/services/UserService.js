@@ -19,8 +19,7 @@
             this.login = "admin";
             this.email = "email@admin";
             this.password = "";
-            this.password1 = "admin";
-            this.password2 = "admin";
+            this.confirmation = "";
         };
 
         /**
@@ -105,10 +104,10 @@
                 });
             },
             join: function () {
-                let validUser = this.isAvailable() && this.password1 && this.password2;
+                let validUser = this.isAvailable() && this.password && this.confirmation;
                 if (!validUser) { return false; }
 
-                if (this.password1 != this.password2) {
+                if (this.password != this.confirmation) {
                     this.errorPassword = 'Пароли должны совпадать';
                     return false;
                 }
@@ -126,7 +125,6 @@
                     user.errorLogin = '';*/
                     $window.location.href = '/';
                 }, function error(response) {
-                    console.log(response);
                     user.error = response.data.error;
                     user.errorLogin = response.data.errorLogin;
                     user.errorEmail = response.data.errorEmail;

@@ -60,16 +60,16 @@ module.exports = {
         let data = {
             login: req.param('login'),
             email: req.param('email'),
-            password1: req.param('password1'),
-            password2: req.param('password2')
+            password: req.param('password'),
+            confirmation: req.param('confirmation')
         }
         // если что то пусто
-        if (!data.login || !data.email || !data.password1 || !data.password2) {
+        if (!data.login || !data.email || !data.password || !data.confirmation) {
             // то говорим что запрос неверный
             return res.badRequest({error: 'Все поля должны быть заполнены!!'});
         }
         // если подтверждение пароля не верное
-        if (data.password1 !== data.password2) {
+        if (data.password !== data.confirmation) {
             // то сообщаем об этом
             return res.badRequest({errorPassword: 'Пароли не совпадают!!'});
         }
@@ -95,8 +95,6 @@ module.exports = {
                     };
                     return res.badRequest(errRes);
                 }
-                
-                data.password = data.password1;
                 // создаем нового пользователя
                 User.create(data).exec(function (err, newUser) {
                     if (err) {
