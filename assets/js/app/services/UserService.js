@@ -16,9 +16,9 @@
             if (dataUser) {
                 this.setData(dataUser);
             }
-            this.login = "admin";
-            this.email = "email";
-            this.password = "admin";
+            this.login = "";
+            this.email = "";
+            this.password = "";
             this.errorLogin = "";
         };
 
@@ -63,8 +63,6 @@
                     this.errorLogin = 'Все поля должны быть заполнены!!';
                     return false;
                 }
-
-                console.log(this);
 
                 return this.isAvailableEmail();
             },
