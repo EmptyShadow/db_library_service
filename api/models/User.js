@@ -32,6 +32,23 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     }
+  },
+
+  beforeCreate: function (data, next) {
+    if (!data.password || data.password != data.confirmation) {
+      return next({ errorPassword: 'Не савподение паролей' });
+    }
+    /*require('bcrypt').hash(data.password, 10, function passwordEncrypted(err, encryptedPassword) {
+      if (err) {
+        return next(err);
+      }
+      data.password = encryptedPassword;
+      next();
+    })*/
+    BCryptService.hash(data.password, function (encryptedPassword) {
+      data.password = encryptedPassword;
+      next();
+    })
   }
 };
 

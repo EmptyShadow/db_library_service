@@ -17,39 +17,49 @@ module.exports = {
             email: req.param('email'),
             password: req.param('password')
         }
-        
+
+
         // если что то пусто
         if (!data.login || !data.email || !data.password) {
             // то говорим что запрос неверный
             return res.badRequest('Все поля должны быть заполнены!!');
         }
-
         // по переданным данным ищем пользователя
-        User.findOne(data).exec(function (err, user) {
-            if (err) {
-                return res.serverError(err);
-            }
+        User.findOne()
+            .where({ login: data.login, email: data.email })
+            .exec(function (err, user) {
+                if (err) {
+                    return res.serverError(err);
+                }
 
-            if (!user) {
-                return res.notFound('Неверный логин, почта или пароль!!');
-            }
+                if (!user) {
+                    return res.notFound('Неверный логин или почта!!');
+                }
 
-            // записываем в сессию что пользователь вошел и записываем его ip
-            req.session.logged_in = user.is_admin;
-            req.session.ip = req.ip;
+                BCryptService.compare(data.password, user.password, function (err, resCompare) {
+                    if (err) {
+                        return res.serverError(err);
+                    } if (!resCompare) {
+                        return res.badRequest('Неправильный пароль!!');
+                    } if (resCompare) {
+                        // записываем в сессию что пользователь вошел и записываем его ip
+                        req.session.logged_in = user.is_admin;
+                        req.session.ip = req.ip;
 
-            // Возвращаем данные пользователя
-            user.password = '';
+                        // Возвращаем данные пользователя
+                        user.password = '';
 
-            res.cookie('user', user);
-            return res.json(user);
-        })
+                        res.cookie('user', user);
+                        return res.json(user);
+                    };
+                });
+            });
     },
 
     logout: function (req, res) {
         req.session.logged_in = false;
         res.clearCookie('user');
-        return res.json({logout: 'true'});
+        return res.json({ logout: 'true' });
     },
 
     /**
@@ -66,21 +76,21 @@ module.exports = {
         // если что то пусто
         if (!data.login || !data.email || !data.password || !data.confirmation) {
             // то говорим что запрос неверный
-            return res.badRequest({error: 'Все поля должны быть заполнены!!'});
+            return res.badRequest({ error: 'Все поля должны быть заполнены!!' });
         }
         // если подтверждение пароля не верное
         if (data.password !== data.confirmation) {
             // то сообщаем об этом
-            return res.badRequest({errorPassword: 'Пароли не совпадают!!'});
+            return res.badRequest({ errorPassword: 'Пароли не совпадают!!' });
         }
 
         // пытаемся найти пользователя у которого логин или почта совпадают с переданными
         User.find()
             .where({
                 or: [
-                    {login: data.login},
-                    {email: data.email}
-                ]    
+                    { login: data.login },
+                    { email: data.email }
+                ]
             })
             .exec(function (err, user) {
                 if (err) {
@@ -102,7 +112,7 @@ module.exports = {
                     }
                     if (!newUser) {
                         if (err) {
-                            return res.serverError({err: 'Неудалось создать пользователя!!', data});
+                            return res.serverError({ err: 'Неудалось создать пользователя!!', data });
                         }
                     }
 
@@ -111,6 +121,6 @@ module.exports = {
                     return res.json(newUser);
                 });
             }
-        );
+            );
     }
 };
