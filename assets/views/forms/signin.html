@@ -6,14 +6,20 @@
             {{user.errorLogin}}
         </div>
 
-        <label for="inputLogin" class="sr-only">Логин</label>
-        <input type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus ng-model="user.login">
+        <div class="input-group">
+            <label for="inputLogin" class="sr-only">Логин</label>
+            <input type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus ng-model="user.login">
+        </div>
 
-        <label for="inputEmail" class="sr-only">Email адрес</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required autofocus ng-model="user.email">
+        <div class="input-group">
+            <label for="inputEmail" class="sr-only">Email адрес</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required autofocus ng-model="user.email">
+        </div>
 
-        <label for="inputPassword" class="sr-only">Пароль</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required ng-model="user.password">
+        <div class="input-group">
+            <label for="inputPassword" class="sr-only">Пароль</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required ng-model="user.password">
+        </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="user.auth()">Войти</button>
     </form>

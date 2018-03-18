@@ -6,8 +6,12 @@
     NavbarController.$inject = ['$scope', '$http', '$cookies'];
     function NavbarController($scope, $http, $cookies) {
         
-        $scope.userAuth = $cookies.get('user') != undefined;
-        console.log($scope.userAuth);
+        let cookie = $cookies.get('user');
+        $scope.userAuth = cookie != undefined;
+        if ($scope.userAuth) {
+            $scope.user = angular.fromJson(cookie.substring(2));
+            console.log($scope.user);
+        }
         
         $http({
             method: 'GET',

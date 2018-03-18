@@ -16,8 +16,8 @@
             if (dataUser) {
                 this.setData(dataUser);
             }
-            this.login = "admin";
-            this.email = "email@admin";
+            this.login = "";
+            this.email = "";
             this.password = "";
             this.confirmation = "";
         };

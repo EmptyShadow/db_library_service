@@ -3,23 +3,31 @@
         <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
 
         <div class="alert alert-danger" role="alert" ng-if="user.errorLogin || user.errorEmail || user.error || user.errorPassword">
-            {{user.error}}<br ng-if="user.error">
-            {{user.errorLogin}}<br ng-if="user.errorLogin">
-            {{user.errorEmail}}<br ng-if="user.errorEmail">
-            {{user.errorPassword}}
+            {{user.error}}
+            <br ng-if="user.error"> {{user.errorLogin}}
+            <br ng-if="user.errorLogin"> {{user.errorEmail}}
+            <br ng-if="user.errorEmail"> {{user.errorPassword}}
         </div>
 
-        <label for="inputLogin" class="sr-only">Логин</label>
-        <input type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus ng-model="user.login">
+        <div class="input-group">
+            <label for="inputLogin" class="sr-only">Логин</label>
+            <input type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus ng-model="user.login">
+        </div>
 
-        <label for="inputEmail" class="sr-only">Email адрес</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required ng-model="user.email">
+        <div class="input-group">
+            <label for="inputEmail" class="sr-only">Email адрес</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email адрес" required ng-model="user.email">
+        </div>
 
-        <label for="inputPassword" class="sr-only">Пароль</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required ng-model="user.password">
+        <div class="input-group">
+            <label for="inputPassword" class="sr-only">Пароль</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required ng-model="user.password">
+        </div>
 
-        <label for="inputConfirmation" class="sr-only">Подтверждение пароля</label>
-        <input type="password" id="inputConfirmation" class="form-control" placeholder="Подтверждение пароля" required ng-model="user.confirmation">
+        <div class="input-group">
+            <label for="inputConfirmation" class="sr-only">Подтверждение пароля</label>
+            <input type="password" id="inputConfirmation" class="form-control" placeholder="Подтверждение пароля" required ng-model="user.confirmation">
+        </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="user.join()">Отправить</button>
     </form>
