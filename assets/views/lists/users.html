@@ -1,0 +1,84 @@
+<div class="jumbotron">
+    <h1>Пользователи</h1>
+    <div class="container-fluid">
+        <form class="form-inline">
+            <div class="form-group mb-2">
+                <label for="userId" class="sr-only">id</label>
+                <input type="text" class="form-control" id="userId" placeholder="Id">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="inputLogin" class="sr-only">Логин</label>
+                <input type="text" class="form-control" id="inputLogin" placeholder="Логин">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="inputEmail" class="sr-only">Email</label>
+                <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Поиск</button>
+        </form>
+        <div class="table-responsive" data-ng-controller="UserController">
+            <table class="table table-hover table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Логин</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Пароль</th>
+                        <th scope="col">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

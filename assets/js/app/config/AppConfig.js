@@ -35,7 +35,11 @@
                 action: 'logout',
                 url: 'logout',
                 templateUrl: 'views/home.html'
+            })
+            .state('home.users', {
+                url: 'users',
+                templateUrl: 'views/lists/users.html'
             });
         $urlRouterProvider.otherwise('/');
-    }
+    };
 })();

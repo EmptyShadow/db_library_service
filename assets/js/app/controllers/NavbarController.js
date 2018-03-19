@@ -17,6 +17,9 @@
             method: 'GET',
             url: '/navs'
         }).then(function success(response) {
+            for(let i = 0; i < response.data.length; i++) {
+                response.data[i].link = 'home' + response.data[i].link.replace('/', '.');
+            }
             console.log(response);
             return $scope.navs = response.data;
         });
