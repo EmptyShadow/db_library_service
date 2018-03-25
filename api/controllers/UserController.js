@@ -56,6 +56,9 @@ module.exports = {
             });
     },
 
+    /**
+     * Выход и уничтожение кукисов
+     */
     logout: function (req, res) {
         req.session.logged_in = false;
         res.clearCookie('user');
@@ -122,5 +125,30 @@ module.exports = {
                 });
             }
             );
+    },
+
+    /**
+     * Поиск пользователей по признакам
+     */
+    search: function (req, res) {
+        let data = {
+            id: req.param('id'),
+            login: req.param('login'),
+            email: req.param('email')
+        }
+
+        let paramsSearch = {};
+
+        if (data.id != "") { paramsSearch.id = data.id }
+        if (data.login != "") { paramsSearch.login = { contains: data.login } }
+        if (data.email != "") { paramsSearch.email = { contains: data.email } }
+
+        User.find(paramsSearch).exec(function (err, users) {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            return res.json(users);
+        })
     }
 };

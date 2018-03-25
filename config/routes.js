@@ -51,6 +51,11 @@ module.exports.routes = {
     action: 'join'
   },
 
+  'POST /users/search': {
+    controller: 'UserController',
+    action: 'search'
+  },
+
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'

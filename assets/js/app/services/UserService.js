@@ -16,6 +16,7 @@
             if (dataUser) {
                 this.setData(dataUser);
             }
+            this.id = "";
             this.login = "";
             this.email = "";
             this.password = "";
@@ -103,6 +104,9 @@
                     console.log(response.data);
                 });
             },
+            /**
+             * Регистрация
+             */
             join: function () {
                 let validUser = this.isAvailable() && this.password && this.confirmation;
                 if (!validUser) { return false; }
@@ -129,6 +133,23 @@
                     user.errorLogin = response.data.errorLogin;
                     user.errorEmail = response.data.errorEmail;
                     user.errorPassword = response.data.errorPassword;
+                });
+            },
+            /**
+             * Поиск пользователей подпадающих под описание этого пользователя
+             */
+            search: function (callback) {
+                $http({
+                    method: 'POST',
+                    url: '/users/search',
+                    data: this,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function success(response) {
+                    callback(response.data);
+                }, function error(response) {
+                    callback([]);
                 });
             }
         };
