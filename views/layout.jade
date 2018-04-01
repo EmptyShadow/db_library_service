@@ -7,6 +7,7 @@ html
 
     block styles
 
+    link(rel="stylesheet", href="/vendor/angular-bootstrap/ui-bootstrap-csp.css")
     link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css")
     // STYLES
     link(rel="stylesheet", href="/styles/importer.css")
@@ -19,13 +20,14 @@ body(data-ng-app="Library")
 
   block content
 
-  script(src="/vendor/jquery/dist/jquery.min.js")  
-  script(src="/vendor/bootstrap/dist/js/bootstrap.min.js")  
+  script(src="/vendor/jquery/dist/jquery.min.js")
   script(src="/vendor/angular/angular.min.js")  
   script(src="/vendor/angular-resource/angular-resource.min.js")  
   script(src="/vendor/angular-route/angular-route.min.js") 
   script(src="/vendor/angular-ui-router/release/angular-ui-router.min.js")
   script(src="/vendor/angular-cookies/angular-cookies.min.js")
+  script(src="/vendor/bootstrap/dist/js/bootstrap.min.js")
+  script(src="/vendor/angular-bootstrap/ui-bootstrap-tpls.js")
   // SCRIPTS
   script(src="/js/dependencies/sails.io.js")
   script(src="/js/app/module.js")
@@ -33,6 +35,7 @@ body(data-ng-app="Library")
   script(src="/js/app/controllers/AuthController.js")
   script(src="/js/app/controllers/ContactController.js")
   script(src="/js/app/controllers/ManualController.js")
+  script(src="/js/app/controllers/ModalUserController.js")
   script(src="/js/app/controllers/NavbarController.js")
   script(src="/js/app/controllers/UserController.js")
   script(src="/js/app/services/UserService.js")

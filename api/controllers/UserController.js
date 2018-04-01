@@ -150,5 +150,33 @@ module.exports = {
 
             return res.json(users);
         })
+    },
+    /**
+     * Обновление данных о пользователе
+     */
+    update: function (req, res) {
+        let id = req.param('id');
+        let setData = {
+            login: req.param('login'),
+            email: req.param('email'),
+            is_admin: req.param('is_admin') ? 1 : 0
+        };
+
+        // если что то пусто
+        if (!setData.login || !setData.email) {
+            // то говорим что запрос неверный
+            return res.badRequest('Все поля должны быть заполнены!!');
+        }
+
+        User.query(
+            'UPDATE user SET login = ?, email = ?, is_admin = ? WHERE id = ?;',
+            [setData.login, setData.email, setData.is_admin, id],
+            function (err, updateRes) {
+                if (err) { return res.serverError(err); }
+                
+                res.json(updateRes);
+            }
+        );
+
     }
 };

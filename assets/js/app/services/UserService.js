@@ -15,12 +15,14 @@
         function User(dataUser) {
             if (dataUser) {
                 this.setData(dataUser);
+                return
             }
             this.id = "";
             this.login = "";
             this.email = "";
             this.password = "";
             this.confirmation = "";
+            this.is_admin = false;
         };
 
         /**
@@ -32,6 +34,7 @@
              */
             setData: function (dataUser) {
                 angular.extend(this, dataUser);
+                this.defValErrors();
             },
             /**
              * Авторизация
@@ -139,6 +142,7 @@
              * Поиск пользователей подпадающих под описание этого пользователя
              */
             search: function (callback) {
+                let user = this;
                 $http({
                     method: 'POST',
                     url: '/users/search',
@@ -147,10 +151,38 @@
                         'Content-Type': 'application/json'
                     }
                 }).then(function success(response) {
-                    callback(response.data);
+                    callback(user.createdIsArray(response.data));
                 }, function error(response) {
                     callback([]);
                 });
+            },
+            createdIsArray: function (data) {
+                let users = [];
+                for (let i = 0; i < data.length; i++) {
+                    users.push(new User(data[i]));
+                }
+                return users;
+            },
+            update: function (callback) {
+                let user = this;
+                $http({
+                    method: 'POST',
+                    url: '/user/update',
+                    data: this,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function success(response) {
+                    callback(new User(response.data));
+                }, function error(response) {
+                    callback(null, response.data);
+                });
+            },
+            defValErrors: function () {
+                this.error = '';
+                this.errorEmail = '';
+                this.errorLogin = '';
+                this.errorPassword = '';
             }
         };
         return User;

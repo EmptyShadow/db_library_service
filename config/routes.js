@@ -56,6 +56,11 @@ module.exports.routes = {
     action: 'search'
   },
 
+  'POST /user/update': {
+    controller: 'UserController',
+    action: 'update'
+  },
+
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'

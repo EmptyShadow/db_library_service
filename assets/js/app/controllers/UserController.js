@@ -3,8 +3,8 @@
 
     angular.module('Library').controller('UserController', UserController);
 
-    UserController.$inject = ['$scope', 'User'];
-    function UserController($scope, User) {
+    UserController.$inject = ['$scope', '$uibModal', 'User'];
+    function UserController($scope, $uibModal, User) {
         $scope.users = [];
         $scope.usersParams = new User();
         /* $scope.maxPrintCount = 50;
@@ -18,8 +18,19 @@
 
         $scope.search = function () {
             $scope.usersParams.search(function callbackUsers(users) {
-                console.log(users);
                 $scope.users = users;
+            });
+        }
+
+        $scope.updateUser = function (user) {
+            var uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/update-user.html',
+                controller: 'ModalUserController',
+                size: 'lg',
+                resolve: {
+                    user: user
+                }
             });
         }
     }

@@ -1,9 +1,27 @@
 body {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 
 .jumbotron {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
+}
+
+.fade {
+  opacity: 1;
+  background-color: #1333;
+}
+
+.modal-dialog {
+    min-height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}
+@media(max-width: 768px) {
+  .modal-dialog {
+    min-height: calc(100vh);
+  }
 }
 
 @import 'forms/forms';
