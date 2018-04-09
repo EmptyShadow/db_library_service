@@ -173,7 +173,7 @@ module.exports = {
             [setData.login, setData.email, setData.is_admin, id],
             function (err, updateRes) {
                 if (err) { return res.serverError(err); }
-                
+
                 res.json(updateRes);
             }
         );

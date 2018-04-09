@@ -33,5 +33,25 @@
                 }
             });
         }
+
+        $scope.removeUser = function (user) {
+            var uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/delete-user.html',
+                controller: 'ModalRemoveController',
+                size: 'sm',
+                resolve: {
+                    obj: user,
+                    callbackRemove: {
+                        run: function callbackRemove() {
+                            let index = $scope.users.indexOf(user);
+                            if (index !== -1) {
+                                $scope.users.splice(index, 1);
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 })();

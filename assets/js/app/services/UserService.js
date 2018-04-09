@@ -183,6 +183,20 @@
                 this.errorEmail = '';
                 this.errorLogin = '';
                 this.errorPassword = '';
+            },
+            remove: function () {
+                $http({
+                    method: 'DELETE',
+                    url: '/user/' + this.id
+                }).then(function success(response) {
+                    console.log('Был удален пользователь');
+                    console.log(this);
+                }, function error(response) {
+                    console.log("ошибка удаления");
+                });
+            },
+            toString: function () {
+                return this.login;
             }
         };
         return User;

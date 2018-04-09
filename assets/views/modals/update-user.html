@@ -1,41 +1,43 @@
-<div class="modal-header bg-dark">
-    <h3 class="modal-title text-white">Изменение пользователя {{user.login}}</h3>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="cancel()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<div class="modal-body modal-center">
-    <form>
-        <div class="alert alert-danger" role="alert" ng-if="user.errorLogin || user.errorEmail || user.error">
-            {{user.error}}
-            <br ng-if="user.error"> {{user.errorLogin}}
-            <br ng-if="user.errorLogin"> {{user.errorEmail}}
-        </div>
-
-        <div class="input-group row">
-            <label for="inputLogin" class="col-sm-2 col-form-label">Логин</label>
-            <div class="col-sm-10">
-                <input type="text" id="inputLogin" class="form-control-plaintext" placeholder="Логин" required autofocus data-ng-model="user.login">
+<div class="modal-content">
+    <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white">Изменение пользователя {{user.login}}</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body modal-center">
+        <form>
+            <div class="alert alert-danger" role="alert" ng-if="user.errorLogin || user.errorEmail || user.error">
+                {{user.error}}
+                <br ng-if="user.error"> {{user.errorLogin}}
+                <br ng-if="user.errorLogin"> {{user.errorEmail}}
             </div>
-        </div>
 
-        <div class="input-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">Email адрес</label>
-            <div class="col-sm-10">
-                <input type="email" id="inputEmail" class="form-control-plaintext" placeholder="Email адрес" required data-ng-model="user.email">
+            <div class="input-group row">
+                <label for="inputLogin" class="col-sm-2 col-form-label">Логин</label>
+                <div class="col-sm-10">
+                    <input type="text" id="inputLogin" class="form-control-plaintext" placeholder="Логин" required autofocus data-ng-model="user.login">
+                </div>
             </div>
-        </div>
 
-        <div class="input-group row">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="user.is_admin"> Администратор
-                </label>
+            <div class="input-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email адрес</label>
+                <div class="col-sm-10">
+                    <input type="email" id="inputEmail" class="form-control-plaintext" placeholder="Email адрес" required data-ng-model="user.email">
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-success" data-ng-click="update()">Сохранить изменения</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-ng-click="cancel()">Отмена</button>
+
+            <div class="input-group row">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" data-ng-model="user.is_admin"> Администратор
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-ng-click="update()">Сохранить изменения</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" data-ng-click="cancel()">Отмена</button>
+    </div>
 </div>

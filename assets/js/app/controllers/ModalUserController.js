@@ -10,7 +10,9 @@
 
         // обновление данных
         $scope.update = function () {
+            // проверяем правильность данных
             if ($scope.user.isAvailable()) {
+                // отсылаем данные на сервер для обновления
                 $scope.user.update(function (OkPacket, err) {
                     if (err) {
                         $scope.user.error = err;
@@ -22,7 +24,9 @@
                         return
                     }
 
+                    // применяем измененные данные
                     user.setData($scope.user);
+                    // закрываем модальное окно
                     $uibModalInstance.close(user);
                 });
             }
