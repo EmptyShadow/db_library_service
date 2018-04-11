@@ -6,12 +6,15 @@
  */
 
 module.exports = {
-
   connection: 'someMysqlServer',
-  attributes:{
-    id_name: {
-      type: 'integer',
-      require: true
+  attributes: {
+    name: {
+      collection: 'name',
+      via: 'author'
+    },
+    publications: {
+      collection: 'publication',
+      via: 'authors'
     }
   }
 };

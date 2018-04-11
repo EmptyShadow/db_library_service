@@ -9,9 +9,9 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
-    id_title: {
-     type: 'integer',
-      required: true
+    titles: {
+      collection: 'editorname',
+      via: 'editor'
     }
   }
 };

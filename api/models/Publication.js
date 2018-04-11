@@ -9,9 +9,9 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
-    id_title: {
-      type: 'integer',
-      require: true
+    title: {
+      collection: 'publicationtitle',
+      via: 'publication'
     },
     datepub: {
       type: 'datetime',
@@ -44,6 +44,10 @@ module.exports = {
     link: {
       type: 'string',
       require: true
+    },
+    authors: {
+      collection: 'author',
+      via: 'publications'
     }
   }
 };
