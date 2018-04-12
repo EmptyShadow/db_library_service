@@ -63,8 +63,10 @@
                                         <td>{{name.updatedAt}}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
-                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button>
+                                                <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
+                                                <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
+                                                <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
                                             </div>
                                         </td>
                                     </tr>
@@ -76,10 +78,9 @@
                             <h5>Публикации</h5>
                             <div id="accordion2" data-ng-repeat="publication in author.publications">
                                 <div class="card">
-                                    <div class="card-header" id="headingPub{{publication.id}}">
+                                    <div class="card-header bg-dark" id="headingPub{{publication.id}}">
                                         <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePub{{publication.id}}" aria-expanded="false"
-                                                aria-controls="collapsePub{{publication.id}}">
+                                            <button class="text-white btn btn-link" data-toggle="collapse" data-target="#collapsePub{{publication.id}}" aria-expanded="false" aria-controls="collapsePub{{publication.id}}">
                                                 {{publication.id}}: {{publication.titles[0].title}}
                                             </button>
                                         </h5>
@@ -108,8 +109,11 @@
                                                             <td>{{title.updatedAt}}</td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
-                                                                    <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button>
+                                                                    <i class="btn material-icons" data-ng-click="">visibility</i>
+                                                                    <i class="btn material-icons mr-2" data-ng-click="">mode edit</i>
+                                                                    <i class="btn material-icons mr-2" data-ng-click="">delete forever</i>
+                                                                    <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                                    <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
                                                                 </div>
                                                             </td>
                                                         </tr>

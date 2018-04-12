@@ -68,8 +68,10 @@
                         <td>{{user.updatedAt}}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-warning" data-ng-click="updateUser(user)">Изменить</button>
-                                <button type="button" class="btn btn-danger" data-ng-click="removeUser(user)">Удалить</button>
+                                <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
+                                <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
+                                <!-- <button type="button" class="btn btn-warning" data-ng-click="updateUser(user)">Изменить</button>
+                                <button type="button" class="btn btn-danger" data-ng-click="removeUser(user)">Удалить</button> -->
                             </div>
                         </td>
                     </tr>
