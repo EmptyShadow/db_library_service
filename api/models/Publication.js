@@ -9,7 +9,7 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
-    title: {
+    titles: {
       collection: 'publicationtitle',
       via: 'publication'
     },

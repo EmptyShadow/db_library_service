@@ -8,7 +8,7 @@
 module.exports = {
   connection: 'someMysqlServer',
   attributes: {
-    name: {
+    names: {
       collection: 'name',
       via: 'author'
     },

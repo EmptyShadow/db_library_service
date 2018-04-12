@@ -39,6 +39,10 @@
             .state('home.users', {
                 url: 'users',
                 templateUrl: 'views/lists/users.html'
+            })
+            .state('home.authors', {
+                url: 'authors',
+                templateUrl: 'views/lists/authors.html'
             });
         $urlRouterProvider.otherwise('/');
     };

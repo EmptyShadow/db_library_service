@@ -1,0 +1,129 @@
+<div class="jumbotron" data-ng-controller="AuthorController">
+    <h1>Авторы</h1>
+    <div class="container-fluid">
+        <form class="form-inline">
+            <div class="form-group mb-2">
+                <label for="authorId" class="sr-only">id автора</label>
+                <input type="number" class="form-control" id="authorId" placeholder="Id автора" data-ng-model="paramsFind.id">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="authorNameLang" class="sr-only">Язык псевдонима</label>
+                <input type="text" class="form-control" id="authorNameLang" placeholder="Язык псевдонима" data-ng-model="paramsFind.name.lang">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="authorLastname" class="sr-only">Фамилия</label>
+                <input type="text" class="form-control" id="authorLastname" placeholder="Фамилия" data-ng-model="paramsFind.name.lastname">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="authorName" class="sr-only">Имя</label>
+                <input type="text" class="form-control" id="authorName" placeholder="Имя" data-ng-model="paramsFind.name.firstname">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="authorPatronymic" class="sr-only">Отчество</label>
+                <input type="text" class="form-control" id="authorPatronymic" placeholder="Отчество" data-ng-model="paramsFind.name.patronymic">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" data-ng-click="author.find(paramsFind, callbackAuthorsFinded)">Поиск</button>
+        </form>
+        <div id="accordion" data-ng-repeat="author in authors">
+            <div class="card">
+                <div class="card-header bg-dark" id="heading{{author.id}}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{author.id}}" aria-expanded="true"
+                            aria-controls="collapse{{author.id}}">
+                            {{author.id}}: {{author.names[0].lastname}} {{author.names[0].firstname}} {{author.names[0].patronymic}}
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse{{author.id}}" class="collapse" aria-labelledby="heading{{author.id}}" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="table-responsive" data-ng-if="author.names.length != 0">
+                            <h5>Псевдонимы</h5>
+                            <table class="table table-hover table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">id псевдонима</th>
+                                        <th scope="col">Язык</th>
+                                        <th scope="col">Фамилия</th>
+                                        <th scope="col">Имя</th>
+                                        <th scope="col">Отчество</th>
+                                        <th scope="col">Дата создания</th>
+                                        <th scope="col">Дата изменения</th>
+                                        <th scope="col">Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-ng-repeat="name in author.names">
+                                    <tr>
+                                        <th scope="row">{{name.id}}</th>
+                                        <td>{{name.lang}}</td>
+                                        <td>{{name.lastname}}</td>
+                                        <td>{{name.firstname}}</td>
+                                        <td>{{name.patronymic}}</td>
+                                        <td>{{name.createdAt}}</td>
+                                        <td>{{name.updatedAt}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div data-ng-if="author.publications.length != 0">
+                            <h5>Публикации</h5>
+                            <div id="accordion2" data-ng-repeat="publication in author.publications">
+                                <div class="card">
+                                    <div class="card-header" id="headingPub{{publication.id}}">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePub{{publication.id}}" aria-expanded="false"
+                                                aria-controls="collapsePub{{publication.id}}">
+                                                {{publication.id}}: {{publication.titles[0].title}}
+                                            </button>
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapsePub{{publication.id}}" class="collapse" aria-labelledby="headingPub{{publication.id}}" data-parent="#accordion2">
+                                        <div class="card-body">
+                                            <div class="table-responsive" data-ng-if="author.publications.length != 0">
+                                                <table class="table table-hover table-striped">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th scope="col">id названия</th>
+                                                            <th scope="col">Язык</th>
+                                                            <th scope="col">Название</th>
+                                                            <th scope="col">Дата создания</th>
+                                                            <th scope="col">Дата изменения</th>
+                                                            <th scope="col">Действия</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-ng-repeat="title in publication.titles">
+                                                        <tr>
+                                                            <th scope="row">{{title.id}}</th>
+                                                            <td>{{title.lang}}</td>
+                                                            <td>{{title.title}}</td>
+                                                            <td>{{title.createdAt}}</td>
+                                                            <td>{{title.updatedAt}}</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                                    <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

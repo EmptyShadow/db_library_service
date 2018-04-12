@@ -61,6 +61,16 @@ module.exports.routes = {
     action: 'update'
   },
 
+  'POST /authors/search': {
+    controller: 'AuthorController',
+    action: 'find'
+  },
+
+  'POST /author/update': {
+    controller: 'AuthorController',
+    action: 'update'
+  },
+
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'
