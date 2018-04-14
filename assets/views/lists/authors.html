@@ -22,7 +22,7 @@
                 <label for="authorPatronymic" class="sr-only">Отчество</label>
                 <input type="text" class="form-control" id="authorPatronymic" placeholder="Отчество" data-ng-model="paramsFind.name.patronymic">
             </div>
-            <button type="submit" class="btn btn-primary mb-2" data-ng-click="author.find(paramsFind, callbackAuthorsFinded)">Поиск</button>
+            <button type="submit" class="btn btn-dark mb-2" data-ng-click="author.find(paramsFind, callbackAuthorsFinded)">Поиск</button>
         </form>
         <div id="accordion" data-ng-repeat="author in authors">
             <div class="card">

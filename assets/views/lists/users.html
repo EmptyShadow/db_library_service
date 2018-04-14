@@ -1,25 +1,26 @@
 <div class="jumbotron" data-ng-controller="UserController">
     <h1>Пользователи</h1>
+    <form class="form-inline">
+        <div class="form-group mb-2">
+            <label for="userId" class="sr-only">id</label>
+            <input type="text" class="form-control" id="userId" placeholder="Id" data-ng-model="usersParams.id">
+        </div>
+        <div class="form-group mx-sm-2 mb-2">
+            <label for="inputLogin" class="sr-only">Логин</label>
+            <input type="text" class="form-control" id="inputLogin" placeholder="Логин" data-ng-model="usersParams.login">
+        </div>
+        <div class="form-group mx-sm-2 mb-2">
+            <label for="inputEmail" class="sr-only">Email</label>
+            <input type="text" class="form-control" id="inputEmail" placeholder="Email" data-ng-model="usersParams.email">
+        </div>
+        <!-- <div class="form-group mx-sm-2 mb-2">
+            <label for="inputUsersCount" class="sr-only">Количество на странице</label>
+            <input type="number" class="form-control" id="inputUsersCount" placeholder="Количество на странице" ng-pattern="/^(1|[1-50]|50)$/" data-ng-model="maxPrintCount">
+        </div> -->
+        <button type="submit" class="btn btn-dark mb-2" data-ng-click="search()">Поиск</button>
+    </form>
     <div class="container-fluid">
-        <form class="form-inline">
-            <div class="form-group mb-2">
-                <label for="userId" class="sr-only">id</label>
-                <input type="text" class="form-control" id="userId" placeholder="Id" data-ng-model="usersParams.id">
-            </div>
-            <div class="form-group mx-sm-2 mb-2">
-                <label for="inputLogin" class="sr-only">Логин</label>
-                <input type="text" class="form-control" id="inputLogin" placeholder="Логин" data-ng-model="usersParams.login">
-            </div>
-            <div class="form-group mx-sm-2 mb-2">
-                <label for="inputEmail" class="sr-only">Email</label>
-                <input type="text" class="form-control" id="inputEmail" placeholder="Email" data-ng-model="usersParams.email">
-            </div>
-            <!-- <div class="form-group mx-sm-2 mb-2">
-                <label for="inputUsersCount" class="sr-only">Количество на странице</label>
-                <input type="number" class="form-control" id="inputUsersCount" placeholder="Количество на странице" ng-pattern="/^(1|[1-50]|50)$/" data-ng-model="maxPrintCount">
-            </div> -->
-            <button type="submit" class="btn btn-primary mb-2" data-ng-click="search()">Поиск</button>
-        </form>
+
         <!-- <nav>
             <ul class="pagination">
                 <li class="page-item">
@@ -45,7 +46,7 @@
                 </li>
             </ul>
         </nav> -->
-        <div class="table-responsive">
+        <div class="table-responsive" data-ng-if="users.length != 0">
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                     <tr>
