@@ -6,15 +6,15 @@
  */
 
 module.exports = {
-	getNavs: function (req, res) {
-        if (!req.session.logged_in) {
+    getNavs: function (req, res) {
+        /* if (!req.session.logged_in) {
             return res.json([]);
-        }
+        } */
         let navs = [
-            {
+            /* {
                 title: 'Пользователи',
                 link: '/users'
-            },
+            }, */
             {
                 title: 'Авторы',
                 link: '/authors'
@@ -28,6 +28,12 @@ module.exports = {
                 link: '/publications'
             }
         ];
+        if (req.session.logged_in && req.session.curUser.is_admin) {
+            navs.push({
+                title: 'Пользователи',
+                link: '/users'
+            });
+        }
 
         return res.json(navs);
     }
