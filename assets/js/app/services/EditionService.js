@@ -1,37 +1,36 @@
 (function () {
     'use strict';
 
-    angular.module('Library').factory('Author', Author);
+    angular.module('Library').factory('Edition', Edition);
 
     /**
      * Прототип объекта автор
      */
-    Author.$inject = ['$http', '$window'];
-    function Author($http, $window) {
+    Edition.$inject = ['$http', '$window'];
+    function Edition($http, $window) {
         /**
          * Конструктор объекта
-         * @param {Данные автора} dataAuthor 
+         * @param {Данные автора} dataEdition 
          */
-        function Author(dataAuthor) {
-            if (dataAuthor) {
-                this.setData(dataAuthor);
+        function Edition(dataEdition) {
+            if (dataEdition) {
+                this.setData(dataEdition);
                 return
             }
 
             this.id = '';
-            this.names = [];
-            this.publications = [];
+            this.titles = [];
         };
 
         /**
          * Прототип, в котором содержатся методы
          */
-        Author.prototype = {
+        Edition.prototype = {
             /**
              * Изменить данные
              */
-            setData: function (dataAuthor) {
-                angular.extend(this, dataAuthor);
+            setData: function (dataEdition) {
+                angular.extend(this, dataEdition);
             },
             /**
              * Поиск авторов по идентификатуру и именам
@@ -40,7 +39,7 @@
                 let service = this;
                 $http({
                     method: 'POST',
-                    url: '/authors/search',
+                    url: '/editions/search',
                     data: data,
                     headers: {
                         'Content-Type': 'application/json'
@@ -60,22 +59,21 @@
                 );
             },
             createdIsArray: function (data) {
-                let authors = [];
+                let editions = [];
                 for (let i = 0; i < data.length; i++) {
-                    authors.push(new Author(data[i]));
+                    editions.push(new Edition(data[i]));
                 }
-                return authors;
+                return editions;
             },
             toString: function () {
                 let str = "";
                 if (this.id) { str += "id: " + this.id; }
-                if (this.names && this.names.length > 1) {
-                    str += " " + this.names[0].firstname + " "
-                        + this.names[0].lastname;
+                if (this.titles && this.titles.length > 1) {
+                    str += " " + this.titles[0].name;
                 }
                 return str;
             }
         };
-        return Author;
+        return Edition;
     }
 })();

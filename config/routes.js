@@ -71,6 +71,16 @@ module.exports.routes = {
     action: 'update'
   },
 
+  'POST /user/:id/change_password': {
+    controller: 'UserController',
+    action: 'changePassword'
+  },
+
+  'POST /editions/search': {
+    controller: 'EditionController',
+    action: 'find'
+  },
+
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'

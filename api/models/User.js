@@ -45,7 +45,11 @@ module.exports = {
       data.password = encryptedPassword;
       next();
     })*/
-    BCryptService.hash(data.password, function (encryptedPassword) {
+    BCryptService.hash(data.password, function (err, encryptedPassword) {
+      if (err) {
+        sails.log.error(err);
+        return;
+      }
       data.password = encryptedPassword;
       next();
     })

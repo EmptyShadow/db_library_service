@@ -1,0 +1,71 @@
+<div class="jumbotron" data-ng-controller="EditionController">
+    <h1>Издания</h1>
+    <div class="container-fluid">
+        <form class="form-inline">
+            <div class="form-group mb-2">
+                <label for="editionId" class="sr-only">id издания</label>
+                <input type="number" class="form-control" id="editionId" placeholder="Id издания" data-ng-model="paramsFind.id">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="editionNameLang" class="sr-only">Язык названия</label>
+                <input type="text" class="form-control" id="editionNameLang" placeholder="Язык названия" data-ng-model="paramsFind.title.lang">
+            </div>
+            <div class="form-group mx-sm-2 mb-2">
+                <label for="editionName" class="sr-only">Название издания</label>
+                <input type="text" class="form-control" id="editionName" placeholder="Название издания" data-ng-model="paramsFind.title.name">
+            </div>
+            <button type="submit" class="btn btn-dark mb-2" data-ng-click="edition.find(paramsFind, callbackEditionsFinded)">Поиск</button>
+        </form>
+        <div id="accordion">
+            <div data-ng-repeat="edition in editions">
+                <div class="card">
+                    <div class="card-header bg-dark" id="headingEdition{{edition.id}}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseEdition{{edition.id}}" aria-expanded="false"
+                                aria-controls="collapseEdition{{edition.id}}">
+                                {{edition.id}}: {{edition.titles[0].name}}
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseEdition{{edition.id}}" class="collapse" aria-labelledby="headingEdition{{edition.id}}" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="table-responsive" data-ng-if="edition.titles.length != 0">
+                                <h5>Названия издания</h5>
+                                <table class="table table-hover table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">id названия</th>
+                                            <th scope="col">Язык</th>
+                                            <th scope="col">Название</th>
+                                            <th scope="col">Дата создания</th>
+                                            <th scope="col">Дата изменения</th>
+                                            <th scope="col">Действия</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-ng-repeat="title in edition.titles">
+                                        <tr>
+                                            <th scope="row">{{title.id}}</th>
+                                            <td>{{title.lang}}</td>
+                                            <td>{{title.name}}</td>
+                                            <td>{{title.createdAt}}</td>
+                                            <td>{{title.updatedAt}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
+                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
+                                                    <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

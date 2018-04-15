@@ -3,8 +3,8 @@
 
     angular.module('Library').controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$http', '$cookies'];
-    function NavbarController($scope, $http, $cookies) {
+    NavbarController.$inject = ['$scope', '$http', '$cookies', '$rootScope'];
+    function NavbarController($scope, $http, $cookies, $rootScope, curUser) {
         
         let cookie = $cookies.get('user');
         $scope.userAuth = cookie != undefined;

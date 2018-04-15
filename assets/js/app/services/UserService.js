@@ -1,13 +1,14 @@
 (function () {
     'use strict';
 
-    angular.module('Library').factory('User', User);
+    let app = angular.module('Library');
+    app.factory('User', User);
 
     /**
      * Прототип объекта пользователь
      */
-    User.$inject = ['$http', '$window'];
-    function User($http, $window) {
+    User.$inject = ['$http', '$window', '$rootScope'];
+    function User($http, $window, $rootScope) {
         /**
          * Конструктор объекта
          * @param {Данные пользователя} dataUser 
@@ -197,7 +198,25 @@
             },
             toString: function () {
                 return this.login;
+            },
+            changePassword: function (newPassword) {
+                console.log(newPassword);
+                $http({
+                    method: 'POST',
+                    url: '/user/' + this.id + '/change_password',
+                    data: newPassword,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function success(response) {
+                    newPassword.success = "Пароль изменен!!";
+                    newPassword.error = '';
+                }, function error(response) {
+                    newPassword.success = '';
+                    newPassword.error = response.data;
+                });
             }
+
         };
         return User;
     }

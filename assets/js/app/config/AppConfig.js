@@ -36,6 +36,10 @@
                 url: 'logout',
                 templateUrl: 'views/home.html'
             })
+            .state('home.settings', {
+                url: 'user/settings',
+                templateUrl: 'views/user/settings.html'
+            })
             .state('home.users', {
                 url: 'users',
                 templateUrl: 'views/lists/users.html'
@@ -43,6 +47,10 @@
             .state('home.authors', {
                 url: 'authors',
                 templateUrl: 'views/lists/authors.html'
+            })
+            .state('home.editions', {
+                url: 'editions',
+                templateUrl: 'views/lists/editions.html'
             });
         $urlRouterProvider.otherwise('/');
     };

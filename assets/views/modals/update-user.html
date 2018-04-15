@@ -1,9 +1,9 @@
 <div class="modal-content">
     <div class="modal-header bg-dark">
         <h5 class="modal-title text-white">Изменение пользователя {{user.login}}</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="cancel()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
     </div>
     <div class="modal-body modal-center">
         <form>
@@ -13,25 +13,25 @@
                 <br ng-if="user.errorLogin"> {{user.errorEmail}}
             </div>
 
-            <div class="input-group row">
+            <div class="input-group">
                 <label for="inputLogin" class="col-sm-2 col-form-label">Логин</label>
                 <div class="col-sm-10">
                     <input type="text" id="inputLogin" class="form-control-plaintext" placeholder="Логин" required autofocus data-ng-model="user.login">
                 </div>
             </div>
 
-            <div class="input-group row">
+            <div class="input-group">
                 <label for="inputEmail" class="col-sm-2 col-form-label">Email адрес</label>
                 <div class="col-sm-10">
                     <input type="email" id="inputEmail" class="form-control-plaintext" placeholder="Email адрес" required data-ng-model="user.email">
                 </div>
             </div>
 
-            <div class="input-group row">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" data-ng-model="user.is_admin"> Администратор
-                    </label>
+            <div class="input-group">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="invalidCheck" data-ng-model="user.is_admin" required>
+                    <label class="custom-control-label" for="invalidCheck">Администратор</label>
+                    <div class="invalid-feedback">Выберите, чтобы предоставить пользователю права администратора</div>
                 </div>
             </div>
         </form>

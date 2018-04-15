@@ -43,8 +43,9 @@ module.exports = {
                         return res.badRequest('Неправильный пароль!!');
                     } if (resCompare) {
                         // записываем в сессию что пользователь вошел и записываем его ip
-                        req.session.logged_in = user.is_admin;
+                        req.session.logged_in = true;
                         req.session.ip = req.ip;
+                        req.session.curUser = user;
 
                         // Возвращаем данные пользователя
                         user.password = '';
@@ -60,8 +61,12 @@ module.exports = {
      * Выход и уничтожение кукисов
      */
     logout: function (req, res) {
-        req.session.logged_in = false;
+        delete req.session.logged_in;
+        delete req.session.ip;
+        delete req.session.curUser;
+
         res.clearCookie('user');
+
         return res.json({ logout: 'true' });
     },
 
@@ -178,5 +183,55 @@ module.exports = {
             }
         );
 
+    },
+    /**
+     * Смена пароля
+     */
+    changePassword: async function (req, res) {
+        let id_req = req.param('id');
+        let id = req.session.curUser.id;
+
+        if (id_req != id) {
+            return res.badRequest('Не ваша сессия!!');
+        }
+
+        let user = await User.findOne({ id: id });
+        if (!user) {
+            return res.notFound('Пользователя с таким id несуществует!!');
+        }
+
+        let password = {
+            curPassword: req.param('curPassword'),
+            newPassword: req.param('newPassword'),
+            confirmationPassword: req.param('confirmationPassword'),
+        }
+        if (password.curPassword == password.newPassword) {
+            return res.badRequest('Новый пароль совпадает с текущим!!');
+        }
+        if (password.newPassword != password.confirmationPassword) {
+            return res.badRequest('Подтверждение нового пароля неверно!!');
+        }
+
+        BCryptService.compare(password.curPassword, user.password, function (err, resCompare) {
+            if (err) {
+                return res.serverError(err);
+            } if (!resCompare) {
+                return res.badRequest('Текущий пароль был введен не верно!!');
+            } if (resCompare) {
+                BCryptService.hash(password.newPassword, function (err, enPas) {
+                    console.log(enPas);
+                    User.update(
+                        { id: user.id },
+                        { password: enPas })
+                        .then(function (updated) {
+                            return res.ok();
+                        })
+                        .catch(function (err) {
+                            sails.log.error(err);
+                            return res.serverError();
+                        });
+                })
+            };
+        });
     }
 };

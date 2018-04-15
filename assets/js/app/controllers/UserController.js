@@ -3,10 +3,23 @@
 
     angular.module('Library').controller('UserController', UserController);
 
-    UserController.$inject = ['$scope', '$uibModal', 'User'];
-    function UserController($scope, $uibModal, User) {
+    UserController.$inject = ['$scope', '$uibModal', 'User', '$cookies'];
+    function UserController($scope, $uibModal, User, $cookies) {
         $scope.users = [];
         $scope.usersParams = new User();
+
+        let cookie = $cookies.get('user');
+        if (cookie != undefined) {
+            $scope.curUser = new User(angular.fromJson(cookie.substring(2)));
+            $scope.newPassword = {
+                curPassword: '',
+                newPassword: '',
+                confirmationPassword: '',
+                error: '',
+                success: ''
+            }
+        }
+
         /* $scope.maxPrintCount = 50;
         $scope.currentListUsers = 1;
 
@@ -27,7 +40,7 @@
                 animation: true,
                 templateUrl: 'views/modals/update-user.html',
                 controller: 'ModalUserController',
-                size: 'lg',
+                size: 'md',
                 resolve: {
                     user: user
                 }
@@ -52,6 +65,20 @@
                     }
                 }
             });
+        }
+
+        $scope.changePassword = function (newPassword) {
+            console.log(newPassword);
+            if (newPassword.curPassword == newPassword.newPassword) {
+                newPassword.error = 'Новый пароль совпадает с текущим!!'
+                return;
+            } else if (newPassword.newPassword != newPassword.confirmationPassword) {
+                newPassword.error = 'Подтверждение нового пароля неверно!!';
+                return;
+            } else {
+                newPassword.error = '';
+            }
+            $scope.curUser.changePassword(newPassword);
         }
     }
 })();
