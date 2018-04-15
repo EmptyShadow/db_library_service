@@ -4,7 +4,10 @@
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4" data-ng-controller="ManualController">
                     <h4 class="text-white">{{data.title}}</h4>
-                    <p class="text-white">{{data.manual}}</p>
+                    <div ng-repeat="paragraph in data.paragraphs">
+                        <p class="text-white">{{paragraph}}</p>
+                    </div>
+                    <!-- <p class="text-white">{{data.manual}}</p> -->
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4" data-ng-controller="ContactController">
                     <h4 class="text-white">Наши контакты</h4>
@@ -19,7 +22,7 @@
     </div>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Библиотека</a>
+        <a class="navbar-brand" href="" ui-sref="home">Библиотека</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
