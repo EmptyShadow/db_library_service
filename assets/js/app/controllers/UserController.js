@@ -3,8 +3,8 @@
 
     angular.module('Library').controller('UserController', UserController);
 
-    UserController.$inject = ['$scope', '$uibModal', 'User', '$cookies'];
-    function UserController($scope, $uibModal, User, $cookies) {
+    UserController.$inject = ['$scope', '$uibModal', 'User', '$cookies', 'CurUserSystem'];
+    function UserController($scope, $uibModal, User, $cookies, CurUserSystem) {
         $scope.users = [];
         $scope.usersParams = new User();
 
@@ -18,6 +18,10 @@
                 error: '',
                 success: ''
             }
+        }
+
+        if (CurUserSystem.userAuth) {
+            $scope.curUserSystem = CurUserSystem.user;
         }
 
         /* $scope.maxPrintCount = 50;

@@ -1,14 +1,14 @@
 (function () {
     'use strict';
 
-    let app = angular.module('Library');
-    app.factory('User', User);
+    angular.module('Library')
+    .factory('User', User);
 
     /**
      * Прототип объекта пользователь
      */
-    User.$inject = ['$http', '$window', '$rootScope'];
-    function User($http, $window, $rootScope) {
+    User.$inject = ['$http', '$window'];
+    function User($http, $window) {
         /**
          * Конструктор объекта
          * @param {Данные пользователя} dataUser 

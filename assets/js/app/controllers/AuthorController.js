@@ -3,8 +3,8 @@
 
     angular.module('Library').controller('AuthorController', AuthorController);
 
-    AuthorController.$inject = ['$scope', '$uibModal', 'Author'];
-    function AuthorController($scope, $uibModal, Author) {
+    AuthorController.$inject = ['$scope', '$uibModal', 'Author', 'CurUserSystem'];
+    function AuthorController($scope, $uibModal, Author, CurUserSystem) {
         $scope.paramsFind = {
             id: '',
             name: {
@@ -13,6 +13,9 @@
                 patronymic: '',
                 lastname: ''
             }
+        }
+        if (CurUserSystem.userAuth) {
+            $scope.curUserSystem = CurUserSystem.user;
         }
         $scope.authors = [];
         $scope.callbackAuthorsFinded = function (err, authors) {

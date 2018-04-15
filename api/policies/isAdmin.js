@@ -7,8 +7,6 @@
  *
  */
 module.exports = function (req, res, next) {
-  console.log('isAdmin' + req.ip);
-  console.log(req.session);
 
   // если сессия с пользователем существует
   if (req.session.curUser !== undefined) {

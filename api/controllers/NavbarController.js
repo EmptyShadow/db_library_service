@@ -11,10 +11,6 @@ module.exports = {
             return res.json([]);
         } */
         let navs = [
-            /* {
-                title: 'Пользователи',
-                link: '/users'
-            }, */
             {
                 title: 'Авторы',
                 link: '/authors'
@@ -22,10 +18,6 @@ module.exports = {
             {
                 title: 'Издания',
                 link: '/editions'
-            },
-            {
-                title: 'Публикации',
-                link: '/publications'
             }
         ];
         if (req.session.logged_in && req.session.curUser.is_admin) {

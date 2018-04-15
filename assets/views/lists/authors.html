@@ -50,7 +50,7 @@
                                             <th scope="col">Отчество</th>
                                             <th scope="col">Дата создания</th>
                                             <th scope="col">Дата изменения</th>
-                                            <th scope="col">Действия</th>
+                                            <th scope="col" ng-if="curUserSystem.is_admin">Действия</th>
                                         </tr>
                                     </thead>
                                     <tbody data-ng-repeat="name in author.names">
@@ -62,7 +62,7 @@
                                             <td>{{name.patronymic}}</td>
                                             <td>{{name.createdAt}}</td>
                                             <td>{{name.updatedAt}}</td>
-                                            <td>
+                                            <td ng-if="curUserSystem.is_admin">
                                                 <div class="btn-group">
                                                     <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
                                                     <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
@@ -113,8 +113,8 @@
                                                                     <td>
                                                                         <div class="btn-group">
                                                                             <i class="btn material-icons" data-ng-click="">visibility</i>
-                                                                            <i class="btn material-icons mr-2" data-ng-click="">mode edit</i>
-                                                                            <i class="btn material-icons mr-2" data-ng-click="">delete forever</i>
+                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">mode edit</i>
+                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">delete forever</i>
                                                                             <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
                                                                     <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
                                                                         </div>

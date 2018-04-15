@@ -9,7 +9,6 @@
             method: 'GET',
             url: '/manual'
         }).then(function success(response) {
-            console.log(response);
             return $scope.data = response.data;
         });
     };

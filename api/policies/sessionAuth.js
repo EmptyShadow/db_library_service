@@ -8,8 +8,6 @@
  *
  */
 module.exports = function(req, res, next) {
-  console.log('sessionAuth ' + req.ip);
-  console.log(req.session);
 
   // Если пользователь вошел на сайт
   if (req.session.logged_in) {
