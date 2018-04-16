@@ -43,16 +43,16 @@
             var uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/modals/update-user.html',
-                controller: 'ModalUserController',
+                controller: 'ModalUpdateController',
                 size: 'md',
                 resolve: {
-                    user: user
+                    obj: user
                 }
             });
         }
 
         $scope.removeUser = function (user) {
-            var uibModalInstance = $uibModal.open({
+            let uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/modals/delete-user.html',
                 controller: 'ModalRemoveController',

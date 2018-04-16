@@ -215,6 +215,9 @@
                     newPassword.success = '';
                     newPassword.error = response.data;
                 });
+            },
+            copy: function () {
+                return new User(this);
             }
 
         };

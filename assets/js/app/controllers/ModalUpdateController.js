@@ -1,33 +1,33 @@
 (function () {
     'use strict'
 
-    angular.module('Library').controller('ModalUserController', ModalUserController);
+    angular.module('Library').controller('ModalUpdateController', ModalUpdateController);
 
-    ModalUserController.$inject = ['$scope', '$uibModalInstance', 'user', 'User'];
-    function ModalUserController($scope, $uibModalInstance, user, User) {
+    ModalUpdateController.$inject = ['$scope', '$uibModalInstance', 'obj'];
+    function ModalUpdateController($scope, $uibModalInstance, obj) {
         // пересоздаю пользователя, для того что бы не затереть старые данные
-        $scope.user = new User(user);
+        $scope.obj = obj.copy();
 
         // обновление данных
         $scope.update = function () {
             // проверяем правильность данных
-            if ($scope.user.isAvailable()) {
+            if ($scope.obj.isAvailable()) {
                 // отсылаем данные на сервер для обновления
-                $scope.user.update(function (OkPacket, err) {
+                $scope.obj.update(function (OkPacket, err) {
                     if (err) {
-                        $scope.user.error = err;
+                        $scope.obj.error = err;
                         return
                     }
                     
                     if (!OkPacket) {
-                        $scope.user.error = 'Изменения не полученны!!';
+                        $scope.obj.error = 'Изменения не полученны!!';
                         return
                     }
 
                     // применяем измененные данные
-                    user.setData($scope.user);
+                    obj.setData($scope.obj);
                     // закрываем модальное окно
-                    $uibModalInstance.close(user);
+                    $uibModalInstance.close(obj);
                 });
             }
         }
