@@ -48,6 +48,9 @@ module.exports = {
     authors: {
       collection: 'author',
       via: 'publications'
+    },
+    editor: {
+      model: 'editor'
     }
   }
 };

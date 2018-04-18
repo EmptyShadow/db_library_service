@@ -1,0 +1,162 @@
+<div class="jumbotron" data-ng-controller="PublicationController">
+    <h1>Публикации</h1>
+    <div class="container-fluid">
+        <form>
+            <div class="form-row">
+                <div class="col-md-2 mb-3">
+                    <label for="publicationId">id публикации</label>
+                    <input type="number" class="form-control" id="publicationId" placeholder="id публикации" data-ng-model="paramsFind.id">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="publicationDate">Год публикации</label>
+                    <input type="number" class="form-control" id="publicationDate" placeholder="Год публикации" data-ng-model="paramsFind.datepub">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="publicationTitle">Название</label>
+                    <input type="text" class="form-control" id="publicationTitle" placeholder="Название" data-ng-model="paramsFind.titles">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="publicationEditor">Издание</label>
+                    <input type="text" class="form-control" id="publicationEditor" placeholder="Издание" data-ng-model="paramsFind.editor">
+                </div>
+            </div>
+            <div class="form-inline mb-3">
+                <list-checkboxs checkboxes="listCheckboxes"></list-checkboxs>
+            </div>
+            <div class="form-inline mb-3">
+                <h5>Авторы
+                    <span class="badge badge-dark">Ф - фамилия</span>
+                    <span class="badge badge-dark">И - имя</span>
+                    <span class="badge badge-dark">О - отчетсво</span>
+                </h5>
+            </div>
+            <div class="form-inline mb-3">
+                <div ng-repeat="author in paramsFind.authors">
+                    <p class="btn btn-secondary mr-2">
+                        <!-- {{author.lastname ? 'Ф: ' + author.lastname : ''}} {{author.firstname ? 'И: ' + author.firstname: ''}} {{author.patronymic
+                        ? 'О: ' + author.patronymic : ''}} -->
+                        <span class="badge badge-dark" ng-if="author.lastname">Ф</span> {{author.lastname}}
+                        <span class="badge badge-dark" ng-if="author.firstname">И</span> {{author.firstname}}
+                        <span class="badge badge-dark" ng-if="author.patronymic">О</span> {{author.patronymic}}
+
+                        <button type="button" class="close ml-2" ng-click="removeFilterAuthor(author)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </p>
+                </div>
+                <button type="button" class="btn btn-dark material-icons mb-3" ng-click="newFilterAuthor()">add</button>
+            </div>
+            <button type="submit" class="btn btn-dark mb-2" data-ng-click="find(callbackAuthorsFinded)">Поиск</button>
+        </form>
+        <div id="accordion">
+            <div data-ng-repeat="author in authors">
+                <div class="card">
+                    <div class="card-header bg-dark" id="heading{{author.id}}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{author.id}}" aria-expanded="true"
+                                aria-controls="collapse{{author.id}}">
+                                {{author.id}}: {{author.names[0].lastname}} {{author.names[0].firstname}} {{author.names[0].patronymic}}
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{author.id}}" class="collapse" aria-labelledby="heading{{author.id}}" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="table-responsive" data-ng-if="author.names.length != 0">
+                                <h5>Псевдонимы</h5>
+                                <table class="table table-hover table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">id псевдонима</th>
+                                            <th scope="col">Язык</th>
+                                            <th scope="col">Фамилия</th>
+                                            <th scope="col">Имя</th>
+                                            <th scope="col">Отчество</th>
+                                            <th scope="col">Дата создания</th>
+                                            <th scope="col">Дата изменения</th>
+                                            <th scope="col" ng-if="curUserSystem.is_admin">Действия</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-ng-repeat="name in author.names">
+                                        <tr>
+                                            <th scope="row">{{name.id}}</th>
+                                            <td>{{name.lang}}</td>
+                                            <td>{{name.lastname}}</td>
+                                            <td>{{name.firstname}}</td>
+                                            <td>{{name.patronymic}}</td>
+                                            <td>{{name.createdAt}}</td>
+                                            <td>{{name.updatedAt}}</td>
+                                            <td ng-if="curUserSystem.is_admin">
+                                                <div class="btn-group">
+                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
+                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
+                                                    <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div data-ng-if="author.publications.length != 0">
+                                <h5>Публикации</h5>
+                                <div id="accordion2">
+                                    <div data-ng-repeat="publication in author.publications">
+                                        <div class="card">
+                                            <div class="card-header bg-dark" id="headingPub{{publication.id}}">
+                                                <h5 class="mb-0">
+                                                    <button class="text-white btn btn-link" data-toggle="collapse" data-target="#collapsePub{{publication.id}}" aria-expanded="false"
+                                                        aria-controls="collapsePub{{publication.id}}">
+                                                        {{publication.id}}: {{publication.titles[0].title}}
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapsePub{{publication.id}}" class="collapse" aria-labelledby="headingPub{{publication.id}}" data-parent="#accordion2">
+                                                <div class="card-body">
+                                                    <div class="table-responsive" data-ng-if="author.publications.length != 0">
+                                                        <table class="table table-hover table-striped">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th scope="col">id названия</th>
+                                                                    <th scope="col">Язык</th>
+                                                                    <th scope="col">Название</th>
+                                                                    <th scope="col">Дата создания</th>
+                                                                    <th scope="col">Дата изменения</th>
+                                                                    <th scope="col">Действия</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-ng-repeat="title in publication.titles">
+                                                                <tr>
+                                                                    <th scope="row">{{title.id}}</th>
+                                                                    <td>{{title.lang}}</td>
+                                                                    <td>{{title.title}}</td>
+                                                                    <td>{{title.createdAt}}</td>
+                                                                    <td>{{title.updatedAt}}</td>
+                                                                    <td>
+                                                                        <div class="btn-group">
+                                                                            <i class="btn material-icons" data-ng-click="">visibility</i>
+                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">mode edit</i>
+                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">delete forever</i>
+                                                                            <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
+                                                                    <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

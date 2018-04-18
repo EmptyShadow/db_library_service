@@ -36,6 +36,10 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+  /**
+   * Пользователь
+   */
+
   'POST /user/login': {
     controller: 'UserController',
     action: 'login'
@@ -61,6 +65,15 @@ module.exports.routes = {
     action: 'update'
   },
 
+  'POST /user/:id/change_password': {
+    controller: 'UserController',
+    action: 'changePassword'
+  },
+
+  /**
+   * Авторы
+   */
+
   'POST /authors/search': {
     controller: 'AuthorController',
     action: 'find'
@@ -71,25 +84,45 @@ module.exports.routes = {
     action: 'update'
   },
 
-  'POST /user/:id/change_password': {
-    controller: 'UserController',
-    action: 'changePassword'
-  },
+  /**
+   * Издания
+   */
 
   'POST /editions/search': {
     controller: 'EditionController',
     action: 'find'
   },
 
+  /**
+   * Публикации
+   */
+
+  'POST /publications/search': {
+    controller: 'PublicationController',
+    action: 'find'
+  },
+
+  /**
+   * Навигация
+   */
+
   'GET /navs': {
     controller: 'NavbarController',
     action: 'getNavs'
   },
 
+  /**
+   * Мануал
+   */
+
   'GET /manual': {
     controller: 'ManualController',
     action: 'getManual'
   },
+
+  /**
+   * Контакты разработчиков
+   */
 
   'GET /contacts': {
     controller: 'ContactController',

@@ -11,7 +11,7 @@
         $scope.add = function () {
             callbackAdd.run($scope.obj);
             // закрываем модальное окно
-            $uibModalInstance.close(obj);
+            $uibModalInstance.close($scope.obj);
         }
 
         // отмена

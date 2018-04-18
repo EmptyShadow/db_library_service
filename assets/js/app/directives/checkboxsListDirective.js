@@ -29,8 +29,7 @@
             controller: function ($scope, $element) {
                 $scope.master = false;
                 $scope.masterChange = function () {
-                    let elements = angular.element('input.custom-control-input');
-                    console.log(elements);
+                    //let elements = angular.element('input.custom-control-input');
                     if ($scope.master) {
                         angular.forEach($scope.checkboxes, function (cb, index) {
                             if (cb.isSelected != undefined) {
@@ -52,19 +51,17 @@
                     angular.forEach($scope.checkboxes, function (cb, index) {
                         if (cb.isSelected) {
                             allClear = false;
-                        } else if (cb.isSelected != undefined) {
+                        } else {
                             allSet = false;
                         }
                     });
-                    if (allSet && !allClear) {
+                    if (allSet) {
                         $scope.master = true;
                         masterCb.indeterminate = false;
-                        return;
                     }
-                    else if (allClear && !allSet) {
+                    else if (allClear) {
                         $scope.master = false;
                         masterCb.indeterminate = false;
-                        return;
                     }
                     else {
                         $scope.master = false;
@@ -72,6 +69,7 @@
                     }
                 };
                 $scope.cbChange();  // initialize
+
                 $scope.click = function (event, cb) {
                     if (event.ctrlKey) {
                         cb.isSelected = undefined;
@@ -79,6 +77,17 @@
                     }
                 }
             },
+            /* compile: function (element, attributes) {
+                return {
+                    pre: function (scope, element, attributes, controller, transcludeFn) {
+                    },
+                    post: function (scope, element, attributes, controller, transcludeFn) {
+                    }
+                }
+            } */
+            /* link: function ($scope, element, attrs) {
+                
+            } */
         };
     }
 })();

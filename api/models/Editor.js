@@ -12,6 +12,9 @@ module.exports = {
     titles: {
       collection: 'editorname',
       via: 'editor'
+    },
+    publication: {
+      model: 'publication'
     }
   }
 };
