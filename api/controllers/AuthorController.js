@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var nestedPop = require('nested-pop')
+var nestedPop = require('nested-pop');
 
 module.exports = {
     /**

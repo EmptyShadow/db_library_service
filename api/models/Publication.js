@@ -14,7 +14,7 @@ module.exports = {
       via: 'publication'
     },
     datepub: {
-      type: 'datetime',
+      type: 'integer',
       require: true
     },
     //Высшая Аттестационная Комиссия

@@ -13,8 +13,9 @@ module.exports = {
       collection: 'editorname',
       via: 'editor'
     },
-    publication: {
-      model: 'publication'
+    publications: {
+      collection: 'publication',
+      via: 'editor'
     }
   }
 };
