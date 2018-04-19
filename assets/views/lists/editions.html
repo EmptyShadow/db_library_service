@@ -18,7 +18,7 @@
         </form>
         <div id="accordion">
             <div data-ng-repeat="edition in editions">
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header bg-dark" id="headingEdition{{edition.id}}">
                         <h5 class="mb-0">
                             <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseEdition{{edition.id}}" aria-expanded="false"
@@ -52,8 +52,8 @@
                                             <td>{{title.updatedAt}}</td>
                                             <td ng-if="curUserSystem.is_admin">
                                                 <div class="btn-group">
-                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode edit</i>
-                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete forever</i>
+                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode_edit</i>
+                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete_forever</i>
                                                     <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
                                                 <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
                                                 </div>
