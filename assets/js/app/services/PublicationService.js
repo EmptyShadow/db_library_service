@@ -55,9 +55,9 @@
                     }
                 }).then(
                     function success(response) {
-                        console.log(response.data);
                         if (callback) {
-                            callback('', service.createdIsArray(response.data));
+                            let publications = service.createdIsArray(response.data);
+                            callback('', publications);
                         }
                     },
                     function error(response) {

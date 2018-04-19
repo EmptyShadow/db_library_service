@@ -58,8 +58,11 @@
                 }
             }
 
-            $scope.paramsFind.find(function callbackFind(publications) {
-                $scope.publications = publications;
+            $scope.paramsFind.find(function callbackFind(err, publications) {
+                if (!err) {
+                    console.log(publications);
+                    $scope.publications = publications;
+                }
             });
         }
 

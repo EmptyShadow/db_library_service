@@ -80,13 +80,21 @@
                                 <div id="accordion2">
                                     <div data-ng-repeat="publication in author.publications">
                                         <div class="card">
-                                            <div class="card-header bg-dark" id="headingPub{{publication.id}}">
-                                                <h5 class="mb-0">
-                                                    <button class="text-white btn btn-link" data-toggle="collapse" data-target="#collapsePub{{publication.id}}" aria-expanded="false"
-                                                        aria-controls="collapsePub{{publication.id}}">
-                                                        {{publication.id}}: {{publication.titles[0].title}}
-                                                    </button>
-                                                </h5>
+                                            <div class="card-header bg-dark row" id="headingPub{{publication.id}}">
+                                                <div class="col-md-10">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{publication.id}}" aria-expanded="true"
+                                                            aria-controls="collapse{{publication.id}}">
+                                                            {{publication.id}}: {{publication.titles[0].title}}
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-2 text-white">
+                                                    <div class="btn-group">
+                                                        <i class="btn material-icons" data-ng-click="">visibility</i>
+                                                        <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">delete_forever</i>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div id="collapsePub{{publication.id}}" class="collapse" aria-labelledby="headingPub{{publication.id}}" data-parent="#accordion2">
@@ -100,7 +108,6 @@
                                                                     <th scope="col">Название</th>
                                                                     <th scope="col">Дата создания</th>
                                                                     <th scope="col">Дата изменения</th>
-                                                                    <th scope="col">Действия</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody data-ng-repeat="title in publication.titles">
@@ -110,15 +117,6 @@
                                                                     <td>{{title.title}}</td>
                                                                     <td>{{title.createdAt}}</td>
                                                                     <td>{{title.updatedAt}}</td>
-                                                                    <td>
-                                                                        <div class="btn-group">
-                                                                            <i class="btn material-icons" data-ng-click="">visibility</i>
-                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">mode edit</i>
-                                                                            <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">delete forever</i>
-                                                                            <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
-                                                                    <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
-                                                                        </div>
-                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
