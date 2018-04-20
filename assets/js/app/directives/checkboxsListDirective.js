@@ -76,28 +76,7 @@
                         event.currentTarget.indeterminate = true;
                     }
                 }
-
-                $scope.indeterminate = function (index) {
-                    console.log($window.document.getElementById('input.checkbox' + index));
-                    /* console.log('input.checkbox' + index);
-                    let checkbox = $('input.checkbox' + index);
-                    console.log(checkbox);
-                    checkbox.prop('indeterminate', true); */
-                }
-            },
-            compile: function (element, attributes) {
-                return {
-                    pre: function (scope, element, attributes, controller, transcludeFn) {
-                        element.indeterminate = true;
-                    },
-                    post: function (scope, element, attributes, controller, transcludeFn) {
-                        element.indeterminate = true;
-                    }
-                }
             }
-            /* link: function ($scope, element, attrs) {
-                
-            } */
         };
     }
 })();
