@@ -3,8 +3,8 @@
 
     angular.module('Library').directive('listCheckboxs', listCheckboxs);
 
-    listCheckboxs.$inject = [];
-    function listCheckboxs() {
+    listCheckboxs.$inject = ['$window'];
+    function listCheckboxs($window) {
         return {
             replace: true,
             restrict: 'E',
@@ -20,7 +20,7 @@
                 + '<div ng-repeat="cb in checkboxes">'
                 + '<div class="form-check ml-2">'
                 + '<div class="custom-control custom-checkbox">'
-                + '<input type="checkbox" class="custom-control-input" id="checkbox{{$index}}" ng-model="cb.isSelected" ng-change="cbChange()" ng-click="click($event, cb)">'
+                + '<input type="checkbox" class="custom-control-input" id="checkbox{{$index}}" ng-model="cb.isSelected" ng-change="cbChange()" ng-click="click($event, cb)" ng-indeterminate="true">'
                 + '<label class="custom-control-label" for="checkbox{{$index}}">{{ cb.desc }}</label>'
                 + '</div>'
                 + '</div>'
@@ -76,15 +76,25 @@
                         event.currentTarget.indeterminate = true;
                     }
                 }
+
+                $scope.indeterminate = function (index) {
+                    console.log($window.document.getElementById('input.checkbox' + index));
+                    /* console.log('input.checkbox' + index);
+                    let checkbox = $('input.checkbox' + index);
+                    console.log(checkbox);
+                    checkbox.prop('indeterminate', true); */
+                }
             },
-            /* compile: function (element, attributes) {
+            compile: function (element, attributes) {
                 return {
                     pre: function (scope, element, attributes, controller, transcludeFn) {
+                        element.indeterminate = true;
                     },
                     post: function (scope, element, attributes, controller, transcludeFn) {
+                        element.indeterminate = true;
                     }
                 }
-            } */
+            }
             /* link: function ($scope, element, attrs) {
                 
             } */
