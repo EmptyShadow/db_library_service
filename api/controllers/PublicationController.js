@@ -14,9 +14,9 @@ module.exports = {
     find: async function (req, res) {
         let data = req.allParams();
         let paramsFind = this.getParamsFind(data);
-        /* console.log(paramsFind);
+        console.log(paramsFind);
         console.log();
-        console.log(); */
+        console.log();
 
         // функция пересечения двух множеств
         let intersect = function (array1, array2) {
@@ -49,9 +49,9 @@ module.exports = {
         let authors = await Author.find()
             .populate('names', paramsFind.authors)
             .populate('publications');
-        /* console.log(authors);
+        console.log(authors);
         console.log();
-        console.log(); */
+        console.log();
 
         // находятся подходящие издания
         /* console.log('editor');
@@ -78,17 +78,25 @@ module.exports = {
         authors.forEach((author, index, array) => {
             if (author.names.length == 0) { return; }
 
-            let idPublicationsAuthor = [];
-            author.publications.forEach(publication => {
-                if (idPublicationsAuthor.indexOf(publication.id) == -1) {
-                    idPublicationsAuthor.push(publication.id);
-                }
-            });
+            if (paramsFind.authors.or != undefined) {
+                let idPublicationsAuthor = [];
+                author.publications.forEach(publication => {
+                    if (idPublicationsAuthor.indexOf(publication.id) == -1) {
+                        idPublicationsAuthor.push(publication.id);
+                    }
+                });
 
-            if (index == 0) {
-                arrayIdPublications.authors = idPublicationsAuthor;
+                if (index == 0) {
+                    arrayIdPublications.authors = idPublicationsAuthor;
+                } else {
+                    arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
+                }
             } else {
-                arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
+                author.publications.forEach(publication => {
+                    if (arrayIdPublications.authors.indexOf(publication.id) == -1) {
+                        arrayIdPublications.authors.push(publication.id);
+                    }
+                });
             }
         });
         editors.forEach(editor => {
@@ -100,9 +108,9 @@ module.exports = {
             });
         });
 
-        /* console.log(arrayIdPublications);
+        console.log(arrayIdPublications);
         console.log();
-        console.log(); */
+        console.log();
 
         arrayIdPublications.publications = intersects([
             arrayIdPublications.titles,
@@ -110,8 +118,8 @@ module.exports = {
             arrayIdPublications.editors
         ]);
 
-        /* console.log(arrayIdPublications);
-        console.log(); */
+        console.log(arrayIdPublications);
+        console.log();
         if (paramsFind.publication.id != undefined) {
             if (arrayIdPublications.publications.indexOf(paramsFind.publication.id) == -1) {
                 return res.notFound();
