@@ -18,6 +18,23 @@ module.exports = {
         console.log();
         console.log(); */
 
+        // функция пересечения двух множеств
+        let intersect = function (array1, array2) {
+            let result = array1.filter(function (n) {
+                return array2.indexOf(n) !== -1;
+            });
+
+            return result;
+        }
+
+        let intersects = function (arraySets) {
+            let result = [];
+            for (let i = 0; i < arraySets.length - 1; i++) {
+                result = intersect(arraySets[i], arraySets[i + 1]);
+            }
+            return result;
+        }
+
         // находятся подходящие названия публикаций
         /* console.log('titles');
         console.log(paramsFind.titles); */
@@ -58,13 +75,21 @@ module.exports = {
                 arrayIdPublications.titles.push(title.publication);
             }
         });
-        authors.forEach(author => {
+        authors.forEach((author, index, array) => {
             if (author.names.length == 0) { return; }
+
+            let idPublicationsAuthor = [];
             author.publications.forEach(publication => {
-                if (arrayIdPublications.authors.indexOf(publication.id) == -1) {
-                    arrayIdPublications.authors.push(publication.id);
+                if (idPublicationsAuthor.indexOf(publication.id) == -1) {
+                    idPublicationsAuthor.push(publication.id);
                 }
             });
+
+            if (index == 0) {
+                arrayIdPublications.authors = idPublicationsAuthor;
+            } else {
+                arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
+            }
         });
         editors.forEach(editor => {
             if (editor.titles.length == 0) { return; }
@@ -75,16 +100,15 @@ module.exports = {
             });
         });
 
-        let intersect = function (array1, array2)
-        {
-           var result = array1.filter(function(n) {
-              return array2.indexOf(n) !== -1;
-           });
-        
-           return result;
-        }
+        /* console.log(arrayIdPublications);
+        console.log();
+        console.log(); */
 
-        arrayIdPublications.publications = intersect(arrayIdPublications.titles, intersect(arrayIdPublications.authors, arrayIdPublications.editors));
+        arrayIdPublications.publications = intersects([
+            arrayIdPublications.titles,
+            arrayIdPublications.authors,
+            arrayIdPublications.editors
+        ]);
 
         /* console.log(arrayIdPublications);
         console.log(); */
