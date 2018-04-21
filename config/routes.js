@@ -84,6 +84,21 @@ module.exports.routes = {
     action: 'update'
   },
 
+  'DELETE /author/:id': {
+    controller: 'AuthorController',
+    action: 'remove'
+  },
+  
+  'DELETE /author/:idAuthor/name/:idName': {
+    controller: 'AuthorController',
+    action: 'removeName'
+  },
+
+  'DELETE /author/:idAuthor/publication/:idPublication': {
+    controller: 'AuthorController',
+    action: 'removePublication'
+  },
+
   /**
    * Издания
    */

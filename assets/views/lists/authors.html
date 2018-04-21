@@ -39,7 +39,7 @@
                             </h5>
                         </div>
                         <div class="col-md-2 text-white text-right">
-                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin">delete_forever</i>
+                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin" ng-click="removeAuthor(author)">delete_forever</i>
                         </div>
                     </div>
 
@@ -73,8 +73,8 @@
                                             <td>{{name.updatedAt}}</td>
                                             <td ng-if="curUserSystem.is_admin">
                                                 <div class="btn-group">
-                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode_edit</i>
-                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete_forever</i>
+                                                    <i class="btn material-icons" data-ng-click="">mode_edit</i>
+                                                    <i class="btn material-icons" data-ng-click="removeName(author, name)">delete_forever</i>
                                                 </div>
                                             </td>
                                         </tr>
@@ -91,7 +91,7 @@
                                             <i class="btn material-icons">visibility</i>
                                             <i class="btn material-icons">get_app</i>
                                             <i class="btn material-icons" ng-if="curUserSystem.is_admin">mode_edit</i>
-                                            <i class="btn material-icons" ng-if="curUserSystem.is_admin">close</i>
+                                            <i class="btn material-icons" ng-if="curUserSystem.is_admin" ng-click="removePublication(author, publication)">close</i>
                                         </div>
                                     </li>
                                 </ul>

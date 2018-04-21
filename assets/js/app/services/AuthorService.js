@@ -47,7 +47,6 @@
                     }
                 }).then(
                     function success(response) {
-                        console.log(response.data);
                         if (callback) {
                             callback('', service.createdIsArray(response.data));
                         }
@@ -74,6 +73,51 @@
                         + this.names[0].lastname;
                 }
                 return str;
+            },
+            remove: function () {
+                $http({
+                    method: 'DELETE',
+                    url: '/author/' + this.id
+                }).then(
+                    function success(response) {
+                        console.log('success remove author');
+                        console.log(response.data);
+                    },
+                    function error(response) {
+                        console.log('error remove author');
+                        console.log(response.data);
+                    }
+                );
+            },
+            removeName: function (name) {
+                $http({
+                    method: 'DELETE',
+                    url: '/author/' + this.id + '/name/' + name.id
+                }).then(
+                    function success(response) {
+                        console.log('success remove name');
+                        console.log(response.data);
+                    },
+                    function error(response) {
+                        console.log('error remove name');
+                        console.log(response.data);
+                    }
+                );
+            },
+            removePublication: function (publication) {
+                $http({
+                    method: 'DELETE',
+                    url: '/author/' + this.id + '/publication/' + publication.id
+                }).then(
+                    function success(response) {
+                        console.log('success remove publication');
+                        console.log(response.data);
+                    },
+                    function error(response) {
+                        console.log('error remove publication');
+                        console.log(response.data);
+                    }
+                );
             }
         };
         return Author;

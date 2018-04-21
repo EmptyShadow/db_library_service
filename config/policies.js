@@ -54,7 +54,9 @@ module.exports.policies = {
     changePassword: ['sessionAuth']
   },
   AuthorController: {
-
+    remove: ['sessionAuth', 'isAdmin'],
+    removeName: ['sessionAuth', 'isAdmin'],
+    removePublication: ['sessionAuth', 'isAdmin']
   },
   EditionController: {
 

@@ -108,6 +108,56 @@ module.exports = {
         }
 
         next('', data);
+    },
+
+    /**
+     * Удалить автора, вмести с ним удаляется список его псевдонимов и исключаются авторства из публикаций
+     */
+    remove: function (req, res) {
+        let params = req.allParams();
+
+        Name.destroy({ author: params.id }).exec(function (err) {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            Author.destroy({ id: params.id }).exec(function (err) {
+                if (err) {
+                    return res.serverError(err);
+                }
+
+                return res.ok();
+            });
+        });
+    },
+    /**
+     * Удалить у автора псевдоним
+     */
+    removeName: function (req, res) {
+        let params = req.allParams();
+        Name.destroy({ id: params.idName }).exec(function (err) {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            return res.ok();
+        })
+    },
+    /**
+     * Исключить автора из авторства на публикацию
+     */
+    removePublication: function (req, res) {
+        let params = req.allParams();
+        Author.findOne({ id: params.idAuthor }).populate('publications').exec(function (err, author) {
+            if (err) { return res.serverError(err); }
+            if (!author) { return res.notFound('Could not find a author id=' + params.idAuthor + '.'); }
+
+            author.publications.remove(params.idPublication);
+            author.save(function (err) {
+                if (err) { return res.serverError(err); }
+                return res.ok();
+            });
+        });
     }
 };
 
