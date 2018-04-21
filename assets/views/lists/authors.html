@@ -89,8 +89,6 @@
                                         {{publication.id}}: {{publication.titles[0].title}}
                                         <div class="btn-group">
                                             <i class="btn material-icons">visibility</i>
-                                            <i class="btn material-icons">get_app</i>
-                                            <i class="btn material-icons" ng-if="curUserSystem.is_admin">mode_edit</i>
                                             <i class="btn material-icons" ng-if="curUserSystem.is_admin" ng-click="removePublication(author, publication)">close</i>
                                         </div>
                                     </li>
