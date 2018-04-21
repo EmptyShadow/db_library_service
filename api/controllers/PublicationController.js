@@ -158,9 +158,9 @@ module.exports = {
 
         data.authors.forEach(author => {
             paramsFind.authors.or.push({
-                lastname: { startsWith: author.lastname },
-                firstname: { startsWith: author.firstname },
-                patronymic: { startsWith: author.patronymic }
+                lastname: { startsWith: author.lastname != undefined ? author.lastname : '' },
+                firstname: { startsWith: author.firstname != undefined ? author.firstname : '' },
+                patronymic: { startsWith: author.patronymic != undefined ? author.patronymic : '' }
             });
         });
 
