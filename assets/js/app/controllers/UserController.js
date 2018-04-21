@@ -49,9 +49,15 @@
                     obj: user
                 }
             });
+            uibModalInstance.result.then(function (updatedUser) {
+                console.log('user ' + updatedUser.id + ' update');
+            }, function (reason) {
+                console.log('user update ' + reason);
+            });
         }
 
         $scope.removeUser = function (user) {
+            console.log(user);
             let uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/modals/remove.html',
@@ -63,16 +69,13 @@
                         title: 'Удалить пользователя',
                         message: 'Вы действительно хотите удалить пользователя ' + user.login + '?'
                     },
-                    callbackRemove: {
-                        run: function callbackRemove(user) {
-                            user.remove();
-                            let index = $scope.users.indexOf(user);
-                            if (index !== -1) {
-                                $scope.users.splice(index, 1);
-                            }
-                        }
+                    array: function () {
+                        return $scope.users;
                     }
                 }
+            });
+            uibModalInstance.result.then(function () {
+            }, function (reason) {
             });
         }
 

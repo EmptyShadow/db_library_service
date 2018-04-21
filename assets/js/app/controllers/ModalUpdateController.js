@@ -12,23 +12,19 @@
         $scope.update = function () {
             // проверяем правильность данных
             if ($scope.obj.isAvailable()) {
-                // отсылаем данные на сервер для обновления
-                $scope.obj.update(function (OkPacket, err) {
-                    if (err) {
-                        $scope.obj.error = err;
-                        return
+                // обновляем данные на сервере
+                $scope.obj.update(function (updetedObj, err) {
+                    if (!err) {
+                        // меняем данные в основном объекте
+                        obj.setData($scope.obj);
+                        // закрываем модальное окно
+                        $uibModalInstance.close(obj);
+                    } else {
+                        $scope.err = err;
                     }
-                    
-                    if (!OkPacket) {
-                        $scope.obj.error = 'Изменения не полученны!!';
-                        return
-                    }
-
-                    // применяем измененные данные
-                    obj.setData($scope.obj);
-                    // закрываем модальное окно
-                    $uibModalInstance.close(obj);
                 });
+            } else {
+                $scope.err = 'Неверные данные';
             }
         }
 

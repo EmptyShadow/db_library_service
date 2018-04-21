@@ -174,7 +174,7 @@
                         'Content-Type': 'application/json'
                     }
                 }).then(function success(response) {
-                    callback(new User(response.data));
+                    callback(new User(response.data), '');
                 }, function error(response) {
                     callback(null, response.data);
                 });
@@ -185,15 +185,14 @@
                 this.errorLogin = '';
                 this.errorPassword = '';
             },
-            remove: function () {
+            remove: function (callback) {
                 $http({
                     method: 'DELETE',
                     url: '/user/' + this.id
                 }).then(function success(response) {
-                    console.log('Был удален пользователь');
-                    console.log(this);
+                    callback('');
                 }, function error(response) {
-                    console.log("ошибка удаления");
+                    callback(response.data);
                 });
             },
             toString: function () {
