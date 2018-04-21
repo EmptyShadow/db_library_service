@@ -1,5 +1,7 @@
 <div class="jumbotron" data-ng-controller="EditionController">
-    <h1>Издания</h1>
+    <h1>Издания
+        <i class="btn material-icons md-36" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+    </h1>
     <div class="container-fluid">
         <form class="form-inline">
             <div class="form-group mb-2">
@@ -19,19 +21,26 @@
         <div id="accordion">
             <div data-ng-repeat="edition in editions">
                 <div class="card mb-2">
-                    <div class="card-header bg-dark" id="headingEdition{{edition.id}}">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseEdition{{edition.id}}" aria-expanded="false"
-                                aria-controls="collapseEdition{{edition.id}}">
-                                {{edition.id}}: {{edition.titles[0].name}}
-                            </button>
-                        </h5>
+                    <div class="card-header bg-dark row" id="headingEdition{{edition.id}}">
+                        <div class="col-md-10">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseEdition{{edition.id}}" aria-expanded="false"
+                                    aria-controls="collapseEdition{{edition.id}}">
+                                    {{edition.id}}: {{edition.titles[0].name}}
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="col-md-2 text-white text-right">
+                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin">delete_forever</i>
+                        </div>
                     </div>
 
                     <div id="collapseEdition{{edition.id}}" class="collapse" aria-labelledby="headingEdition{{edition.id}}" data-parent="#accordion">
                         <div class="card-body">
                             <div class="table-responsive" data-ng-if="edition.titles.length != 0">
-                                <h5>Названия издания</h5>
+                                <h5>Названия издания
+                                    <i class="btn material-icons md-24" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+                                </h5>
                                 <table class="table table-hover table-striped">
                                     <thead class="thead-dark">
                                         <tr>

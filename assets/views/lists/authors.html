@@ -1,5 +1,7 @@
 <div class="jumbotron" data-ng-controller="AuthorController">
-    <h1>Авторы</h1>
+    <h1>Авторы
+        <i class="btn material-icons md-36" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+    </h1>
     <div class="container-fluid">
         <form class="form-inline">
             <div class="form-group mb-2">
@@ -27,19 +29,26 @@
         <div id="accordion">
             <div data-ng-repeat="author in authors">
                 <div class="card mb-2">
-                    <div class="card-header bg-dark" id="heading{{author.id}}">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{author.id}}" aria-expanded="true"
-                                aria-controls="collapse{{author.id}}">
-                                {{author.id}}: {{author.names[0].lastname}} {{author.names[0].firstname}} {{author.names[0].patronymic}}
-                            </button>
-                        </h5>
+                    <div class="card-header bg-dark row" id="heading{{author.id}}">
+                        <div class="col-md-10">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{author.id}}" aria-expanded="true"
+                                    aria-controls="collapse{{author.id}}">
+                                    {{author.id}}: {{author.names[0].lastname}} {{author.names[0].firstname}} {{author.names[0].patronymic}}
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="col-md-2 text-white text-right">
+                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin">delete_forever</i>
+                        </div>
                     </div>
 
                     <div id="collapse{{author.id}}" class="collapse" aria-labelledby="heading{{author.id}}" data-parent="#accordion">
                         <div class="card-body">
                             <div class="table-responsive" data-ng-if="author.names.length != 0">
-                                <h5>Псевдонимы</h5>
+                                <h5>Псевдонимы
+                                    <i class="btn material-icons md-24" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+                                </h5>
                                 <table class="table table-hover table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -66,8 +75,6 @@
                                                 <div class="btn-group">
                                                     <i class="btn material-icons" data-ng-click="updateUser(user)">mode_edit</i>
                                                     <i class="btn material-icons" data-ng-click="removeUser(user)">delete_forever</i>
-                                                    <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
-                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -77,55 +84,17 @@
 
                             <div data-ng-if="author.publications.length != 0">
                                 <h5>Публикации</h5>
-                                <div id="accordion2">
-                                    <div data-ng-repeat="publication in author.publications">
-                                        <div class="card mb-2">
-                                            <div class="card-header bg-dark row" id="headingPub{{publication.id}}">
-                                                <div class="col-md-10">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapse{{publication.id}}" aria-expanded="true"
-                                                            aria-controls="collapse{{publication.id}}">
-                                                            {{publication.id}}: {{publication.titles[0].title}}
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-2 text-white">
-                                                    <div class="btn-group">
-                                                        <i class="btn material-icons" data-ng-click="">visibility</i>
-                                                        <i class="btn material-icons mr-2" data-ng-click="" ng-if="curUserSystem.is_admin">delete_forever</i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div id="collapsePub{{publication.id}}" class="collapse" aria-labelledby="headingPub{{publication.id}}" data-parent="#accordion2">
-                                                <div class="card-body">
-                                                    <div class="table-responsive" data-ng-if="author.publications.length != 0">
-                                                        <table class="table table-hover table-striped">
-                                                            <thead class="thead-dark">
-                                                                <tr>
-                                                                    <th scope="col">id названия</th>
-                                                                    <th scope="col">Язык</th>
-                                                                    <th scope="col">Название</th>
-                                                                    <th scope="col">Дата создания</th>
-                                                                    <th scope="col">Дата изменения</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody data-ng-repeat="title in publication.titles">
-                                                                <tr>
-                                                                    <th scope="row">{{title.id}}</th>
-                                                                    <td>{{title.lang}}</td>
-                                                                    <td>{{title.title}}</td>
-                                                                    <td>{{title.createdAt}}</td>
-                                                                    <td>{{title.updatedAt}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <ul class="list-group col mb-3" data-ng-repeat="publication in author.publications">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                        {{publication.id}}: {{publication.titles[0].title}}
+                                        <div class="btn-group">
+                                            <i class="btn material-icons">visibility</i>
+                                            <i class="btn material-icons">get_app</i>
+                                            <i class="btn material-icons" ng-if="curUserSystem.is_admin">mode_edit</i>
+                                            <i class="btn material-icons" ng-if="curUserSystem.is_admin">close</i>
                                         </div>
-                                    </div>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
