@@ -14,9 +14,9 @@ module.exports = {
     find: async function (req, res) {
         let data = req.allParams();
         let paramsFind = this.getParamsFind(data);
-        console.log(paramsFind);
+        /* console.log(paramsFind);
         console.log();
-        console.log();
+        console.log(); */
 
         // функция пересечения двух множеств
         let intersect = function (array1, array2) {
@@ -49,9 +49,9 @@ module.exports = {
         let authors = await Author.find()
             .populate('names', paramsFind.authors)
             .populate('publications');
-        console.log(authors);
+        /* console.log(authors);
         console.log();
-        console.log();
+        console.log(); */
 
         // находятся подходящие издания
         /* console.log('editor');
@@ -108,9 +108,9 @@ module.exports = {
             });
         });
 
-        console.log(arrayIdPublications);
+        /* console.log(arrayIdPublications);
         console.log();
-        console.log();
+        console.log(); */
 
         arrayIdPublications.publications = intersects([
             arrayIdPublications.titles,
@@ -118,8 +118,8 @@ module.exports = {
             arrayIdPublications.editors
         ]);
 
-        console.log(arrayIdPublications);
-        console.log();
+        /* console.log(arrayIdPublications);
+        console.log(); */
         if (paramsFind.publication.id != undefined) {
             if (arrayIdPublications.publications.indexOf(paramsFind.publication.id) == -1) {
                 return res.notFound();
@@ -197,6 +197,6 @@ module.exports = {
         });
 
         return paramsFind;
-    }
+    },
 };
 
