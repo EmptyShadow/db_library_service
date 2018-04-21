@@ -3,18 +3,16 @@
 
     angular.module('Library').controller('ModalRemoveController', ModalRemoveController);
 
-    ModalRemoveController.$inject = ['$scope', '$uibModalInstance', 'obj', 'callbackRemove'];
-    function ModalRemoveController($scope, $uibModalInstance, obj, callbackRemove) {
-        $scope.obj = obj;
+    ModalRemoveController.$inject = ['$scope', '$uibModalInstance', 'obj', 'view', 'callbackRemove'];
+    function ModalRemoveController($scope, $uibModalInstance, obj, view, callbackRemove) {
+        $scope.title = view.title;
+        $scope.message = view.message;
 
         // удалить субъект
         $scope.remove = function () {
-            if (obj.remove !== undefined) {
-                obj.remove();
-                callbackRemove.run();
-                // закрываем модальное окно
-                $uibModalInstance.close(obj);
-            }
+            callbackRemove.run(obj);
+            // закрываем модальное окно
+            $uibModalInstance.close(obj);
         }
 
         // отмена

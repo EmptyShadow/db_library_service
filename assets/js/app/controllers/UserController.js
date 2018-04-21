@@ -54,13 +54,18 @@
         $scope.removeUser = function (user) {
             let uibModalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'views/modals/delete-user.html',
+                templateUrl: 'views/modals/remove.html',
                 controller: 'ModalRemoveController',
                 size: 'sm',
                 resolve: {
                     obj: user,
+                    view: {
+                        title: 'Удалить пользователя',
+                        message: 'Вы действительно хотите удалить пользователя ' + user.login + '?'
+                    },
                     callbackRemove: {
-                        run: function callbackRemove() {
+                        run: function callbackRemove(user) {
+                            user.remove();
                             let index = $scope.users.indexOf(user);
                             if (index !== -1) {
                                 $scope.users.splice(index, 1);
