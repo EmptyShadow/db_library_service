@@ -14,9 +14,6 @@ module.exports = {
     find: async function (req, res) {
         let data = req.allParams();
         let paramsFind = this.getParamsFind(data);
-        /* console.log(paramsFind);
-        console.log();
-        console.log(); */
 
         // функция пересечения двух множеств
         let intersect = function (array1, array2) {
@@ -35,101 +32,97 @@ module.exports = {
             return result;
         }
 
-        // находятся подходящие названия публикаций
-        /* console.log('titles');
-        console.log(paramsFind.titles); */
-        let titles = await PublicationTitle.find(paramsFind.titles);
-        /* console.log(titles);
-        console.log();
-        console.log(); */
-
-        // находятся подходящие авторы
-        /* console.log('authors');
-        console.log(paramsFind.authors); */
-        let authors = await Author.find()
-            .populate('names', paramsFind.authors)
-            .populate('publications');
-        /* console.log(authors);
-        console.log();
-        console.log(); */
-
-        // находятся подходящие издания
-        /* console.log('editor');
-        console.log(paramsFind.editor); */
-        let editors = await Editor.find()
-            .populate('titles', paramsFind.editor)
-            .populate('publications');
-        /* console.log(editors);
-        console.log();
-        console.log(); */
-
         // формируется массив уникальных id публикаций
         let arrayIdPublications = {
             titles: [],
             authors: [],
             editors: [],
-            publications: []
+            publications: {}
         };
-        titles.forEach(title => {
-            if (arrayIdPublications.titles.indexOf(title.publication) == -1) {
-                arrayIdPublications.titles.push(title.publication);
-            }
-        });
-        authors.forEach((author, index, array) => {
-            if (author.names.length == 0) { return; }
 
-            if (paramsFind.authors.or != undefined) {
-                let idPublicationsAuthor = [];
-                author.publications.forEach(publication => {
-                    if (idPublicationsAuthor.indexOf(publication.id) == -1) {
-                        idPublicationsAuthor.push(publication.id);
-                    }
-                });
-
-                if (index == 0) {
-                    arrayIdPublications.authors = idPublicationsAuthor;
-                } else {
-                    arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
-                }
-            } else {
-                author.publications.forEach(publication => {
-                    if (arrayIdPublications.authors.indexOf(publication.id) == -1) {
-                        arrayIdPublications.authors.push(publication.id);
-                    }
-                });
-            }
-        });
-        editors.forEach(editor => {
-            if (editor.titles.length == 0) { return; }
-            editor.publications.forEach(publication => {
-                if (arrayIdPublications.editors.indexOf(publication.id) == -1) {
-                    arrayIdPublications.editors.push(publication.id);
+        // Если в поиске заданны параметры названия, то учитываем найденные названия
+        if (paramsFind.titles.title != undefined) {
+            // находятся подходящие названия публикаций
+            let titles = await PublicationTitle.find(paramsFind.titles);
+            titles.forEach(title => {
+                if (arrayIdPublications.titles.indexOf(title.publication) == -1) {
+                    arrayIdPublications.titles.push(title.publication);
                 }
             });
-        });
-
-        /* console.log(arrayIdPublications);
-        console.log();
-        console.log(); */
-
-        arrayIdPublications.publications = intersects([
-            arrayIdPublications.titles,
-            arrayIdPublications.authors,
-            arrayIdPublications.editors
-        ]);
-
-        /* console.log(arrayIdPublications);
-        console.log(); */
-        if (paramsFind.publication.id != undefined) {
-            if (arrayIdPublications.publications.indexOf(paramsFind.publication.id) == -1) {
-                return res.notFound();
-            }
-        } else {
-            paramsFind.publication.id = arrayIdPublications.publications;
+            arrayIdPublications.publications = arrayIdPublications.titles;
         }
 
-        /* console.log('publications');
-        console.log(paramsFind.publication) */;
+        // Если в поиске заданны параметры авторов, то учитываем авторов
+        if (paramsFind.authors.or != undefined) {
+            // находятся подходящие авторы
+            let authors = await Author.find()
+                .populate('names', paramsFind.authors)
+                .populate('publications');
+            authors.forEach((author, index, array) => {
+                if (author.names.length == 0) { return; }
+
+                if (paramsFind.authors.or != undefined) {
+                    let idPublicationsAuthor = [];
+                    author.publications.forEach(publication => {
+                        if (idPublicationsAuthor.indexOf(publication.id) == -1) {
+                            idPublicationsAuthor.push(publication.id);
+                        }
+                    });
+
+                    if (index == 0) {
+                        arrayIdPublications.authors = idPublicationsAuthor;
+                    } else {
+                        arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
+                    }
+                } else {
+                    author.publications.forEach(publication => {
+                        if (arrayIdPublications.authors.indexOf(publication.id) == -1) {
+                            arrayIdPublications.authors.push(publication.id);
+                        }
+                    });
+                }
+            });
+
+            if (arrayIdPublications.publications.length != undefined) {
+                arrayIdPublications.publications = intersect(arrayIdPublications.publications, arrayIdPublications.authors);
+            } else {
+                arrayIdPublications.publications = arrayIdPublications.authors;
+            }
+        }
+
+        if (paramsFind.editor.name != undefined) {
+            // находятся подходящие издания
+            let editors = await Editor.find()
+                .populate('titles', paramsFind.editor)
+                .populate('publications');
+            editors.forEach(editor => {
+                if (editor.titles.length == 0) { return; }
+                editor.publications.forEach(publication => {
+                    if (arrayIdPublications.editors.indexOf(publication.id) == -1) {
+                        arrayIdPublications.editors.push(publication.id);
+                    }
+                });
+            });
+
+            if (arrayIdPublications.publications.length != undefined) {
+                arrayIdPublications.publications = intersect(arrayIdPublications.publications, arrayIdPublications.editors);
+            } else {
+                arrayIdPublications.publications = arrayIdPublications.editors;
+            }
+        }
+
+        if (paramsFind.publication.id != undefined) {
+            if (arrayIdPublications.publications.length != undefined) {
+                if (arrayIdPublications.publications.indexOf(paramsFind.publication.id) == -1) {
+                    return res.notFound();
+                }
+            }
+        } else {
+            if (arrayIdPublications.publications.length != undefined) {
+                paramsFind.publication.id = arrayIdPublications.publications;
+            }
+        }
+
         let publications = await Publication.find(paramsFind.publication)
             .populate('titles')
             .populate('authors')
@@ -141,9 +134,6 @@ module.exports = {
             authors: ['names'],
             editor: ['titles']
         }).then(function (publications) {
-            /* console.log(publications);
-            console.log();
-            console.log(); */
             return res.json(publications);
         }).catch(function (err) {
             return res.serverError(err);

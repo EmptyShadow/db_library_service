@@ -24,20 +24,17 @@
                 animation: true,
                 templateUrl: 'views/modals/add-author.html',
                 controller: 'ModalAddController',
-                size: 'md',
-                resolve: {
-                    callbackAdd: {
-                        run: function callbackAdd(author) {
-                            // если данные пришли все пустые
-                            if (!author.lastname && !author.firstname && !author.patronymic) {
-                                // то не добавляем фильтр автора
-                                return;
-                            }
-                            // иначе добавляем
-                            $scope.paramsFind.authors.push(author);
-                        }
-                    }
+                size: 'md'
+            });
+            uibModalInstance.result.then(function (author) {
+                // если данные пришли все пустые
+                if (!author.lastname && !author.firstname && !author.patronymic) {
+                    // то не добавляем фильтр автора
+                    return;
                 }
+                // иначе добавляем
+                $scope.paramsFind.authors.push(author);
+            }, function (reason) {
             });
         };
 
