@@ -158,6 +158,72 @@ module.exports = {
                 return res.ok();
             });
         });
+    },
+    /**
+     * Создать автора
+     */
+    create: async function (req, res) {
+        let data = req.allParams();
+
+        if (!data.lang || !data.lastname || !data.firstname || !data.patronymic) {
+            return res.badRequest('Не все данные об авторе заполненны!');
+        }
+
+        try {
+            let author = await Author.create();
+
+            let name = await Name.create(data);
+
+            author.names.add(name.id);
+            author.save(async function (err) {
+                if (err) {
+                    return res.serverError('Произошла ошибка!');
+                }
+                author = await Author.findOne({ id: author.id })
+                    .populate('names')
+                    .populate('publications');
+
+                return res.json(author);
+            });
+        } catch (err) {
+            return res.serverError('Произошла ошибка!');
+        }
+    },
+    /**
+     * Добавить имя автору
+     */
+    addName: async function (req, res) {
+        let data = req.allParams();
+
+        let author = await Author.findOne({ id: data.id })
+            .populate('names');
+        delete data.id;
+        let name = await Name.create(data);
+
+        author.names.add(name.id);
+        author.save(function (err) {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            return res.json(name);
+        })
+    },
+    /**
+     * Обновить имя автора
+     */
+    updateName: async function (req, res) {
+        let id = req.param('id');
+        let data = req.allParams();
+        delete data.id;
+
+        try {
+            let updated = await Name.update({ id: id }, data);
+
+            return res.json(updated[0]);
+        } catch (err) {
+            return res.serverError('Произошла ошибка!');
+        }
     }
 };
 

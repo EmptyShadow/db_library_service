@@ -74,7 +74,76 @@
                 }
                 return str;
             },
-            remove: function () {
+            create: function (callback) {
+                $http({
+                    method: 'POST',
+                    url: '/author/create',
+                    data: this,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(
+                    function success(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback('', new Author(response.data));
+                        }
+                    },
+                    function error(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback(response.data, null);
+                        }
+                    }
+                );
+            },
+            addName: function (name, callback) {
+                $http({
+                    method: 'POST',
+                    url: '/author/' + this.id + '/add/name',
+                    data: name,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(
+                    function success(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback('', angular.fromJson(response.data));
+                        }
+                    },
+                    function error(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback(response.data, null);
+                        }
+                    }
+                );
+            },
+            updateName: function (name, callback) {
+                $http({
+                    method: 'POST',
+                    url: '/author/name/update',
+                    data: name,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(
+                    function success(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback('', angular.fromJson(response.data));
+                        }
+                    },
+                    function error(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback(response.data, null);
+                        }
+                    }
+                );
+            },
+            remove: function (callback) {
                 $http({
                     method: 'DELETE',
                     url: '/author/' + this.id
@@ -82,14 +151,16 @@
                     function success(response) {
                         console.log('success remove author');
                         console.log(response.data);
+                        callback('');
                     },
                     function error(response) {
                         console.log('error remove author');
                         console.log(response.data);
+                        callback(response.data);
                     }
                 );
             },
-            removeName: function (name) {
+            removeName: function (name, callback) {
                 $http({
                     method: 'DELETE',
                     url: '/author/' + this.id + '/name/' + name.id
@@ -97,14 +168,16 @@
                     function success(response) {
                         console.log('success remove name');
                         console.log(response.data);
+                        callback('');
                     },
                     function error(response) {
                         console.log('error remove name');
                         console.log(response.data);
+                        callback(response.data);
                     }
                 );
             },
-            removePublication: function (publication) {
+            removePublication: function (publication, callback) {
                 $http({
                     method: 'DELETE',
                     url: '/author/' + this.id + '/publication/' + publication.id
@@ -112,10 +185,12 @@
                     function success(response) {
                         console.log('success remove publication');
                         console.log(response.data);
+                        callback('');
                     },
                     function error(response) {
                         console.log('error remove publication');
                         console.log(response.data);
+                        callback(response.data);
                     }
                 );
             }

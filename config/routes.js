@@ -79,16 +79,26 @@ module.exports.routes = {
     action: 'find'
   },
 
-  'POST /author/update': {
+  'POST /author/create': {
     controller: 'AuthorController',
-    action: 'update'
+    action: 'create'
+  },
+
+  'POST /author/:id/add/name': {
+    controller: 'AuthorController',
+    action: 'addName'
+  },
+
+  'POST /author/name/update': {
+    controller: 'AuthorController',
+    action: 'updateName'
   },
 
   'DELETE /author/:id': {
     controller: 'AuthorController',
     action: 'remove'
   },
-  
+
   'DELETE /author/:idAuthor/name/:idName': {
     controller: 'AuthorController',
     action: 'removeName'

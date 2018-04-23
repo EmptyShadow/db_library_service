@@ -56,7 +56,10 @@ module.exports.policies = {
   AuthorController: {
     remove: ['sessionAuth', 'isAdmin'],
     removeName: ['sessionAuth', 'isAdmin'],
-    removePublication: ['sessionAuth', 'isAdmin']
+    removePublication: ['sessionAuth', 'isAdmin'],
+    create: ['sessionAuth', 'isAdmin'],
+    addName: ['sessionAuth', 'isAdmin'],
+    updateName: ['sessionAuth', 'isAdmin']
   },
   EditionController: {
 

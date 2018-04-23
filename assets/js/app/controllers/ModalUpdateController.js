@@ -9,16 +9,16 @@
         $scope.obj = obj.copy();
 
         // обновление данных
-        $scope.update = function () {
+        $scope.add = function () {
             // проверяем правильность данных
             if ($scope.obj.isAvailable()) {
                 // обновляем данные на сервере
-                $scope.obj.update(function (updetedObj, err) {
+                obj.update($scope.obj, function (err, updatedObj) {
                     if (!err) {
                         // меняем данные в основном объекте
-                        obj.setData($scope.obj);
+                        obj.setData(updatedObj);
                         // закрываем модальное окно
-                        $uibModalInstance.close(obj);
+                        $uibModalInstance.close(updatedObj);
                     } else {
                         $scope.err = err;
                     }

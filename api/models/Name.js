@@ -11,20 +11,11 @@ module.exports = {
   attributes: {
     lang: {
       type: 'string',
-      isIn: [/* Английский */'en', 
-        /* Американский английский */'en-us',
-        /* Немецкий */'de',
-        /* Русский */	'ru',
-        /* Украинский */'uk',
-        /* Французский */'fr',
-        /* Чешский */'cs',
-        /* Шведский */'sv',
-        /* Эсперанто (искусственный язык) */'eo'],
-      require: true
+      required: true
     },
     firstname: {
       type: 'string',
-      require: true,
+      required: true,
       size: 40
     },
     patronymic: {
@@ -33,7 +24,7 @@ module.exports = {
     },
     lastname: {
       type: 'string',
-      require: true,
+      required: true,
       size: 60
     },
     author: {

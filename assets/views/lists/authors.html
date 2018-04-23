@@ -1,6 +1,19 @@
 <div class="jumbotron" data-ng-controller="AuthorController">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="success">
+        {{success}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="err">
+        {{err}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <h1>Авторы
-        <i class="btn material-icons md-36" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+        <i class="btn material-icons md-36" data-ng-click="createAuthor()" ng-if="curUserSystem.is_admin">add_circle_outline</i>
     </h1>
     <div class="container-fluid">
         <form class="form-inline">
@@ -46,8 +59,14 @@
                     <div id="collapse{{author.id}}" class="collapse" aria-labelledby="heading{{author.id}}" data-parent="#accordion">
                         <div class="card-body">
                             <div class="table-responsive" data-ng-if="author.names.length != 0">
+                                <div class="alert alert-success" role="alert" ng-if="author.success">
+                                    {{author.success}}
+                                </div>
+                                <div class="alert alert-danger" role="alert" ng-if="author.err">
+                                    {{author.err}}
+                                </div>
                                 <h5>Псевдонимы
-                                    <i class="btn material-icons md-24" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+                                    <i class="btn material-icons md-24" data-ng-click="addAuthorName(author)" ng-if="curUserSystem.is_admin">add_circle_outline</i>
                                 </h5>
                                 <table class="table table-hover table-striped">
                                     <thead class="thead-dark">
@@ -73,7 +92,7 @@
                                             <td>{{name.updatedAt}}</td>
                                             <td ng-if="curUserSystem.is_admin">
                                                 <div class="btn-group">
-                                                    <i class="btn material-icons" data-ng-click="">mode_edit</i>
+                                                    <i class="btn material-icons" data-ng-click="updateAuthorName(author, name)">mode_edit</i>
                                                     <i class="btn material-icons" data-ng-click="removeName(author, name)">delete_forever</i>
                                                 </div>
                                             </td>
@@ -88,7 +107,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
                                         {{publication.id}}: {{publication.titles[0].title}}
                                         <div class="btn-group">
-                                            <i class="btn material-icons">visibility</i>
+                                            <a class="btn material-icons md-dark" href="{{publication.link}}" target="_blank">visibility</a>
                                             <i class="btn material-icons" ng-if="curUserSystem.is_admin" ng-click="removePublication(author, publication)">close</i>
                                         </div>
                                     </li>
