@@ -11,20 +11,12 @@ module.exports = {
     attributes: {
         lang: {
             type: 'string',
-            isIn: [/* Английский */'en',
-          /* Американский английский */'en-us',
-          /* Немецкий */'de',
-          /* Русский */	'ru',
-          /* Украинский */'uk',
-          /* Французский */'fr',
-          /* Чешский */'cs',
-          /* Шведский */'sv',
-          /* Эсперанто (искусственный язык) */'eo'],
-            require: true
+            required: true,
         },
         name: {
             type: 'string',
-            require: true,
+            required: true,
+            unique: true,
             size: 40
         },
         editor: {

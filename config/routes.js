@@ -118,6 +118,31 @@ module.exports.routes = {
     action: 'find'
   },
 
+  'POST /editor/create': {
+    controller: 'EditionController',
+    action: 'create'
+  },
+
+  'POST /editor/:id/add/title': {
+    controller: 'EditionController',
+    action: 'addTitle'
+  },
+
+  'POST /editor/title/update': {
+    controller: 'EditionController',
+    action: 'updateTitle'
+  },
+
+  'DELETE /editor/:id': {
+    controller: 'EditionController',
+    action: 'remove'
+  },
+
+  'DELETE /editor/:idEditor/title/:idTitle': {
+    controller: 'EditionController',
+    action: 'removeTitle'
+  },
+
   /**
    * Публикации
    */

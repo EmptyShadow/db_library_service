@@ -1,6 +1,6 @@
 <div class="jumbotron" data-ng-controller="EditionController">
     <h1>Издания
-        <i class="btn material-icons md-36" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+        <i class="btn material-icons md-36" data-ng-click="createEditor()" ng-if="curUserSystem.is_admin">add_circle_outline</i>
     </h1>
     <div class="container-fluid">
         <form class="form-inline">
@@ -31,7 +31,7 @@
                             </h5>
                         </div>
                         <div class="col-md-2 text-white text-right">
-                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin">delete_forever</i>
+                            <i class="btn material-icons md-light" ng-if="curUserSystem.is_admin" ng-click="removeEditor(edition)">delete_forever</i>
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@
                         <div class="card-body">
                             <div class="table-responsive" data-ng-if="edition.titles.length != 0">
                                 <h5>Названия издания
-                                    <i class="btn material-icons md-24" data-ng-click="" ng-if="curUserSystem.is_admin">add_circle_outline</i>
+                                    <i class="btn material-icons md-24" data-ng-click="addEditorTitle(edition)" ng-if="curUserSystem.is_admin">add_circle_outline</i>
                                 </h5>
                                 <table class="table table-hover table-striped">
                                     <thead class="thead-dark">
@@ -61,10 +61,8 @@
                                             <td>{{title.updatedAt}}</td>
                                             <td ng-if="curUserSystem.is_admin">
                                                 <div class="btn-group">
-                                                    <i class="btn material-icons" data-ng-click="updateUser(user)">mode_edit</i>
-                                                    <i class="btn material-icons" data-ng-click="removeUser(user)">delete_forever</i>
-                                                    <!-- <button type="button" class="btn btn-warning" data-ng-click="">Изменить</button>
-                                                <button type="button" class="btn btn-danger" data-ng-click="">Удалить</button> -->
+                                                    <i class="btn material-icons" data-ng-click="updateEditorTitle(edition, title)">mode_edit</i>
+                                                    <i class="btn material-icons" data-ng-click="removeTitle(edition, title)">delete_forever</i>
                                                 </div>
                                             </td>
                                         </tr>
