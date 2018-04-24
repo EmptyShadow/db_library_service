@@ -69,6 +69,27 @@ module.exports = {
         });
     },
 
+    findOne: async function (req, res) {
+        let name = req.param('name');
+
+        try {
+            let editor = await findOne()
+                .populate('titles', { where: { name: name } });
+
+            if (!editor) {
+                return res.notFound();
+            }
+            
+            return res.json(editor);
+        } catch (err) {
+            if (err.name === 'UsageError') {
+                return res.badRequest();
+            } else {
+                return res.serverError(err);
+            }
+        }
+    },
+
     /**
      * Валидация данных для поиска
      * data - данные полученные из запроса
