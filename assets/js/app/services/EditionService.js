@@ -58,6 +58,24 @@
                     }
                 );
             },
+            findOne: function (name) {
+                $http({
+                    method: 'GET',
+                    url: '/edition/search/:name',
+                }).then(
+                    function success(response) {
+                        console.log(response.data);
+                        if (callback) {
+                            callback('', service.createdIsArray(response.data));
+                        }
+                    },
+                    function error(response) {
+                        if (callback) {
+                            callback(response.data, []);
+                        }
+                    }
+                );
+            },
             createdIsArray: function (data) {
                 let editions = [];
                 for (let i = 0; i < data.length; i++) {
