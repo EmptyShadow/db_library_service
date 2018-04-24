@@ -108,7 +108,7 @@
                 ariaDescribedBy: 'modal-body',
                 templateUrl: 'views/modals/author.html',
                 controller: 'ModalUpdateController',
-                size: 'lg',
+                size: 'md',
                 resolve: {
                     obj: name
                 }
