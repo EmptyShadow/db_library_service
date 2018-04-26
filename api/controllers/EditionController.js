@@ -69,6 +69,19 @@ module.exports = {
         });
     },
 
+    findOneById: async function (req, res) {
+        let id = req.param('id');
+
+        try {
+            let editor = await Editor.findOne({ id: id })
+                .populate('titles');
+
+            return res.json(editor);
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+
     findOne: async function (req, res) {
         let name = req.param('name');
 
@@ -79,7 +92,7 @@ module.exports = {
             if (!editor) {
                 return res.notFound();
             }
-            
+
             return res.json(editor);
         } catch (err) {
             if (err.name === 'UsageError') {

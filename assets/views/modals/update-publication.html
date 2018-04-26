@@ -1,0 +1,30 @@
+<div class="modal-header bg-dark">
+    <h5 class="modal-title text-white" id="modal-title">Публикация</h5>
+    <button type="button" class="text-white close ml-2" data-ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" id="modal-body">
+    <form>
+        <div class="mb-2" class="form-group">
+            <label for="inputDatePublication">Год публикации</label>
+            <input id="inputDatePublication" type="number" class="form-control" placeholder="Год публикации" ng-model="obj.datepub">
+        </div>
+        <div class="form-group">
+            <label for="inputEditorLink">Ссылка на публикацию</label>
+            <input id="inputEditorLink" type="text" class="form-control" placeholder="Ссылка на публикацию" ng-model="obj.link">
+        </div>
+        <div class="mb-2" ng-repeat="checkbox in listCheckboxes">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" value="false" id="modalCheckbox{{$index}}" ng-model="obj[checkbox.id]">
+                <label class="custom-control-label" for="modalCheckbox{{$index}}">
+                    {{checkbox.desc}}
+                </label>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-dark" data-ng-click="update()">Сохранить</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-ng-click="cancel()">Отмена</button>
+</div>

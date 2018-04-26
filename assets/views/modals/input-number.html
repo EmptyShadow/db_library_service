@@ -1,0 +1,18 @@
+<div class="modal-header bg-dark">
+    <h5 class="modal-title text-white" id="modal-title">{{view.title}}</h5>
+    <button type="button" class="text-white close ml-2" data-ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" id="modal-body">
+    <form>
+        <div class="mb-2" class="form-group">
+            <label for="inputNumber">{{view.labelNumber}}</label>
+            <input id="inputNumber" type="number" class="form-control" placeholder="{{view.labelNumber}}" ng-model="number">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-dark" data-ng-click="add()">Добавить</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-ng-click="cancel()">Отмена</button>
+</div>

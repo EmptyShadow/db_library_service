@@ -3,11 +3,14 @@
 
     angular.module('Library').controller('PublicationController', PublicationController);
 
-    PublicationController.$inject = ['$scope', '$uibModal', 'Publication', 'CurUserSystem'];
-    function PublicationController($scope, $uibModal, Publication, CurUserSystem) {
+    PublicationController.$inject = ['$scope', '$uibModal', 'Publication', 'CurUserSystem', 'Edition'];
+    function PublicationController($scope, $uibModal, Publication, CurUserSystem, Edition) {
         if (CurUserSystem.userAuth) {
             $scope.curUserSystem = CurUserSystem.user;
         }
+
+        $scope.publications = [];
+        $scope.authors = [];
 
         $scope.paramsFind = new Publication();
 
@@ -57,7 +60,6 @@
 
             $scope.paramsFind.find(function callbackFind(err, publications) {
                 if (!err) {
-                    console.log(publications);
                     $scope.publications = publications;
                 }
             });
@@ -90,5 +92,350 @@
                 id: 'is_doi'
             }
         ];
+
+        $scope.createPublication = function () {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/add-publication.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.obj = new Publication();
+                    $scope.listCheckboxes = [
+                        {
+                            desc: 'Высшая аттестационная комиссия',
+                            id: 'is_vak'
+                        },
+                        {
+                            desc: 'Российский индекс научного цитирования',
+                            id: 'is_rince'
+                        },
+                        {
+                            desc: 'WOS',
+                            id: 'is_wos'
+                        },
+                        {
+                            desc: 'Публикация в журнале Scope',
+                            id: 'is_scopus'
+                        },
+                        {
+                            desc: 'DOI',
+                            id: 'is_doi'
+                        }
+                    ];
+                    $scope.listCheckboxes.forEach(element => {
+                        $scope.obj[element.id] = false;
+                    });
+                    $scope.add = function () {
+                        console.log($scope.obj);
+                        if ($scope.obj.datepub != undefined
+                            && $scope.obj.link != undefined
+                            && $scope.obj.title.lang != undefined
+                            && $scope.obj.title.title != undefined) {
+                            $scope.obj.createPublication(function (err, newPublication) {
+                                $uibModalInstance.close(newPublication);
+                            });
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'lg'
+            });
+            uibModalInstance.result.then(function (publication) {
+                $scope.publications.push(publication);
+            }, function (reason) {
+            });
+        };
+
+        $scope.updatePublication = function (publication) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/update-publication.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.obj = publication;
+                    $scope.listCheckboxes = [
+                        {
+                            desc: 'Высшая аттестационная комиссия',
+                            id: 'is_vak'
+                        },
+                        {
+                            desc: 'Российский индекс научного цитирования',
+                            id: 'is_rince'
+                        },
+                        {
+                            desc: 'WOS',
+                            id: 'is_wos'
+                        },
+                        {
+                            desc: 'Публикация в журнале Scope',
+                            id: 'is_scope'
+                        },
+                        {
+                            desc: 'DOI',
+                            id: 'is_doi'
+                        }
+                    ];
+                    $scope.update = function () {
+                        if ($scope.obj.datepub != undefined
+                            && $scope.obj.link != undefined) {
+                            $scope.obj.updatePublication(function (err) {
+                                if (!err) {
+                                    $uibModalInstance.close($scope.obj);
+                                }
+                            })
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'lg'
+            });
+            uibModalInstance.result.then(function () {
+            }, function (reason) {
+            });
+        };
+
+        $scope.removePublication = function (publication) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/remove.html',
+                controller: 'ModalRemoveController',
+                size: 'sm',
+                resolve: {
+                    obj: publication,
+                    view: {
+                        title: 'Удалить публикацию',
+                        message: 'Вы действительно хотите удалить публикацию ' + publication.titles[0].title + '?'
+                    },
+                    array: function () {
+                        return $scope.publications;
+                    }
+                }
+            });
+            uibModalInstance.result.then(function () {
+            }, function (reason) {
+            });
+        };
+
+        $scope.createPublicationTitle = function (publication) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/title-publication.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.obj = {};
+
+                    $scope.add = function () {
+                        console.log($scope.obj);
+                        if ($scope.obj.lang != undefined
+                            && $scope.obj.title != undefined) {
+                            publication.createPublicationTitle($scope.obj, function (err, title) {
+                                $uibModalInstance.close(title);
+                            });
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'md'
+            });
+            uibModalInstance.result.then(function (title) {
+                publication.titles.push(title);
+            }, function (reason) {
+            });
+        };
+
+        $scope.updatePublicationTitle = function (publication, title) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/title-publication.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.obj = {
+                        id: title.id,
+                        lang: title.lang,
+                        title: title.title
+                    };
+
+                    $scope.add = function () {
+                        if ($scope.obj.lang != undefined
+                            && $scope.obj.title != undefined) {
+                            publication.updatePublicationTitle($scope.obj, function (err, title) {
+                                if (!err) {
+                                    $uibModalInstance.close(title);
+                                }
+                            });
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'md'
+            });
+            uibModalInstance.result.then(function (updateTitle) {
+                let index = publication.titles.indexOf(title);
+                if (index != -1) {
+                    publication.titles[index] = updateTitle;
+                }
+            }, function (reason) {
+            });
+        };
+
+        $scope.removePublicationTitle = function (publication, title) {
+            if (publication.titles.length == 1) {
+                $scope.removePublication(publication);
+                return;
+            }
+
+            title.remove = function (callback) {
+                publication.removePublicationTitle(title, callback);
+            };
+
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/remove.html',
+                controller: 'ModalRemoveController',
+                size: 'sm',
+                resolve: {
+                    obj: title,
+                    view: {
+                        title: 'Удалить название публикации',
+                        message: 'Вы действительно хотите удалить название публикации ' + title.title + '?'
+                    },
+                    array: function () {
+                        return publication.titles;
+                    }
+                }
+            });
+            uibModalInstance.result.then(function () {
+            }, function (reason) {
+            });
+        };
+
+        $scope.addAuthor = function (publication) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/input-number.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.view = {
+                        title: 'Добавить автора публикации',
+                        labelNumber: 'Индентификатор автора'
+                    };
+
+                    $scope.add = function () {
+                        if ($scope.number != undefined) {
+                            (new Publication).addAuthor(publication.id, $scope.number, function (err, author) {
+                                if (err) {
+                                    $scope.err = err;
+                                    return;
+                                }
+
+                                $uibModalInstance.close(author);
+                            })
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'sm'
+            });
+            uibModalInstance.result.then(function (author) {
+                publication.authors.push(author);
+            }, function (reason) {
+            });
+        };
+
+        $scope.removeAuthor = function (publication, author) {
+            author.remove = function (callback) {
+                publication.removeAuthor(publication.id, author.id, callback);
+            };
+
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/remove.html',
+                controller: 'ModalRemoveController',
+                size: 'sm',
+                resolve: {
+                    obj: author,
+                    view: {
+                        title: 'Исключить автора',
+                        message: 'Вы действительно хотите исключить автора ' 
+                        + author.names[0].lastname + ' ' + author.names[0].firstname + ' ' + author.names[0].patronymic 
+                        + ' из авторов публикации ' + publication.titles[0].title + '?'
+                    },
+                    array: function () {
+                        return publication.authors;
+                    }
+                }
+            });
+            uibModalInstance.result.then(function () {
+            }, function (reason) {
+            });
+        };
+
+        $scope.replaceEditor = function (publication) {
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/input-number.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.view = {
+                        title: 'Добавить издание публикации',
+                        labelNumber: 'Индентификатор издания'
+                    };
+
+                    $scope.add = function () {
+                        if ($scope.number != undefined) {
+                            (new Publication).replaceEditor(publication.id, $scope.number, function (err, editor) {
+                                if (err) {
+                                    $scope.err = err;
+                                    return;
+                                }
+
+                                $uibModalInstance.close(editor);
+                            })
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'sm'
+            });
+            uibModalInstance.result.then(function (editor) {
+                publication.editor = editor;
+            }, function (reason) {
+            });
+        };
+
+        $scope.removeEditor = function (publication, editor) {
+            editor.remove = function (callback) {
+                publication.removeEditor(publication.id, callback);
+            };
+
+            let uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/modals/remove.html',
+                controller: 'ModalRemoveController',
+                size: 'sm',
+                resolve: {
+                    obj: editor,
+                    view: {
+                        title: 'Исключить издание',
+                        message: 'Вы действительно хотите исключить издание ' 
+                        + editor.titles[0].name 
+                        + ' из публикации ' + publication.titles[0].title + '?'
+                    },
+                    array: function () {
+                        return [];
+                    }
+                }
+            });
+            uibModalInstance.result.then(function () {
+                delete publication.editor;
+            }, function (reason) {
+            });
+        };
     }
 })();

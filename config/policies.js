@@ -68,5 +68,17 @@ module.exports.policies = {
     addTitle: ['sessionAuth', 'isAdmin'],
     updateTitle: ['sessionAuth', 'isAdmin']
   },
+  PublicationController: {
+    /* remove: ['sessionAuth', 'isAdmin'],
+    create: ['sessionAuth', 'isAdmin'],
+    update: ['sessionAuth', 'isAdmin'],
+    createTitle: ['sessionAuth', 'isAdmin'],
+    updateTitle: ['sessionAuth', 'isAdmin'],
+    removeTitle: ['sessionAuth', 'isAdmin'],
+    addAuthor: ['sessionAuth', 'isAdmin'],
+    removeAuthor: ['sessionAuth', 'isAdmin'],
+    replaceEditor: ['sessionAuth', 'isAdmin'],
+    removeEditor: ['sessionAuth', 'isAdmin'] */
+  }
   
 };

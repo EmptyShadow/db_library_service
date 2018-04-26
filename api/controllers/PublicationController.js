@@ -188,5 +188,229 @@ module.exports = {
 
         return paramsFind;
     },
+    /**
+     * Создать новую публикацию
+     */
+    create: async function (req, res) {
+        let data = req.allParams();
+        let title = req.param('title');
+        delete data.title;
+        delete data.titles;
+        delete data.authors;
+
+        try {
+            let publication = await Publication.create(data);
+            title = await PublicationTitle.create(title);
+
+            publication.titles.add(title.id);
+            publication.save(async function (err) {
+                title.publication = publication.id;
+                if (err) {
+                    return res.serverError(err);
+                }
+
+                publication = await Publication.findOne({ id: publication.id })
+                    .populate('titles')
+                    .populate('authors')
+                    .populate('editor');
+                return res.json(publication);
+            });
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Обновить публикацию
+     */
+    update: async function (req, res) {
+        let id = req.param('id');
+        let data = req.allParams();
+        delete data.id;
+        delete data.titles;
+        delete data.authors;
+        delete data.publications;
+
+        try {
+            let publication = await Publication.update(id, data);
+            res.ok();
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Удалить публикацию
+     */
+    remove: async function (req, res) {
+        let id = req.param('id');
+
+        try {
+            let publication = await Publication.findOne({ id: id })
+                .populate('titles')
+                .populate('authors')
+                .populate('editor');
+
+            let idTitles = [];
+            publication.titles.forEach(element => {
+                publication.titles.remove(element.id);
+                idTitles.push(element.id);
+            });
+
+            let paramDestroy = {};
+            if (idTitles.length > 0) {
+                paramDestroy.id = idTitles;
+            }
+            await PublicationTitle.destroy(paramDestroy);
+
+            publication.authors.forEach(element => {
+                publication.authors.remove(element.id);
+            });
+
+            publication.save(async function (err) {
+                if (err) {
+                    return res.serverError(err);
+                }
+
+                await Publication.destroy({ id: publication.id });
+
+                return res.ok();
+            });
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+
+    /**
+     * Создать заголовок публикации
+     */
+    createTitle: async function (req, res) {
+        let id = req.param('id');
+        let data = req.allParams();
+        delete data.id;
+
+        try {
+            let publication = await Publication.findOne({ id: id })
+                .populate('titles');
+            let title = await PublicationTitle.create(data);
+
+            publication.titles.add(title.id);
+
+            publication.save(function (err) {
+                if (err) {
+                    throw err;
+                }
+
+                return res.json(title);
+            });
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Изменить заголовок публикации
+     */
+    updateTitle: async function (req, res) {
+        let id = req.param('id');
+        let data = req.allParams();
+        delete data.id;
+
+        try {
+            let title = await PublicationTitle.update({ id: id }, data);
+
+            return res.json(title[0]);
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Удалить заголовок у публикации
+     */
+    removeTitle: async function (req, res) {
+        let id = req.param('id');
+
+        try {
+            await PublicationTitle.destroy({ id: id });
+
+            return res.ok();
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Добавить автора к публикации
+     */
+    addAuthor: async function (req, res) {
+        let idPublication = req.param('idPublication');
+        let idAuthor = req.param('idAuthor');
+
+        try {
+            let author = await Author.findOne({ id: idAuthor })
+                .populate('names');
+            let publication = await Publication.findOne({ id: idPublication });
+
+            publication.authors.add(author.id);
+            publication.save(function (err) {
+                if (err) {
+                    throw err;
+                }
+
+                return res.json(author);
+            })
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Исключить автора из списка авторов публикации
+     */
+    removeAuthor: async function (req, res) {
+        let ids = req.allParams();
+
+        try {
+            let publication = await Publication.findOne({ id: ids.idPublication });
+            let author = await Author.findOne({ id: ids.idAuthor });
+
+            publication.authors.remove(author.id);
+            publication.save(function (err) {
+                if (err) {
+                    throw err;
+                }
+
+                return res.ok();
+            })
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Изменить издание публикации
+     */
+    replaceEditor: async function (req, res) {
+        let ids = req.allParams();
+
+        try {
+            let editor = await Editor.findOne({ id: ids.idEditor })
+                .populate('titles');
+
+            await Publication.update({ id: ids.idPublication }, { editor: editor.id });
+
+            return res.json(editor);
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
+    /**
+     * Удалить издание из публикации
+     */
+    removeEditor: async function (req, res) {
+        let ids = req.allParams();
+
+        try {
+            let publication = await Publication.update({ id: ids.idPublication }, { editor: null });
+
+            return res.ok();
+        } catch (err) {
+            return ErrorHandler.handle(err, res);
+        }
+    },
 };
 

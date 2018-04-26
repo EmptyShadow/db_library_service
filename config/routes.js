@@ -118,6 +118,16 @@ module.exports.routes = {
     action: 'find'
   },
 
+  'GET /editor/:id': {
+    controller: 'EditionController',
+    action: 'findOneById'
+  },
+
+  'GET /edition/search/:name': {
+    controller: 'EditionController',
+    action: 'findOne'
+  },
+
   'POST /editor/create': {
     controller: 'EditionController',
     action: 'create'
@@ -150,6 +160,56 @@ module.exports.routes = {
   'POST /publications/search': {
     controller: 'PublicationController',
     action: 'find'
+  },
+
+  'POST /publication/create': {
+    controller: 'PublicationController',
+    action: 'create'
+  },
+
+  'POST /publication/update': {
+    controller: 'PublicationController',
+    action: 'update'
+  },
+
+  'DELETE /publication/:id': {
+    controller: 'PublicationController',
+    action: 'remove'
+  },
+
+  'POST /publication/:id/title/create': {
+    controller: 'PublicationController',
+    action: 'createTitle'
+  },
+
+  'POST /publication/title/update': {
+    controller: 'PublicationController',
+    action: 'updateTitle'
+  },
+
+  'DELETE /publication/title/:id': {
+    controller: 'PublicationController',
+    action: 'removeTitle'
+  },
+
+  'GET /publication/:idPublication/author/:idAuthor': {
+    controller: 'PublicationController',
+    action: 'addAuthor'
+  },
+
+  'DELETE /publication/:idPublication/author/:idAuthor': {
+    controller: 'PublicationController',
+    action: 'removeAuthor'
+  },
+
+  'GET /publication/:idPublication/editor/:idEditor': {
+    controller: 'PublicationController',
+    action: 'replaceEditor'
+  },
+
+  'DELETE /publication/:idPublication/editor': {
+    controller: 'PublicationController',
+    action: 'removeEditor'
   },
 
   /**

@@ -15,7 +15,7 @@ module.exports = {
     },
     datepub: {
       type: 'integer',
-      require: true
+      required: true
     },
     //Высшая Аттестационная Комиссия
     is_vak: {
@@ -43,7 +43,7 @@ module.exports = {
     },
     link: {
       type: 'string',
-      require: true
+      required: true
     },
     authors: {
       collection: 'author',
