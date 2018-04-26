@@ -54,32 +54,27 @@ module.exports = {
 
         // Если в поиске заданны параметры авторов, то учитываем авторов
         if (paramsFind.authors.or != undefined) {
+            arrayIdPublications.authors = [];
+            let flagInitArray = false;
             // находятся подходящие авторы
             let authors = await Author.find()
                 .populate('names', paramsFind.authors)
                 .populate('publications');
-            authors.forEach((author, index, array) => {
+            authors.forEach((author) => {
                 if (author.names.length == 0) { return; }
 
-                if (paramsFind.authors.or != undefined) {
-                    let idPublicationsAuthor = [];
-                    author.publications.forEach(publication => {
-                        if (idPublicationsAuthor.indexOf(publication.id) == -1) {
-                            idPublicationsAuthor.push(publication.id);
-                        }
-                    });
-
-                    if (index == 0) {
-                        arrayIdPublications.authors = idPublicationsAuthor;
-                    } else {
-                        arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
+                let idPublicationsAuthor = [];
+                author.publications.forEach(publication => {
+                    if (idPublicationsAuthor.indexOf(publication.id) == -1) {
+                        idPublicationsAuthor.push(publication.id);
                     }
+                });
+
+                if (!flagInitArray) {
+                    arrayIdPublications.authors = idPublicationsAuthor;
+                    flagInitArray = true;
                 } else {
-                    author.publications.forEach(publication => {
-                        if (arrayIdPublications.authors.indexOf(publication.id) == -1) {
-                            arrayIdPublications.authors.push(publication.id);
-                        }
-                    });
+                    arrayIdPublications.authors = intersect(arrayIdPublications.authors, idPublicationsAuthor);
                 }
             });
 
