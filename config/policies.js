@@ -69,7 +69,7 @@ module.exports.policies = {
     updateTitle: ['sessionAuth', 'isAdmin']
   },
   PublicationController: {
-    /* remove: ['sessionAuth', 'isAdmin'],
+    remove: ['sessionAuth', 'isAdmin'],
     create: ['sessionAuth', 'isAdmin'],
     update: ['sessionAuth', 'isAdmin'],
     createTitle: ['sessionAuth', 'isAdmin'],
@@ -78,7 +78,7 @@ module.exports.policies = {
     addAuthor: ['sessionAuth', 'isAdmin'],
     removeAuthor: ['sessionAuth', 'isAdmin'],
     replaceEditor: ['sessionAuth', 'isAdmin'],
-    removeEditor: ['sessionAuth', 'isAdmin'] */
+    removeEditor: ['sessionAuth', 'isAdmin']
   }
   
 };

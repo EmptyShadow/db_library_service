@@ -19,6 +19,11 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
 
+ console.log('Host ' + process.env.MYSQL_HOST);
+ console.log('User ' + process.env.MYSQL_USER);
+ console.log('Password ' + process.env.MYSQL_PASSWORD);
+ console.log('Base ' + process.env.MYSQL_DATABASE);
+
 module.exports.connections = {
 
   /***************************************************************************
@@ -42,10 +47,10 @@ module.exports.connections = {
   ***************************************************************************/
   someMysqlServer: {
     adapter: 'sails-mysql',
-    host: 'db',
-    user: 'admin', //optional
-    password: '123', //optional
-    database: 'library' //optional
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER, //optional
+    password: process.env.MYSQL_PASSWORD, //optional
+    database: process.env.MYSQL_DATABASE //optional
   },
 
   /***************************************************************************
