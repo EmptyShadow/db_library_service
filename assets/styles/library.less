@@ -7,18 +7,20 @@ body {
 }
 
 .block-white {
-  background-color: white;
+    background-color: white;
 }
 
-.top-buffer { margin-top:20px; }
+.top-buffer {
+    margin-top: 20px;
+}
 
 .background-clear {
-  background-color: inherit;
+    background-color: inherit;
 }
 
 .fade {
-  opacity: 1;
-  background-color: rgba(34, 37, 37, 0.2);
+    opacity: 1;
+    background-color: rgba(34, 37, 37, 0.2);
 }
 
 .modal-dialog {
@@ -28,10 +30,15 @@ body {
     justify-content: center;
     overflow: auto;
 }
+
 @media(max-width: 768px) {
-  .modal-dialog {
-    min-height: calc(100vh);
-  }
+    .modal-dialog {
+        min-height: calc(100vh);
+    }
+}
+
+.btn {
+  white-space: normal;
 }
 
 @import 'forms/forms';
