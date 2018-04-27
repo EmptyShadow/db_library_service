@@ -16,8 +16,7 @@ module.exports = {
         name: {
             type: 'string',
             required: true,
-            unique: true,
-            size: 40
+            unique: true
         },
         editor: {
             model: 'editor'
