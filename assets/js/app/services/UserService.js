@@ -164,17 +164,17 @@
                 }
                 return users;
             },
-            update: function (callback) {
+            update: function (data, callback) {
                 let user = this;
                 $http({
                     method: 'POST',
                     url: '/user/update',
-                    data: this,
+                    data: data,
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then(function success(response) {
-                    callback(new User(response.data), '');
+                    callback('', response.data);
                 }, function error(response) {
                     callback(null, response.data);
                 });
@@ -199,7 +199,6 @@
                 return this.login;
             },
             changePassword: function (newPassword) {
-                console.log(newPassword);
                 $http({
                     method: 'POST',
                     url: '/user/' + this.id + '/change_password',

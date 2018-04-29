@@ -159,7 +159,7 @@ module.exports = {
     /**
      * Обновление данных о пользователе
      */
-    update: function (req, res) {
+    update: async function (req, res) {
         let id = req.param('id');
         let setData = {
             login: req.param('login'),
@@ -173,16 +173,17 @@ module.exports = {
             return res.badRequest('Все поля должны быть заполнены!!');
         }
 
-        User.query(
-            'UPDATE user SET login = ?, email = ?, is_admin = ? WHERE id = ?;',
-            [setData.login, setData.email, setData.is_admin, id],
-            function (err, updateRes) {
-                if (err) { return res.serverError(err); }
+        try {
+            let users = await User.update({ id: id }, {
+                login: setData.login,
+                email: setData.email,
+                is_admin: setData.is_admin
+            });
 
-                res.json(updateRes);
-            }
-        );
-
+            return res.json(users[0]);
+        } catch (err) {
+            return ErrorHandler.handle(err);
+        }
     },
     /**
      * Смена пароля
