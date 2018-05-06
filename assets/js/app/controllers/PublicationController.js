@@ -452,7 +452,7 @@
 
         let comparePubByYear = function (a, b) {
             let razn = a.datepub - b.datepub;
-            if ($scope.sortAscendingByYear) {
+            if (!$scope.sortAscendingByYear) {
                 razn = -razn;
             }
             return razn;
@@ -462,7 +462,7 @@
             let countA = a.authors.length;
             let countB = b.authors.length;
             let razn = countA - countB;
-            if ($scope.sortAscendingByCountAuthors) {
+            if (!$scope.sortAscendingByCountAuthors) {
                 if (razn != 0) { razn = -razn; }
             }
             return razn;
