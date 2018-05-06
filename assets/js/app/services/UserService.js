@@ -41,7 +41,7 @@
              * Авторизация
              */
             auth: function () {
-                let validUser = this.isAvailable() && this.password;
+                let validUser = this.login && this.password;
                 if (!validUser) { return false; }
 
                 let user = this;

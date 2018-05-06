@@ -14,19 +14,18 @@ module.exports = {
         // получаем данные из запроса
         let data = {
             login: req.param('login'),
-            email: req.param('email'),
             password: req.param('password')
         }
 
 
         // если что то пусто
-        if (!data.login || !data.email || !data.password) {
+        if (!data.login || !data.password) {
             // то говорим что запрос неверный
             return res.badRequest('Все поля должны быть заполнены!!');
         }
         // по переданным данным ищем пользователя
         User.findOne()
-            .where({ login: data.login, email: data.email })
+            .where({ login: data.login })
             .exec(function (err, user) {
                 if (err) {
                     return res.serverError(err);
