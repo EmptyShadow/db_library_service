@@ -128,6 +128,7 @@
         };
 
         $scope.updatePublication = function (publication) {
+            let listTypesPub = $scope.listTypesPub;
             let uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/modals/update-publication.html',
@@ -141,23 +142,11 @@
                         {
                             desc: 'Российский индекс научного цитирования',
                             id: 'is_rince'
-                        },
-                        {
-                            desc: 'WOS',
-                            id: 'is_wos'
-                        },
-                        {
-                            desc: 'Публикация в журнале Scope',
-                            id: 'is_scope'
-                        },
-                        {
-                            desc: 'DOI',
-                            id: 'is_doi'
                         }
                     ];
+                    $scope.listTypesPub = listTypesPub;
                     $scope.update = function () {
                         if ($scope.obj.datepub != undefined
-                            && $scope.obj.link != undefined
                             && $scope.obj.type != undefined) {
                             $scope.obj.updatePublication(function (err) {
                                 if (!err) {
@@ -422,8 +411,8 @@
         $scope.setGOST = function (publication) {
             let gost = '';
             for (let i = 0; i < publication.authors.length; i++) {
-                let author = publication.author[i];
-                gost += author.lastname + ' ' + author.firstname.charAt(0) + '. ' + author.patronymic.charAt(0) + '.';
+                let author = publication.authors[i];
+                gost += author.names[0].lastname + ' ' + author.names[0].firstname.charAt(0) + '. ' + author.names[0].patronymic.charAt(0) + '.';
                 if (i + 1 == publication.authors.length) {
                     gost += ', ';
                 } else {
@@ -454,15 +443,15 @@
                 gost += ')';
             }
 
-            $scope.gost = gost;
+            return gost;
         };
 
         // сортировка по убыванию
-        $scope.sortAscendingByYear = false;
-        $scope.sortAscendingByCountAuthors = false;
+        $scope.sortAscendingByYear = true;
+        $scope.sortAscendingByCountAuthors = true;
 
         let comparePubByYear = function (a, b) {
-            let razn = a - b;
+            let razn = a.datepub - b.datepub;
             if ($scope.sortAscendingByYear) {
                 razn = -razn;
             }
@@ -472,9 +461,9 @@
         let comparePubByCountAuhor = function (a, b) {
             let countA = a.authors.length;
             let countB = b.authors.length;
-            let razn = a - b;
+            let razn = countA - countB;
             if ($scope.sortAscendingByCountAuthors) {
-                razn = -razn;
+                if (razn != 0) { razn = -razn; }
             }
             return razn;
         };

@@ -23,11 +23,11 @@
             this.datepub = undefined;
             this.is_vak = undefined;
             this.is_rince = undefined;
-            this.is_wos = '';
-            this.is_scopus = '';
-            this.is_doi = '';
+            this.wos = '';
+            this.scopus_id = '';
+            this.doi = '';
             this.link = '';
-            this.dataot = '';
+            this.dataout = '';
             this.type = undefined;
             this.authors = [];
             this.editor = undefined;

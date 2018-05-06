@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <div id="collapse{{publication.id}}" class="collapse" aria-labelledby="heading{{publication.id}}" data-parent="#accordion" ng-click="setGOST(publication)">
+                    <div id="collapse{{publication.id}}" class="collapse" aria-labelledby="heading{{publication.id}}" data-parent="#accordion">
                         <div class="card-body">
                             <ul class="list-group col mb-3">
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
@@ -53,7 +53,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
                                     DOI: {{publication.doi}}
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action" ng-init="gost = setGOST(publication)">
                                     ГОСТ: {{gost}}
                                 </li>
                             </ul>
