@@ -65,5 +65,9 @@
             </p>
         </div>
     </div>
-    <button type="submit" class="btn btn-dark mb-2" data-ng-click="find(callbackAuthorsFinded)">Поиск</button>
+    <div class="form-inline">
+        <button type="submit" class="btn btn-dark mb-2" data-ng-click="find(callbackAuthorsFinded)">Поиск</button>
+        <button type="button" class="btn btn-secondary mb-2 ml-2" ng-click="sortByYear($event)">По убыванию даты</button>
+        <button type="button" class="btn btn-secondary mb-2 ml-2" ng-click="sortByCountAuthors($event)">По убывание кол-во авторов</button>
+    </div>
 </form>

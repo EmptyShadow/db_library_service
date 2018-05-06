@@ -455,6 +455,56 @@
             }
 
             $scope.gost = gost;
+        };
+
+        // сортировка по убыванию
+        $scope.sortAscendingByYear = false;
+        $scope.sortAscendingByCountAuthors = false;
+
+        let comparePubByYear = function (a, b) {
+            let razn = a - b;
+            if ($scope.sortAscendingByYear) {
+                razn = -razn;
+            }
+            return razn;
+        };
+
+        let comparePubByCountAuhor = function (a, b) {
+            let countA = a.authors.length;
+            let countB = b.authors.length;
+            let razn = a - b;
+            if ($scope.sortAscendingByCountAuthors) {
+                razn = -razn;
+            }
+            return razn;
+        };
+
+        $scope.sortByYear = function (event) {
+            $scope.publications.sort(comparePubByYear);
+
+            $scope.sortAscendingByYear = !$scope.sortAscendingByYear;
+
+            let target = event.currentTarget;
+            if ($scope.sortAscendingByYear) {
+                target.innerText = "По возрастанию даты";
+            } else {
+                target.innerText = "По убыванию даты";
+            }
         }
+
+        $scope.sortByCountAuthors = function (event) {
+            $scope.publications.sort(comparePubByCountAuhor);
+
+            $scope.sortAscendingByCountAuthors = !$scope.sortAscendingByCountAuthors;
+
+            let target = event.currentTarget;
+            if ($scope.sortAscendingByCountAuthors) {
+                target.innerText = "По возрастанию кол-во авторов";
+            } else {
+                target.innerText = "По убыванию кол-во авторов";
+            }
+        }
+
+
     }
 })();
