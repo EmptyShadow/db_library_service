@@ -1,0 +1,69 @@
+<form>
+    <div class="form-row">
+        <div class="col-md-2 mb-3">
+            <label for="publicationId">id публикации</label>
+            <input type="number" class="form-control" id="publicationId" placeholder="id публикации" data-ng-model="paramsFind.id">
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="publicationDate">Год публикации</label>
+            <input type="number" class="form-control" id="publicationDate" placeholder="Год публикации" data-ng-model="paramsFind.datepub">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="publicationTitle">Название</label>
+            <input type="text" class="form-control" id="publicationTitle" placeholder="Название" data-ng-model="paramsFind.titles">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="publicationType">Тип публикации</label>
+            <select class="form-control" id="publicationType" ng-model="paramsFind.type">
+                <option selected value="undefined"></option>
+                <option value="{{type.id}}" ng-repeat="type in listTypesPub">{{type.type}}</option>
+            </select>
+        </div>
+    </div>
+    <label for="publicationIndexes">Индексации во всероссийских и международных базах данных</label>
+    <div id="publicationIndexes">
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="publicationDOI">DOI</label>
+                <input type="text" class="form-control" id="publicationDOI" placeholder="DOI" data-ng-model="paramsFind.doi">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="publicationWOS">WOS</label>
+                <input type="text" class="form-control" id="publicationWOS" placeholder="WOS" data-ng-model="paramsFind.wos">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="publicationScopusId">Scopus id</label>
+                <input type="text" class="form-control" id="publicationScopusId" placeholder="Scopus id" data-ng-model="paramsFind.scopus_id">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="publicationISBN">ISBN</label>
+                <input type="text" class="form-control" id="publicationISBN" placeholder="ISBN" data-ng-model="paramsFind.isbn">
+            </div>
+        </div>
+        <div class="form-inline">
+            <list-checkboxs checkboxes="listCheckboxes"></list-checkboxs>
+        </div>
+    </div>
+    <div class="form-inline mb-3">
+        <h5>Авторы
+            <span class="badge badge-dark">Ф - фамилия</span>
+            <span class="badge badge-dark">И - имя</span>
+            <span class="badge badge-dark">О - отчеcтво</span>
+            <i class="btn material-icons md-24" ng-click="newFilterAuthor()">add_circle_outline</i>
+        </h5>
+    </div>
+    <div class="form-inline mb-3">
+        <div ng-repeat="author in paramsFind.authors">
+            <p class="btn btn-secondary mr-2">
+                <span class="badge badge-dark" ng-if="author.lastname">Ф</span> {{author.lastname}}
+                <span class="badge badge-dark" ng-if="author.firstname">И</span> {{author.firstname}}
+                <span class="badge badge-dark" ng-if="author.patronymic">О</span> {{author.patronymic}}
+
+                <button type="button" class="close ml-2" ng-click="removeFilterAuthor(author)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </p>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-dark mb-2" data-ng-click="find(callbackAuthorsFinded)">Поиск</button>
+</form>

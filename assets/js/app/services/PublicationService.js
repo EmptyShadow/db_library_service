@@ -23,10 +23,12 @@
             this.datepub = undefined;
             this.is_vak = undefined;
             this.is_rince = undefined;
-            this.is_wos = undefined;
-            this.is_scopus = undefined;
-            this.is_doi = undefined;
+            this.is_wos = '';
+            this.is_scopus = '';
+            this.is_doi = '';
             this.link = '';
+            this.dataot = '';
+            this.type = undefined;
             this.authors = [];
             this.editor = undefined;
         };

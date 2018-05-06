@@ -3,51 +3,10 @@
         <i class="btn material-icons md-36" data-ng-click="createPublication()" ng-if="curUserSystem.is_admin">add_circle_outline</i>
     </h1>
     <div class="container-fluid">
-        <form>
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-                    <label for="publicationId">id публикации</label>
-                    <input type="number" class="form-control" id="publicationId" placeholder="id публикации" data-ng-model="paramsFind.id">
-                </div>
-                <div class="col-md-2 mb-3">
-                    <label for="publicationDate">Год публикации</label>
-                    <input type="number" class="form-control" id="publicationDate" placeholder="Год публикации" data-ng-model="paramsFind.datepub">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="publicationTitle">Название</label>
-                    <input type="text" class="form-control" id="publicationTitle" placeholder="Название" data-ng-model="paramsFind.titles">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="publicationEditor">Издание</label>
-                    <input type="text" class="form-control" id="publicationEditor" placeholder="Издание" data-ng-model="paramsFind.editor">
-                </div>
-            </div>
-            <div class="form-inline mb-3">
-                <list-checkboxs checkboxes="listCheckboxes"></list-checkboxs>
-            </div>
-            <div class="form-inline mb-3">
-                <h5>Авторы
-                    <span class="badge badge-dark">Ф - фамилия</span>
-                    <span class="badge badge-dark">И - имя</span>
-                    <span class="badge badge-dark">О - отчеcтво</span>
-                    <i class="btn material-icons md-24" ng-click="newFilterAuthor()">add_circle_outline</i>
-                </h5>
-            </div>
-            <div class="form-inline mb-3">
-                <div ng-repeat="author in paramsFind.authors">
-                    <p class="btn btn-secondary mr-2">
-                        <span class="badge badge-dark" ng-if="author.lastname">Ф</span> {{author.lastname}}
-                        <span class="badge badge-dark" ng-if="author.firstname">И</span> {{author.firstname}}
-                        <span class="badge badge-dark" ng-if="author.patronymic">О</span> {{author.patronymic}}
+        <!-- Форма поиска -->
+        <ng-include src="'views/forms/find-publication.html'"></ng-include>
 
-                        <button type="button" class="close ml-2" ng-click="removeFilterAuthor(author)">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </p>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-dark mb-2" data-ng-click="find(callbackAuthorsFinded)">Поиск</button>
-        </form>
+        <!-- Публикации -->
         <div id="accordion">
             <div data-ng-repeat="publication in publications">
                 <div class="card mb-2">
@@ -67,9 +26,12 @@
                         </div>
                     </div>
 
-                    <div id="collapse{{publication.id}}" class="collapse" aria-labelledby="heading{{publication.id}}" data-parent="#accordion">
+                    <div id="collapse{{publication.id}}" class="collapse" aria-labelledby="heading{{publication.id}}" data-parent="#accordion" ng-click="setGOST(publication)">
                         <div class="card-body">
                             <ul class="list-group col mb-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                    Тип публикации: {{publication.type.type}}
+                                </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
                                     Год публикации
                                     <span class="badge badge-dark badge-pill">{{publication.datepub}}</span>
@@ -83,16 +45,16 @@
                                     <span class="badge badge-dark badge-pill">{{publication.is_rince ? 'Присутствует' : 'Отсутствует'}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                                    WOS
-                                    <span class="badge badge-dark badge-pill">{{publication.is_wos ? 'Присутствует' : 'Отсутствует'}}</span>
+                                    WOS: {{publication.wos}}
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                                    Публикация в журнале Scope
-                                    <span class="badge badge-dark badge-pill">{{publication.is_scope ? 'Присутствует' : 'Отсутствует'}}</span>
+                                    Scope id: {{publication.scope_id}}
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                                    DOI
-                                    <span class="badge badge-dark badge-pill">{{publication.is_doi ? 'Присутствует' : 'Отсутствует'}}</span>
+                                    DOI: {{publication.doi}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                    ГОСТ: {{gost}}
                                 </li>
                             </ul>
 

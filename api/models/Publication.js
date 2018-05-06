@@ -31,22 +31,28 @@ module.exports = {
       defaultTo: false
     },
     // хз
-    is_wos: {
+    wos: {
       type: 'string'
     },
     // публикация в журнале
-    is_scopus: {
+    scopus_id: {
       type: 'string'
     },
-    is_doi: {
+    doi: {
       type: 'string'
     },
     link: {
       type: 'string'
     },
+    dataout: {
+      type: 'string'
+    },
     authors: {
       collection: 'author',
       via: 'publications'
+    },
+    isbn: {
+      type: 'string'
     },
     editor: {
       model: 'editor'

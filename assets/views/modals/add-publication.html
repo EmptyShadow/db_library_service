@@ -9,16 +9,27 @@
         <div class="form-row">
             <div class="col-md-8 mb-3">
                 <div class="mb-2" class="form-group">
-                    <label for="inputLangTitlePublication">Язык названия</label>
-                    <input id="inputLangTitlePublication" type="text" class="form-control" placeholder="Язык названия" ng-model="obj.title.lang">
+                    <label for="inputLangTitlePublication">Язык названия*</label>
+                    <input id="inputLangTitlePublication" type="text" class="form-control" placeholder="Язык названия" ng-model="obj.title.lang"
+                        required>
                 </div>
                 <div class="mb-2" class="form-group">
-                    <label for="inputTitlePublication">Название</label>
-                    <input id="inputTitlePublication" type="text" class="form-control" placeholder="Название" ng-model="obj.title.title">
+                    <label for="inputDatePublication">Год публикации*</label>
+                    <input id="inputDatePublication" type="number" class="form-control" placeholder="Год публикации" ng-model="obj.datepub" required>
                 </div>
                 <div class="mb-2" class="form-group">
-                    <label for="inputDatePublication">Год публикации</label>
-                    <input id="inputDatePublication" type="number" class="form-control" placeholder="Год публикации" ng-model="obj.datepub">
+                    <label for="inputTitlePublication">Название*</label>
+                    <input id="inputTitlePublication" type="text" class="form-control" placeholder="Название" ng-model="obj.title.title" required>
+                </div>
+                <div class="mb-2" class="form-group">
+                    <label for="publicationType">Тип публикации*</label>
+                    <select class="form-control" id="publicationType" ng-model="obj.type">
+                        <option value="{{type.id}}" ng-repeat="type in listTypesPub">{{type.type}}</option>
+                    </select>
+                </div>
+                <div class="mb-2" class="form-group">
+                    <label for="inputDataoutPublication">Выходные данные</label>
+                    <input id="inputDataoutPublication" type="text" class="form-control" placeholder="Выходные данные" ng-model="obj.dataout" required>
                 </div>
                 <div class="form-group">
                     <label for="inputEditorLink">Ссылка на публикацию</label>
@@ -34,11 +45,27 @@
                         </label>
                     </div>
                 </div>
+                <div class="mb-2" class="form-group">
+                    <label for="inputDOIPublication">DOI</label>
+                    <input id="inputDOIPublication" type="text" class="form-control" placeholder="DOI" ng-model="obj.doi">
+                </div>
+                <div class="mb-2" class="form-group">
+                    <label for="inputWOSPublication">WOS</label>
+                    <input id="inputWOSPublication" type="text" class="form-control" placeholder="WOS" ng-model="obj.wos">
+                </div>
+                <div class="mb-2" class="form-group">
+                    <label for="inputScopesIdPublication">Scopes id</label>
+                    <input id="inputScopesIdPublication" type="text" class="form-control" placeholder="Scopes id" ng-model="obj.scopes_id">
+                </div>
+                <div class="mb-2">
+                    <label for="publicationISBN">ISBN</label>
+                    <input type="text" class="form-control" id="publicationISBN" placeholder="ISBN" data-ng-model="obj.isbn">
+                </div>
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-dark" data-ng-click="add()">Сохранить</button>
+    <button type="submit" class="btn btn-dark" data-ng-click="add()">Сохранить</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" data-ng-click="cancel()">Отмена</button>
 </div>

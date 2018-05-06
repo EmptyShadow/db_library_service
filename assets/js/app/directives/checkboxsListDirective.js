@@ -24,7 +24,7 @@
                 + '<label class="custom-control-label" for="checkbox{{$index}}">{{ cb.desc }}</label>'
                 + '</div>'
                 + '</div>'
-                + '</div>'
+                + '</div><small class="form-text text-muted ml-2">Ctr + mouse button Left исключает чекбокс</small>'
                 + '</div>',
             controller: function ($scope, $element) {
                 $scope.master = false;

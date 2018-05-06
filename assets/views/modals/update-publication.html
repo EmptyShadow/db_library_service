@@ -6,22 +6,54 @@
 </div>
 <div class="modal-body" id="modal-body">
     <form>
-        <div class="mb-2" class="form-group">
-            <label for="inputDatePublication">Год публикации</label>
-            <input id="inputDatePublication" type="number" class="form-control" placeholder="Год публикации" ng-model="obj.datepub">
-        </div>
-        <div class="form-group">
-            <label for="inputEditorLink">Ссылка на публикацию</label>
-            <input id="inputEditorLink" type="text" class="form-control" placeholder="Ссылка на публикацию" ng-model="obj.link">
-        </div>
-        <div class="mb-2" ng-repeat="checkbox in listCheckboxes">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" value="false" id="modalCheckbox{{$index}}" ng-model="obj[checkbox.id]">
-                <label class="custom-control-label" for="modalCheckbox{{$index}}">
-                    {{checkbox.desc}}
-                </label>
-            </div>
-        </div>
+            <div class="form-row">
+                    <div class="col-md-8 mb-3">
+                        <div class="mb-2" class="form-group">
+                            <label for="inputDatePublication">Год публикации</label>
+                            <input id="inputDatePublication" type="number" class="form-control" placeholder="Год публикации" ng-model="obj.datepub" required>
+                        </div>
+                        <div class="mb-2" class="form-group">
+                            <label for="publicationType">Тип публикации</label>
+                            <select class="form-control" id="publicationType" ng-model="obj.type">
+                                <option value="{{type.id}}" ng-repeat="type in listTypesPub">{{type.type}}</option>
+                            </select>
+                        </div>
+                        <div class="mb-2" class="form-group">
+                            <label for="inputDataoutPublication">Выходные данные</label>
+                            <input id="inputDataoutPublication" type="text" class="form-control" placeholder="Выходные данные" ng-model="obj.dataout" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEditorLink">Ссылка на публикацию</label>
+                            <input id="inputEditorLink" type="text" class="form-control" placeholder="Ссылка на публикацию" ng-model="obj.link">
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="mb-2" ng-repeat="checkbox in listCheckboxes">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" value="false" id="modalCheckbox{{$index}}" ng-model="obj[checkbox.id]">
+                                <label class="custom-control-label" for="modalCheckbox{{$index}}">
+                                    {{checkbox.desc}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-2" class="form-group">
+                            <label for="inputDOIPublication">DOI</label>
+                            <input id="inputDOIPublication" type="text" class="form-control" placeholder="DOI" ng-model="obj.doi">
+                        </div>
+                        <div class="mb-2" class="form-group">
+                            <label for="inputWOSPublication">WOS</label>
+                            <input id="inputWOSPublication" type="text" class="form-control" placeholder="WOS" ng-model="obj.wos">
+                        </div>
+                        <div class="mb-2" class="form-group">
+                            <label for="inputScopesIdPublication">Scopes id</label>
+                            <input id="inputScopesIdPublication" type="text" class="form-control" placeholder="Scopes id" ng-model="obj.scopes_id">
+                        </div>
+                        <div class="mb-2">
+                            <label for="publicationISBN">ISBN</label>
+                            <input type="text" class="form-control" id="publicationISBN" placeholder="ISBN" data-ng-model="obj.isbn">
+                        </div>
+                    </div>
+                </div>
     </form>
 </div>
 <div class="modal-footer">

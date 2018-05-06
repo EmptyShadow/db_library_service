@@ -3,14 +3,19 @@
 
     angular.module('Library').controller('PublicationController', PublicationController);
 
-    PublicationController.$inject = ['$scope', '$uibModal', 'Publication', 'CurUserSystem', 'Edition'];
-    function PublicationController($scope, $uibModal, Publication, CurUserSystem, Edition) {
+    PublicationController.$inject = ['$scope', '$uibModal', 'Publication', 'CurUserSystem', 'Edition', 'TypePublication'];
+    function PublicationController($scope, $uibModal, Publication, CurUserSystem, Edition, TypePublication) {
         if (CurUserSystem.userAuth) {
             $scope.curUserSystem = CurUserSystem.user;
         }
 
         $scope.publications = [];
         $scope.authors = [];
+        (new TypePublication()).find(function (err, data) {
+            if (!err) {
+                $scope.listTypesPub = data;
+            }
+        });
 
         $scope.paramsFind = new Publication();
 
@@ -75,25 +80,11 @@
                 isSelected: undefined,
                 desc: 'Российский индекс научного цитирования',
                 id: 'is_rince'
-            },
-            {
-                isSelected: undefined,
-                desc: 'WOS',
-                id: 'is_wos'
-            },
-            {
-                isSelected: undefined,
-                desc: 'Публикация в журнале Scope',
-                id: 'is_scope'
-            },
-            {
-                isSelected: undefined,
-                desc: 'DOI',
-                id: 'is_doi'
             }
         ];
 
         $scope.createPublication = function () {
+            let listTypesPub = $scope.listTypesPub;
             let uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/modals/add-publication.html',
@@ -107,29 +98,18 @@
                         {
                             desc: 'Российский индекс научного цитирования',
                             id: 'is_rince'
-                        },
-                        {
-                            desc: 'WOS',
-                            id: 'is_wos'
-                        },
-                        {
-                            desc: 'Публикация в журнале Scope',
-                            id: 'is_scopus'
-                        },
-                        {
-                            desc: 'DOI',
-                            id: 'is_doi'
                         }
                     ];
                     $scope.listCheckboxes.forEach(element => {
                         $scope.obj[element.id] = false;
                     });
+                    $scope.listTypesPub = listTypesPub;
                     $scope.add = function () {
                         console.log($scope.obj);
                         if ($scope.obj.datepub != undefined
-                            && $scope.obj.link != undefined
                             && $scope.obj.title.lang != undefined
-                            && $scope.obj.title.title != undefined) {
+                            && $scope.obj.title.title != undefined
+                            && $scope.obj.type != undefined) {
                             $scope.obj.createPublication(function (err, newPublication) {
                                 $uibModalInstance.close(newPublication);
                             });
@@ -177,7 +157,8 @@
                     ];
                     $scope.update = function () {
                         if ($scope.obj.datepub != undefined
-                            && $scope.obj.link != undefined) {
+                            && $scope.obj.link != undefined
+                            && $scope.obj.type != undefined) {
                             $scope.obj.updatePublication(function (err) {
                                 if (!err) {
                                     $uibModalInstance.close($scope.obj);
@@ -361,9 +342,9 @@
                     obj: author,
                     view: {
                         title: 'Исключить автора',
-                        message: 'Вы действительно хотите исключить автора ' 
-                        + author.names[0].lastname + ' ' + author.names[0].firstname + ' ' + author.names[0].patronymic 
-                        + ' из авторов публикации ' + publication.titles[0].title + '?'
+                        message: 'Вы действительно хотите исключить автора '
+                            + author.names[0].lastname + ' ' + author.names[0].firstname + ' ' + author.names[0].patronymic
+                            + ' из авторов публикации ' + publication.titles[0].title + '?'
                     },
                     array: function () {
                         return publication.authors;
@@ -423,9 +404,9 @@
                     obj: editor,
                     view: {
                         title: 'Исключить издание',
-                        message: 'Вы действительно хотите исключить издание ' 
-                        + editor.titles[0].name 
-                        + ' из публикации ' + publication.titles[0].title + '?'
+                        message: 'Вы действительно хотите исключить издание '
+                            + editor.titles[0].name
+                            + ' из публикации ' + publication.titles[0].title + '?'
                     },
                     array: function () {
                         return [];
@@ -437,5 +418,43 @@
             }, function (reason) {
             });
         };
+
+        $scope.setGOST = function (publication) {
+            let gost = '';
+            for (let i = 0; i < publication.authors.length; i++) {
+                let author = publication.author[i];
+                gost += author.lastname + ' ' + author.firstname.charAt(0) + '. ' + author.patronymic.charAt(0) + '.';
+                if (i + 1 == publication.authors.length) {
+                    gost += ', ';
+                } else {
+                    gost += ' ';
+                }
+            }
+
+            gost += publication.titles[0].title;
+
+            if (publication.dataout) {
+                gost += ' ' + publication.dataout;
+            }
+
+            let indexed = [];
+            if (publication.doi) { indexed.push('DOI: ' + publication.doi); }
+            if (publication.scopus_id) { indexed.push('Scopus id: ' + publication.scopus_id); }
+            if (publication.wos) { indexed.push('WOS: ' + publication.wos); }
+            if (publication.isbn) { indexed.push('ISBN: ' + publication.isbn); }
+
+            if (indexed.length != 0) {
+                gost += ' (';
+                for (let i = 0; i < indexed.length; i++) {
+                    gost += indexed[i];
+                    if (i + 1 != indexed.length) {
+                        gost += ', ';
+                    }
+                }
+                gost += ')';
+            }
+
+            $scope.gost = gost;
+        }
     }
 })();
