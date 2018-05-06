@@ -11,6 +11,10 @@ module.exports = {
             type: 'string',
             unique: true,
             required: true
+        },
+        publications: {
+            collection: 'publication',
+            via: 'type'
         }
     }
 };

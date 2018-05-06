@@ -9,6 +9,9 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
+    type: {
+      model: 'typepublication'
+    },
     titles: {
       collection: 'publicationtitle',
       via: 'publication'
