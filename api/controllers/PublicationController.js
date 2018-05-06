@@ -105,7 +105,7 @@ module.exports = {
             } else {
                 arrayIdPublications.publications = arrayIdPublications.editors;
             }
-        }
+        } */
 
         if (paramsFind.publication.id != undefined) {
             if (arrayIdPublications.publications.length != undefined) {
@@ -118,7 +118,7 @@ module.exports = {
                 paramsFind.publication.id = arrayIdPublications.publications;
             }
         }
- */
+
         let publications = await Publication.find(paramsFind.publication)
             .populate('type')
             .populate('titles')

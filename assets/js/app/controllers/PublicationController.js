@@ -413,7 +413,7 @@
             for (let i = 0; i < publication.authors.length; i++) {
                 let author = publication.authors[i];
                 gost += author.names[0].lastname + ' ' + author.names[0].firstname.charAt(0) + '. ' + author.names[0].patronymic.charAt(0) + '.';
-                if (i + 1 == publication.authors.length) {
+                if (i + 1 != publication.authors.length) {
                     gost += ', ';
                 } else {
                     gost += ' ';
