@@ -433,7 +433,7 @@
             if (publication.isbn) { indexed.push('ISBN: ' + publication.isbn); }
 
             if (indexed.length != 0) {
-                gost += ' (';
+                gost += ', (';
                 for (let i = 0; i < indexed.length; i++) {
                     gost += indexed[i];
                     if (i + 1 != indexed.length) {
