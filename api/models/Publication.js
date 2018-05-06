@@ -32,21 +32,17 @@ module.exports = {
     },
     // хз
     is_wos: {
-      type: 'boolean',
-      defaultTo: false
+      type: 'string'
     },
     // публикация в журнале
     is_scopus: {
-      type: 'boolean',
-      defaultTo: false
+      type: 'string'
     },
     is_doi: {
-      type: 'boolean',
-      defaultTo: false
+      type: 'string'
     },
     link: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     authors: {
       collection: 'author',
