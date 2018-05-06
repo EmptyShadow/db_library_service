@@ -36,7 +36,7 @@ module.exports = {
         let arrayIdPublications = {
             titles: [],
             authors: [],
-            editors: [],
+            /* editors: [], */
             publications: {}
         };
 
@@ -60,6 +60,7 @@ module.exports = {
             let authors = await Author.find()
                 .populate('names', paramsFind.authors)
                 .populate('publications');
+
             authors.forEach((author) => {
                 if (author.names.length == 0) { return; }
 
@@ -85,7 +86,7 @@ module.exports = {
             }
         }
 
-        if (paramsFind.editor.name != undefined) {
+        /* if (paramsFind.editor.name != undefined) {
             // находятся подходящие издания
             let editors = await Editor.find()
                 .populate('titles', paramsFind.editor)
@@ -117,8 +118,9 @@ module.exports = {
                 paramsFind.publication.id = arrayIdPublications.publications;
             }
         }
-
+ */
         let publications = await Publication.find(paramsFind.publication)
+            .populate('type')
             .populate('titles')
             .populate('authors')
             .populate('editor');
@@ -142,7 +144,7 @@ module.exports = {
             publication: {},
             titles: {},
             authors: data.authors.length != 0 ? { or: [] } : {},
-            editor: {}
+            /* editor: {} */
         };
 
         if (data.id != undefined && data.id != null) {
@@ -164,21 +166,36 @@ module.exports = {
         // поиск по наличию нахождения в журналах, рейтингах и так далее
         if (data.is_vak != undefined) { paramsFind.publication.is_vak = data.is_vak; }
         if (data.is_rince != undefined) { paramsFind.publication.is_rince = data.is_rince; }
-        if (data.is_wos != undefined) { paramsFind.publication.is_wos = data.is_wos; }
-        if (data.is_scope != undefined) { paramsFind.publication.is_scope = data.is_scope; }
-        if (data.is_doi != undefined) { paramsFind.publication.is_doi = data.is_doi; }
+        if (data.wos) { paramsFind.publication.wos = data.wos; }
+        if (data.scopus_id) { paramsFind.publication.scopus_id = data.scopus_id; }
+        if (data.doi) { paramsFind.publication.doi = data.doi; }
+        if (data.type) { paramsFind.publication.type = data.type; }
 
-        // поиск по одной строковой фразе в издании
+        /* // поиск по одной строковой фразе в издании
         if (data.editor != undefined && data.editor != '') {
             paramsFind.editor.name = { contains: data.editor };
-        }
+        } */
 
         data.authors.forEach(author => {
-            paramsFind.authors.or.push({
-                lastname: { startsWith: author.lastname != undefined ? author.lastname : '' },
-                firstname: { startsWith: author.firstname != undefined ? author.firstname : '' },
-                patronymic: { startsWith: author.patronymic != undefined ? author.patronymic : '' }
-            });
+            let or = {};
+            if (author.lastname != undefined) {
+                or.lastname = {
+                    startsWith: author.lastname
+                }
+            }
+            if (author.firstname != undefined) {
+                or.firstname = {
+                    startsWith: author.firstname
+                }
+            }
+            if (author.patronymic != undefined) {
+                or.patronymic = {
+                    startsWith: author.patronymic
+                }
+            }
+            if (or.lastname || or.firstname || or.patronymic) {
+                paramsFind.authors.or.push(or);
+            }
         });
 
         return paramsFind;
@@ -188,6 +205,7 @@ module.exports = {
      */
     create: async function (req, res) {
         let data = req.allParams();
+        console.log(data);
         let title = req.param('title');
         delete data.title;
         delete data.titles;
@@ -205,6 +223,7 @@ module.exports = {
                 }
 
                 publication = await Publication.findOne({ id: publication.id })
+                    .populate('type')
                     .populate('titles')
                     .populate('authors')
                     .populate('editor');
@@ -240,6 +259,7 @@ module.exports = {
 
         try {
             let publication = await Publication.findOne({ id: id })
+                .populate('type')
                 .populate('titles')
                 .populate('authors')
                 .populate('editor');
