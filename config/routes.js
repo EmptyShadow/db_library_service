@@ -237,8 +237,27 @@ module.exports.routes = {
   'GET /contacts': {
     controller: 'ContactController',
     action: 'getContacts'
-  }
+  },
 
+  /**
+   * Значения по умолчанию
+   */
+  'GET /def/types-publication': {
+    controller: 'DefAddedController',
+    action: 'typesPublication'
+  },
+  'GET /def/authors': {
+    controller: 'DefAddedController',
+    action: 'authors'
+  },
+  'GET /def/publications': {
+    controller: 'DefAddedController',
+    action: 'publications'
+  },
+  'GET /def/all': {
+    controller: 'DefAddedController',
+    action: 'all'
+  },
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

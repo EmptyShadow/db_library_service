@@ -9,6 +9,10 @@ module.exports = {
 
   connection: 'someMysqlServer',
   attributes: {
+    country: {
+      type: 'string',
+      required: true
+    },
     type: {
       model: 'typepublication'
     },
