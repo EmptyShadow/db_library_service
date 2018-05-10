@@ -158,9 +158,22 @@ module.exports = {
             }
         }
 
+        // поиск по стране публикации
+        if (data.country != '') {
+            paramsFind.publication.country = data.country;
+        }
+
         // поиск года публикации
         if (data.datepub != undefined && data.datepub != null) {
-            paramsFind.publication.datepub = data.datepub;
+            let indexDef = data.datepub.indexOf('-');
+            if (indexDef == -1) {
+                paramsFind.publication.datepub = data.datepub;
+            } else {
+                paramsFind.publication.datepub = {
+                    '>=': data.datepub.substring(0, indexDef),
+                    '<=': data.datepub.substring(indexDef + 1)
+                };
+            }
         }
 
         // поиск по наличию нахождения в журналах, рейтингах и так далее
@@ -207,6 +220,7 @@ module.exports = {
         let data = req.allParams();
         console.log(data);
         let title = req.param('title');
+        title.lang = GetLang.getLangByStr(title.title);
         delete data.title;
         delete data.titles;
         delete data.authors;

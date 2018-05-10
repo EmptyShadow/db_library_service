@@ -106,12 +106,16 @@
                     $scope.listTypesPub = listTypesPub;
                     $scope.add = function () {
                         console.log($scope.obj);
-                        if ($scope.obj.datepub != undefined
-                            && $scope.obj.title.lang != undefined
+                        if ($scope.obj.country != undefined
+                            && $scope.obj.datepub != undefined
                             && $scope.obj.title.title != undefined
                             && $scope.obj.type != undefined) {
                             $scope.obj.createPublication(function (err, newPublication) {
-                                $uibModalInstance.close(newPublication);
+                                if (err) {
+                                    alert('Ошибка создания публикации!! Проверьте данные.');
+                                } else {
+                                    $uibModalInstance.close(newPublication);
+                                }
                             });
                         }
                     };
@@ -122,7 +126,9 @@
                 size: 'lg'
             });
             uibModalInstance.result.then(function (publication) {
+                $scope.publications = [];
                 $scope.publications.push(publication);
+                alert('Не забудьте добавить авторов и издание к публикации');
             }, function (reason) {
             });
         };
@@ -151,6 +157,8 @@
                             $scope.obj.updatePublication(function (err) {
                                 if (!err) {
                                     $uibModalInstance.close($scope.obj);
+                                } else {
+                                    alert('Не удалось обновить публикацию!!');
                                 }
                             })
                         }
@@ -162,6 +170,17 @@
                 size: 'lg'
             });
             uibModalInstance.result.then(function () {
+                $scope.setGOST(publication);
+                for (let i = 0; i < listTypesPub.length; i++) {
+                    if (listTypesPub[i].id == publication.type) {
+                        publication.type = {
+                            id: publication.type,
+                            type: listTypesPub[i].type
+                        }
+                        break;
+                    }
+                }
+                
             }, function (reason) {
             });
         };
@@ -412,7 +431,13 @@
             let gost = '';
             for (let i = 0; i < publication.authors.length; i++) {
                 let author = publication.authors[i];
-                gost += author.names[0].lastname + ' ' + author.names[0].firstname.charAt(0) + '. ' + author.names[0].patronymic.charAt(0) + '.';
+
+                gost += author.names[0].lastname
+                    + ' ' + author.names[0].firstname.charAt(0) + '.';
+                if (author.names[0].patronymic != undefined) {
+                    gost += ' ' + author.names[0].patronymic.charAt(0) + '.';
+                }
+
                 if (i + 1 != publication.authors.length) {
                     gost += ', ';
                 } else {
@@ -421,6 +446,8 @@
             }
 
             gost += publication.titles[0].title;
+
+            if (publication.editor.titles != undefined) gost += '; ' + publication.editor.titles[0].name + '; ';
 
             if (publication.dataout) {
                 gost += ' ' + publication.dataout;
@@ -443,7 +470,7 @@
                 gost += ')';
             }
 
-            return gost;
+            publication.gost = gost;
         };
 
         // сортировка по убыванию

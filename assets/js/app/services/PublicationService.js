@@ -19,6 +19,7 @@
             }
 
             this.id = undefined;
+            this.country = '';
             this.titles = [];
             this.datepub = undefined;
             this.is_vak = undefined;

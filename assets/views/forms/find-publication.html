@@ -5,19 +5,23 @@
             <input type="number" class="form-control" id="publicationId" placeholder="id публикации" data-ng-model="paramsFind.id">
         </div>
         <div class="col-md-2 mb-3">
+            <label for="publicationCountry">Страна публикации</label>
+            <input type="text" class="form-control" id="publicationCountry" placeholder="Страна публикации" data-ng-model="paramsFind.country">
+        </div>
+        <div class="col-md-2 mb-3">
             <label for="publicationDate">Год публикации</label>
-            <input type="number" class="form-control" id="publicationDate" placeholder="Год публикации" data-ng-model="paramsFind.datepub">
+            <input type="text" class="form-control" id="publicationDate" placeholder="ГГГГ или ГГГГ-ГГГГ" data-ng-model="paramsFind.datepub" pattern="[0-9]{4}(-[0-9]{4})?">
         </div>
-        <div class="col-md-4 mb-3">
-            <label for="publicationTitle">Название</label>
-            <input type="text" class="form-control" id="publicationTitle" placeholder="Название" data-ng-model="paramsFind.titles">
-        </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-2 mb-3">
             <label for="publicationType">Тип публикации</label>
             <select class="form-control" id="publicationType" ng-model="paramsFind.type">
                 <option selected value=""></option>
                 <option value="{{type.id}}" ng-repeat="type in listTypesPub">{{type.type}}</option>
             </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="publicationTitle">Название</label>
+            <input type="text" class="form-control" id="publicationTitle" placeholder="Название" data-ng-model="paramsFind.titles">
         </div>
     </div>
     <label for="publicationIndexes">Индексации во всероссийских и международных базах данных</label>
