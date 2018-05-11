@@ -218,7 +218,6 @@ module.exports = {
      */
     create: async function (req, res) {
         let data = req.allParams();
-        console.log(data);
         let title = req.param('title');
         title.lang = GetLang.getLangByStr(title.title);
         delete data.title;
@@ -369,14 +368,26 @@ module.exports = {
      */
     addAuthor: async function (req, res) {
         let idPublication = req.param('idPublication');
-        let idAuthor = req.param('idAuthor');
+        let authorNameParams = req.allParams();
+        delete authorNameParams.idPublication;
 
         try {
-            let author = await Author.findOne({ id: idAuthor })
+            let authorName = await Name.findOne(authorNameParams);
+
+            if (authorName == undefined) {
+                authorNameParams.lang = GetLang.getLangByStr(authorNameParams.lastname);
+
+                let author = await Author.create({ names: [authorNameParams], publications: [idPublication] })
+                    .populate('names');
+
+                return res.json(await Author.findOne({ id: author.id }).populate('names'));
+            }
+
+            let author = await Author.findOne({ id: authorName.author })
                 .populate('names');
             let publication = await Publication.findOne({ id: idPublication });
 
-            publication.authors.add(author.id);
+            publication.authors.add(authorName.author);
             publication.save(function (err) {
                 if (err) {
                     throw err;
@@ -414,13 +425,26 @@ module.exports = {
      * Изменить издание публикации
      */
     replaceEditor: async function (req, res) {
-        let ids = req.allParams();
+        let idPublication = req.param('idPublication');
+        let name = req.param('name');
 
         try {
-            let editor = await Editor.findOne({ id: ids.idEditor })
+            let editorName = await EditorName.findOne({ name: name });
+            if (editorName == undefined) {
+                let editor = await Editor.create({
+                    titles: [{
+                        lang: GetLang.getLangByStr(name),
+                        name: name
+                    }],
+                    publications: [idPublication]
+                });
+                return res.json(await Editor.findOne({id: editor.id}).populate('titles'));
+            }
+
+            let editor = await Editor.findOne({ id: editorName.editor })
                 .populate('titles');
 
-            await Publication.update({ id: ids.idPublication }, { editor: editor.id });
+            await Publication.update({ id: idPublication }, { editor: editor.id });
 
             return res.json(editor);
         } catch (err) {

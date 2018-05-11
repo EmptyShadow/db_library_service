@@ -180,7 +180,7 @@
                         break;
                     }
                 }
-                
+
             }, function (reason) {
             });
         };
@@ -305,16 +305,13 @@
         $scope.addAuthor = function (publication) {
             let uibModalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'views/modals/input-number.html',
+                templateUrl: 'views/modals/add-author.html',
+                size: 'md',
                 controller: function ($uibModalInstance, $scope) {
-                    $scope.view = {
-                        title: 'Добавить автора публикации',
-                        labelNumber: 'Индентификатор автора'
-                    };
-
                     $scope.add = function () {
-                        if ($scope.number != undefined) {
-                            (new Publication).addAuthor(publication.id, $scope.number, function (err, author) {
+                        if ($scope.obj.lastname != undefined
+                            && $scope.obj.firstname != undefined) {
+                            (new Publication).addAuthor(publication.id, $scope.obj, function (err, author) {
                                 if (err) {
                                     $scope.err = err;
                                     return;
@@ -328,7 +325,7 @@
                         $uibModalInstance.dismiss('cancel');
                     };
                 },
-                size: 'sm'
+                size: 'md'
             });
             uibModalInstance.result.then(function (author) {
                 publication.authors.push(author);
@@ -367,7 +364,8 @@
         $scope.replaceEditor = function (publication) {
             let uibModalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'views/modals/input-number.html',
+                templateUrl: 'views/modals/add-editor.html',
+                size: 'lg',
                 controller: function ($uibModalInstance, $scope) {
                     $scope.view = {
                         title: 'Добавить издание публикации',
@@ -375,8 +373,8 @@
                     };
 
                     $scope.add = function () {
-                        if ($scope.number != undefined) {
-                            (new Publication).replaceEditor(publication.id, $scope.number, function (err, editor) {
+                        if ($scope.obj.name != undefined) {
+                            (new Publication).replaceEditor(publication.id, $scope.obj, function (err, editor) {
                                 if (err) {
                                     $scope.err = err;
                                     return;
@@ -389,8 +387,7 @@
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
                     };
-                },
-                size: 'sm'
+                }
             });
             uibModalInstance.result.then(function (editor) {
                 publication.editor = editor;

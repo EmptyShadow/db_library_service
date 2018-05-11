@@ -192,7 +192,7 @@ module.exports.routes = {
     action: 'removeTitle'
   },
 
-  'GET /publication/:idPublication/author/:idAuthor': {
+  'POST /publication/:idPublication/author': {
     controller: 'PublicationController',
     action: 'addAuthor'
   },
@@ -202,7 +202,7 @@ module.exports.routes = {
     action: 'removeAuthor'
   },
 
-  'GET /publication/:idPublication/editor/:idEditor': {
+  'POST /publication/:idPublication/editor': {
     controller: 'PublicationController',
     action: 'replaceEditor'
   },

@@ -202,23 +202,19 @@
                     }
                 );
             },
-            addAuthor: function (idPublication, idAuthor, callback) {
+            addAuthor: function (idPublication, authorName, callback) {
+                console.log(authorName);
                 $http({
-                    method: 'GET',
-                    url: '/author/' + idAuthor
+                    method: 'POST',
+                    url: '/publication/' + idPublication + '/author',
+                    data: authorName,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(
                     function success(response) {
-                        $http({
-                            method: 'GET',
-                            url: '/publication/' + idPublication + '/author/' + idAuthor
-                        }).then(
-                            function success(response) {
-                                callback('', new Author(response.data));
-                            },
-                            function error(response) {
-                                callback(response.data, null);
-                            }
-                        );
+                        console.log(response.data);
+                        callback('', new Author(response.data));
                     },
                     function error(response) {
                         callback(response.data, null);
@@ -238,27 +234,20 @@
                     }
                 );
             },
-            replaceEditor: function (idPublication, idEditor, callback) {
+            replaceEditor: function (idPublication, editorName, callback) {
                 $http({
-                    method: 'GET',
-                    url: '/editor/' + idEditor
+                    method: 'POST',
+                    url: '/publication/' + idPublication + '/editor',
+                    data: editorName,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(
                     function success(response) {
                         let editor = new Edition(response.data);
-                        $http({
-                            method: 'GET',
-                            url: '/publication/' + idPublication + '/editor/' + idEditor
-                        }).then(
-                            function success(response) {
-                                callback('', editor);
-                            },
-                            function error(response) {
-                                callback(response.data, null);
-                            }
-                        );
+                        callback('', editor);
                     },
                     function error(response) {
-                        console.log(response.data);
                         callback(response.data, null);
                     }
                 );
